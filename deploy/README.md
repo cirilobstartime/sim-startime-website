@@ -525,8 +525,8 @@ sudo nginx -T | grep -nE 'server_name|proxy_pass|return 301'
 ```
 
 Confirm there is only one enabled SIMF production virtual host and that its
-proxy points to `127.0.0.1:3004`. Disable obsolete preview configurations only
-after identifying their exact symlink under `/etc/nginx/sites-enabled`.
+proxy points to `127.0.0.1:3004`. Investigate any additional SIMF virtual host
+before disabling its exact symlink under `/etc/nginx/sites-enabled`.
 
 ### Form succeeds but email is not received
 
