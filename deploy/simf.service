@@ -1,0 +1,35 @@
+[Unit]
+Description=SIMF Next.js and Payload CMS
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/var/www/simf/app
+EnvironmentFile=/etc/simf/simf.env
+Environment=DATABASE_URL=file:/var/www/simf/shared/simf.db
+Environment=MEDIA_UPLOAD_DIR=/var/www/simf/shared/uploads/media
+Environment=FORM_UPLOAD_DIR=/var/www/simf/shared/uploads/form-uploads
+ExecStartPre=/usr/bin/install -d -m 0750 /var/www/simf/shared/uploads/media /var/www/simf/shared/uploads/form-uploads
+ExecStart=/usr/bin/npm run start -- --hostname 127.0.0.1
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGINT
+UMask=0027
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=full
+ReadWritePaths=/var/www/simf/shared /var/www/simf/app/.next/cache
+RestrictSUIDSGID=true
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

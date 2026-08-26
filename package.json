@@ -1,0 +1,58 @@
+{
+  "name": "simf-event-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0 <27.0.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run payload:generate:types && next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "payload": "payload",
+    "payload:generate:types": "mkdir -p src/generated && payload generate:types",
+    "payload:generate:importmap": "payload generate:importmap",
+    "migrate:partner-badges": "tsx scripts/migrate-partner-badge-tiers.ts",
+    "verify:tracking": "tsx scripts/verify-attribution.ts && tsx scripts/verify-conversion-tracking.ts && tsx scripts/verify-form-export.ts",
+    "verify:media": "tsx scripts/verify-media-webp.ts",
+    "verify:secrets": "bash scripts/check-secrets.sh",
+    "seed": "tsx scripts/seed-simf-microsite.ts",
+    "create-admin": "tsx scripts/create-admin.ts"
+  },
+  "dependencies": {
+    "@payloadcms/db-sqlite": "3.86.0",
+    "@payloadcms/email-nodemailer": "^3.86.0",
+    "@payloadcms/next": "3.86.0",
+    "@payloadcms/richtext-lexical": "3.86.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "country-flag-icons": "^1.6.20",
+    "graphql": "^16.11.0",
+    "motion": "12.23.12",
+    "next": "16.2.11",
+    "payload": "3.86.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "sharp": "^0.35.2",
+    "tsx": "^4.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "16.2.10",
+    "prettier": "latest",
+    "typescript": "latest"
+  },
+  "overrides": {
+    "dompurify": "3.4.12",
+    "framer-motion": "12.23.12",
+    "motion-dom": "12.23.12",
+    "motion-utils": "12.23.6",
+    "postcss": "8.5.25",
+    "sharp": "$sharp"
+  }
+}

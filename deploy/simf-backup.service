@@ -1,0 +1,16 @@
+[Unit]
+Description=Back up SIMF CMS database and uploads
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecStart=/usr/local/sbin/simf-backup
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+ReadOnlyPaths=/var/www/simf/shared
+ReadWritePaths=/var/backups/simf
