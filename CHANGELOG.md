@@ -1,14 +1,5 @@
 # Changelog
 
-## 2026-08-27
-
-- Documented the supported clean seed and authorized production-recovery paths
-  for reproducible database setup.
-- Added secure database/archive acquisition, checksum verification, local
-  restoration, upload pairing and environment-variable guidance.
-- Clarified why production databases, users, submissions, uploads and runtime
-  secrets must remain outside the public repository.
-
 ## 2026-08-26
 
 - Improved CMS session handling, autosave behavior and editor permissions.

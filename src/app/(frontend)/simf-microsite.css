@@ -17182,6 +17182,28 @@ body .simf-homepage-about .simf-option-hero__review-lead {
   filter: none !important;
 }
 
+/* Show photographic media in its original colour while preserving the
+   dedicated logo, icon and flag treatments. */
+.simf-site
+  :is(
+    .simf-inner-hero__media,
+    .simf-content-media__visual,
+    .simf-content-card__media,
+    .simf-content-value__media,
+    .simf-directory-speakers__portrait,
+    .simf-content-cta__media,
+    .simf-legacy__image,
+    .simf-option-hero__media,
+    .simf-option-about__image,
+    .simf-option-topics__image,
+    .simf-speakers__portrait,
+    .simf-option-sponsor__media,
+    .simf-option-audience__media
+  )
+  img {
+  filter: none !important;
+}
+
 @media (max-width: 800px) {
   .simf-content-page--sponsor
     .simf-content-sponsor-rail
