@@ -92,6 +92,8 @@ export function SimfHomepageOption({
   const hero = section<HeroSection>(page, "top");
   const countdown = section<CountdownSection>(page, "countdown");
   const authority = section<CardGridSection>(page, "authority");
+  const authorityCards =
+    authority?.cards.filter((card) => card.visible !== false) || [];
   const about = section<MediaFeatureSection>(page, "about");
   const legacy = section<LegacySection>(page, "legacy");
   const indicators = section<MetricRailSection>(page, "indicators");
@@ -250,12 +252,12 @@ export function SimfHomepageOption({
 
         {authority ? (
           <section className="simf-option-authority">
-            <div className="simf-shell simf-option-authority__inner">
+            <div
+              className={`simf-shell simf-option-authority__inner simf-option-authority__inner--${authorityCards.length}`}
+            >
               <p>{authority.heading}</p>
               <div>
-                {authority.cards
-                  .filter((card) => card.visible !== false)
-                  .map((card) => (
+                {authorityCards.map((card) => (
                     <article
                       className={
                         card.title.includes("Naval") || card.title.includes("البحرية")

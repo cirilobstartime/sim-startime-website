@@ -18031,15 +18031,15 @@ body .simf-homepage-about .simf-option-hero__review-lead {
 /* The approved authority strip has two organisations. Let both cards share
    the full available rail in LTR and RTL rather than reserving a third slot. */
 @media (min-width: 801px) {
-  .simf-homepage-about .simf-option-authority__inner > div {
+  .simf-homepage-about .simf-option-authority__inner--2 > div {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .simf-homepage-about .simf-option-authority article {
+  .simf-homepage-about .simf-option-authority__inner--2 article {
     justify-content: center;
   }
 
-  .simf-homepage-about .simf-option-authority article > div {
+  .simf-homepage-about .simf-option-authority__inner--2 article > div {
     width: 176px;
     height: 104px;
     flex-basis: 176px;
