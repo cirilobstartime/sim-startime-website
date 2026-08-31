@@ -85,6 +85,37 @@ const pageBlockOptions: Record<string, string[]> = {
   ],
 };
 
+function ensureSectionNames<T extends Record<string, unknown> | undefined>(
+  data: T,
+): T {
+  if (!data || !Array.isArray(data.sections)) return data;
+
+  return {
+    ...data,
+    sections: data.sections.map((value) => {
+      if (!value || typeof value !== "object") return value;
+      const section = value as Record<string, unknown>;
+      const heading =
+        typeof section.heading === "string" ? section.heading : undefined;
+      const internalLabel =
+        typeof section.internalLabel === "string"
+          ? section.internalLabel
+          : undefined;
+      const blockType =
+        typeof section.blockType === "string" ? section.blockType : "Section";
+
+      return {
+        ...section,
+        blockName:
+          (typeof section.blockName === "string" && section.blockName.trim()) ||
+          internalLabel ||
+          heading ||
+          blockType,
+      };
+    }),
+  } as T;
+}
+
 export const Pages: CollectionConfig = {
   slug: "pages",
   disableDuplicate: false,
@@ -122,6 +153,9 @@ export const Pages: CollectionConfig = {
             ],
           } as Where),
     update: authenticatedStaff,
+  },
+  hooks: {
+    beforeValidate: [({ data }) => ensureSectionNames(data)],
   },
   fields: [
     {

@@ -86,7 +86,11 @@ export function SimfPartnerRail({
             <div>
               <CmsImage alt={card.title} media={card.media} sizes="220px" />
             </div>
-            {showNames ? <span>{card.title}</span> : null}
+            {card.meta ? (
+              <span className="simf-option-partners__type">{card.meta}</span>
+            ) : showNames ? (
+              <span>{card.title}</span>
+            ) : null}
           </article>
         ))}
       </div>

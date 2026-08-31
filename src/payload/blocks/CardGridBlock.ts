@@ -111,7 +111,15 @@ export const CardGridBlock: Block = {
             { label: "Map pin", value: "map-pin" },
           ],
         },
-        { name: "meta", type: "text", admin: { hidden: true } },
+        {
+          name: "meta",
+          label: "Partnership / sponsorship type",
+          type: "text",
+          admin: {
+            description:
+              "Optional supporting label. On partner-logo sections this appears beneath the logo, for example Organized by, Strategic Partner, or Gold Sponsor.",
+          },
+        },
         {
           name: "button",
           label: "Card link",

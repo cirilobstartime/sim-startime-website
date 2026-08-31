@@ -4,7 +4,6 @@ import { getPayload } from "payload";
 import { cache } from "react";
 import { getSimfMicrositePage } from "./simfMicrositeDefaults";
 import {
-  applyEditorialMedia,
   getSimfContentPage,
   type SimfContentPageKey,
 } from "./simfContentPagesDefaults";
@@ -100,9 +99,7 @@ async function fetchPage(
       summary: page.summary,
       title: page.title,
     };
-    return isContentPage && contentKey
-      ? applyEditorialMedia(resolvedPage, contentKey)
-      : resolvedPage;
+    return resolvedPage;
   } catch {
     return pageType === "simf-microsite-updates"
       ? getSimfUpdatesPage(locale)

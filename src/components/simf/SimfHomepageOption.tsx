@@ -49,6 +49,10 @@ function localePath(locale: Locale, path = "") {
   return `${locale === "ar" ? "/ar" : ""}${path}` || "/";
 }
 
+function audienceHeading(title: string) {
+  return title.replace(/^\s*0[1-5](?:[\s.:\-–—]+|$)/, "").trim();
+}
+
 function ConceptButton({
   href,
   label,
@@ -394,28 +398,32 @@ export function SimfHomepageOption({
               <div className="simf-option-audience__list">
                 {audience.cards
                   .filter((card) => card.visible !== false)
-                  .map((card, index) => (
-                    <article key={card.title}>
-                      {card.media ? (
-                        <div className="simf-option-audience__media" aria-hidden="true">
-                          <CmsImage
-                            alt=""
-                            media={card.media}
-                            sizes={
-                              index === 0
-                                ? "(max-width: 800px) 86vw, 40vw"
-                                : "(max-width: 800px) 86vw, 30vw"
-                            }
-                          />
+                  .map((card, index) => {
+                    const heading = audienceHeading(card.title);
+
+                    return (
+                      <article key={card.title}>
+                        {card.media ? (
+                          <div className="simf-option-audience__media" aria-hidden="true">
+                            <CmsImage
+                              alt=""
+                              media={card.media}
+                              sizes={
+                                index === 0
+                                  ? "(max-width: 800px) 86vw, 40vw"
+                                  : "(max-width: 800px) 86vw, 30vw"
+                              }
+                            />
+                          </div>
+                        ) : null}
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        <div>
+                          <h3>{heading}</h3>
+                          {card.body ? <p>{card.body}</p> : null}
                         </div>
-                      ) : null}
-                      <span>{String(index + 1).padStart(2, "0")}</span>
-                      <div>
-                        <h3>{card.title}</h3>
-                        {card.body ? <p>{card.body}</p> : null}
-                      </div>
-                    </article>
-                  ))}
+                      </article>
+                    );
+                  })}
               </div>
               {audience.buttons?.length ? (
                 <div className="simf-option-audience__actions">
@@ -490,6 +498,11 @@ export function SimfHomepageOption({
                             sizes="220px"
                           />
                         </div>
+                        {card.meta ? (
+                          <span className="simf-option-partners__type">
+                            {card.meta}
+                          </span>
+                        ) : null}
                       </article>
                     ))}
                 </div>
@@ -503,10 +516,7 @@ export function SimfHomepageOption({
             <div className="simf-option-sponsor__media">
               <CmsImage
                 alt=""
-                media={
-                  sponsorship.media ||
-                  "/assets/simf-microsite/photos/fleet-formation.webp"
-                }
+                media={sponsorship.media}
                 sizes="100vw"
               />
             </div>

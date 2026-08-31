@@ -63,6 +63,13 @@ type Props = {
   showLanguageSwitcher?: boolean;
 };
 
+const imageAboveCopySections = new Set([
+  "official-framework",
+  "programme-days",
+  "programme-highlights",
+  "sponsor-reasons",
+]);
+
 function findSection<T extends PublicPage["sections"][number]>(
   page: PublicPage,
   anchorID: string,
@@ -207,6 +214,7 @@ function CardSection({
   }
 
   const partnerCategory = section.anchorID?.startsWith("partner-category-");
+  const imageAboveCopy = imageAboveCopySections.has(section.anchorID || "");
   if (section.anchorID === "sponsor-slider") {
     return (
       <section
@@ -263,6 +271,9 @@ function CardSection({
         <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
         <div className={`simf-content-cards__grid simf-content-cards__grid--${section.layout || "editorial"}`}>
           {cards.map((card, index) => {
+            const imageOverlay = Boolean(
+              card.media && !partnerCategory && !imageAboveCopy,
+            );
             const content = (
               <>
                 {card.media ? (
@@ -293,7 +304,7 @@ function CardSection({
                 </div>
               </>
             );
-            const className = `simf-content-card simf-reveal simf-reveal--${(index % 3) + 1}`;
+            const className = `simf-content-card${imageOverlay ? " simf-content-card--image-overlay" : ""} simf-reveal simf-reveal--${(index % 3) + 1}`;
             return card.button?.href ? (
               <Link
                 className={className}

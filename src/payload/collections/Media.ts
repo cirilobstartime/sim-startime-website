@@ -9,7 +9,7 @@ export const Media: CollectionConfig = {
     description:
       "Upload images and videos used across SIMF. JPEG and PNG images are automatically stored as optimized WebP; videos keep their original format. Exact role and recommended dimensions are shown beside every image field where this media is selected.",
     group: "Content",
-    useAsTitle: "alt",
+    useAsTitle: "title",
   },
   access: {
     create: authenticatedStaff,
@@ -60,10 +60,24 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
+      name: "title",
+      type: "text",
+      localized: true,
+      required: true,
+      admin: {
+        description:
+          "Editable image title used for the media-library label and the image title attribute on the website.",
+      },
+    },
+    {
       name: "alt",
       type: "text",
       localized: true,
       required: true,
+      admin: {
+        description:
+          "Describe the image for accessibility and search engines. Do not repeat nearby text unless needed for context.",
+      },
     },
     {
       name: "caption",

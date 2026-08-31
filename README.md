@@ -7,13 +7,26 @@ authorized CMS users.
 
 ## Local development
 
+For a clean, reproducible development database that contains the approved
+public English and Arabic content but no production users or form submissions:
+
 ```bash
 cp .env.example .env
 npm ci
+npm run seed
 npm run dev -- --port 3004
 ```
 
 Use development-only secret values in `.env`; never commit credentials.
+Create a local administrator separately with `npm run create-admin`; the
+required `ADMIN_EMAIL` and `ADMIN_PASSWORD` values must be supplied only in the
+local shell environment.
+
+The live SQLite database and CMS/form uploads are not stored in Git. They can
+contain personal data, password hashes and private submissions. Authorized
+operators who need an exact environment must obtain a verified encrypted
+recovery archive through the process documented in
+[the deployment and recovery manual](deploy/README.md#database-and-dataset-availability).
 
 ## Verification
 

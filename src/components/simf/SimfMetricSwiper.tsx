@@ -55,7 +55,13 @@ export function SimfMetricSwiper({
       <div className="simf-indicators__grid" ref={rail}>
         {metrics.map((metric) => (
           <div key={metric.label}>
-            <strong dir="ltr">{metric.value}</strong>
+            <strong
+              dir={
+                ar && /[\u0600-\u06ff]/.test(metric.value) ? "rtl" : "ltr"
+              }
+            >
+              {metric.value}
+            </strong>
             <span>{metric.label}</span>
           </div>
         ))}

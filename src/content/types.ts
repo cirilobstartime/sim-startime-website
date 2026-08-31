@@ -11,6 +11,7 @@ export type MediaValue =
       filename?: string | null;
       height?: number | null;
       id?: number | string;
+      title?: string | null;
       url?: string | null;
       width?: number | null;
     }
@@ -36,6 +37,7 @@ export type BaseSection = {
     theme?: "light" | "dark" | "brand" | "transparent" | null;
   } | null;
   blockType: string;
+  blockName?: string | null;
   displayOrder?: number | null;
   id?: string | null;
   internalLabel?: string | null;

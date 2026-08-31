@@ -18028,6 +18028,24 @@ body .simf-homepage-about .simf-option-hero__review-lead {
   font-weight: 650;
 }
 
+/* The approved authority strip has two organisations. Let both cards share
+   the full available rail in LTR and RTL rather than reserving a third slot. */
+@media (min-width: 801px) {
+  .simf-homepage-about .simf-option-authority__inner > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .simf-homepage-about .simf-option-authority article {
+    justify-content: center;
+  }
+
+  .simf-homepage-about .simf-option-authority article > div {
+    width: 176px;
+    height: 104px;
+    flex-basis: 176px;
+  }
+}
+
 .simf-homepage-option .simf-option-speakers .simf-speakers__portrait {
   height: clamp(430px, 34vw, 520px);
 }
@@ -18172,4 +18190,257 @@ body .simf-homepage-about .simf-option-hero__review-lead {
    heading rhythm, particularly when headings wrap across two or three lines. */
 .simf-site[lang="ar"] :is(h1, h2, h3) {
   line-height: 1.3 !important;
+}
+
+/* Arabic copy uses longer letterforms and frequently wraps inside narrower
+   editorial columns. Keep those headings comfortably inside their sections
+   without changing the approved English scale. */
+.simf-site[lang="ar"] .simf-option-about__copy h2,
+.simf-site[lang="ar"] .simf-option-section-head h2,
+.simf-site[lang="ar"] .simf-option-legacy h2,
+.simf-site[lang="ar"] .simf-option-partners h2,
+.simf-site[lang="ar"] .simf-option-sponsor h2,
+.simf-site[lang="ar"].simf-content-page .simf-section-head h2 {
+  font-size: clamp(30px, 3vw, 44px);
+  line-height: 1.32 !important;
+  text-wrap: balance;
+}
+
+.simf-site[lang="ar"] .simf-option-partners__intro h2,
+.simf-site[lang="ar"].simf-content-page
+  :is(.simf-content-media__copy, .simf-content-metrics__layout)
+  .simf-section-head h2 {
+  font-size: clamp(28px, 2.35vw, 38px);
+}
+
+.simf-site[lang="ar"].simf-content-page .simf-content-value__steps h3,
+.simf-site[lang="ar"] .simf-option-audience__list h3 {
+  font-size: clamp(18px, 1.45vw, 22px);
+  line-height: 1.38 !important;
+}
+
+.simf-site[lang="ar"].simf-content-page
+  .simf-content-value
+  .simf-section-head
+  h2,
+.simf-site[lang="ar"].simf-content-page--sponsor
+  .simf-content-sponsor-rail
+  .simf-section-head
+  h2 {
+  font-size: clamp(28px, 2.65vw, 40px);
+}
+
+/* Long Arabic metric values need room for the complete number and unit. */
+.simf-site[lang="ar"]
+  .simf-option-indicators
+  .simf-indicators__grid
+  strong {
+  display: block;
+  width: 100%;
+  min-height: 2.5em;
+  font-size: clamp(18px, 1.55vw, 24px);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-align: right;
+  white-space: normal;
+}
+
+.simf-site[lang="ar"]
+  .simf-option-indicators
+  .simf-indicators__grid
+  > div {
+  align-items: stretch;
+  text-align: right;
+}
+
+.simf-site[lang="ar"]
+  .simf-option-indicators
+  .simf-indicators__grid
+  span {
+  width: 100%;
+  text-align: right;
+}
+
+.simf-site[lang="ar"]
+  .simf-option-indicators
+  .simf-metric-swiper__controls {
+  justify-content: flex-start;
+}
+
+/* Image-overlay cards must retain strong contrast over every photograph. */
+.simf-homepage-about .simf-option-audience__list :is(h3, p) {
+  color: #fff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .72);
+}
+
+/* Card-level image overlays only. Full-section background treatments and
+   cards whose image sits above their copy intentionally remain untouched. */
+.simf-content-page
+  .simf-content-card--image-overlay
+  .simf-content-card__copy
+  :is(h3, p, span, small) {
+  color: #fff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .72);
+}
+
+.simf-content-page
+  .simf-content-card--image-overlay
+  .simf-content-card__copy
+  h3 {
+  font-size: clamp(19px, 1.65vw, 24px);
+  line-height: 1.25;
+}
+
+.simf-content-page
+  .simf-content-card--image-overlay
+  .simf-content-card__copy
+  p {
+  font-size: 13px;
+  line-height: 1.58;
+}
+
+.simf-site[lang="ar"]
+  .simf-content-card--image-overlay
+  .simf-content-card__copy
+  h3 {
+  font-size: clamp(18px, 1.55vw, 22px);
+  line-height: 1.38 !important;
+}
+
+/* Keep the audience copy compact enough to remain readable over the photos,
+   including long English and Arabic titles in the narrower cards. */
+.simf-homepage-about .simf-option-audience__list h3 {
+  font-size: clamp(17px, 1.28vw, 21px);
+  line-height: 1.28;
+}
+
+.simf-homepage-about .simf-option-audience__list p {
+  margin-top: 12px;
+  font-size: clamp(12px, .88vw, 13px);
+  line-height: 1.58;
+}
+
+@media (min-width: 801px) {
+  .simf-homepage-about .simf-option-audience__list article:first-child h3 {
+    font-size: clamp(21px, 1.7vw, 26px);
+  }
+
+  .simf-homepage-about .simf-option-audience__list article:first-child p {
+    font-size: 13px;
+  }
+}
+
+.simf-site[lang="ar"] .simf-homepage-about .simf-option-audience__list h3 {
+  font-size: clamp(17px, 1.28vw, 20px);
+  line-height: 1.38 !important;
+}
+
+@media (min-width: 801px) {
+  .simf-site[lang="ar"]
+    .simf-homepage-about
+    .simf-option-audience__list
+    article:first-child
+    h3 {
+    font-size: clamp(19px, 1.5vw, 21px);
+  }
+}
+
+@media (max-width: 800px) {
+  .simf-homepage-about .simf-option-audience__list h3,
+  .simf-site[lang="ar"] .simf-homepage-about .simf-option-audience__list h3 {
+    font-size: 17px;
+  }
+
+  .simf-homepage-about .simf-option-audience__list p {
+    font-size: 12px;
+  }
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card
+  :is(h3, p) {
+  color: #fff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .78);
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__media::after {
+  background:
+    linear-gradient(180deg, rgba(5, 10, 23, .2), rgba(5, 10, 23, .9)),
+    linear-gradient(90deg, rgba(5, 10, 23, .58), transparent 72%);
+}
+
+[dir="rtl"].simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__media::after {
+  background:
+    linear-gradient(180deg, rgba(5, 10, 23, .2), rgba(5, 10, 23, .9)),
+    linear-gradient(270deg, rgba(5, 10, 23, .58), transparent 72%);
+}
+
+.simf-homepage-about .simf-option-audience__list article::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .12) 4%, rgba(5, 9, 20, .48) 46%, rgba(5, 9, 20, .98) 100%),
+    linear-gradient(90deg, rgba(5, 9, 20, .64), transparent 76%);
+}
+
+[dir="rtl"].simf-homepage-about
+  .simf-option-audience__list
+  article::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .12) 4%, rgba(5, 9, 20, .48) 46%, rgba(5, 9, 20, .98) 100%),
+    linear-gradient(270deg, rgba(5, 9, 20, .64), transparent 76%);
+}
+
+/* The sponsorship process uses a light background; keep its introductory copy
+   readable instead of inheriting the pale text intended for dark sections. */
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-process
+  .simf-section-head
+  > p:last-child:not(.simf-eyebrow) {
+  color: #536173 !important;
+  opacity: 1;
+}
+
+/* Localized CMS partnership types replace the previously empty rule beneath
+   each homepage logo. */
+.simf-homepage-about
+  .simf-partner-rail
+  .simf-option-partners__logos
+  .simf-option-partners__type,
+.simf-option-partners__logos .simf-option-partners__type {
+  display: block;
+  min-height: 30px;
+  margin-top: 16px;
+  padding: 10px 8px 0;
+  border-top: 1px solid rgba(16, 25, 54, .5);
+  color: #263b72;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+}
+
+[dir="rtl"] .simf-option-partners__logos .simf-option-partners__type {
+  letter-spacing: 0;
+}
+
+@media (max-width: 800px) {
+  .simf-site[lang="ar"] .simf-option-about__copy h2,
+  .simf-site[lang="ar"] .simf-option-section-head h2,
+  .simf-site[lang="ar"] .simf-option-legacy h2,
+  .simf-site[lang="ar"] .simf-option-partners h2,
+  .simf-site[lang="ar"] .simf-option-sponsor h2,
+  .simf-site[lang="ar"].simf-content-page .simf-section-head h2 {
+    font-size: clamp(27px, 7.2vw, 34px);
+  }
+
+  .simf-option-partners__logos .simf-option-partners__type {
+    min-height: 27px;
+    margin-top: 12px;
+    padding-top: 8px;
+    font-size: 10px;
+  }
 }

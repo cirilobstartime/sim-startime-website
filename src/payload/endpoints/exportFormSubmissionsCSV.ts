@@ -122,8 +122,11 @@ export const exportFormSubmissionsCSV: PayloadHandler = async (req) => {
     "currentSessionID",
     "conversionLandingPage",
     "conversionReferrer",
+    "first_touch.utm_source",
+    "latest_touch.utm_campaign",
     "uploads",
     "notes",
+    "form.email",
   ];
   const discovered = new Set(rows.flatMap((row) => Object.keys(row)));
   const headers = [

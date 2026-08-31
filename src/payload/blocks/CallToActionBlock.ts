@@ -4,8 +4,8 @@ import { buttonFields, sectionControls } from "./shared";
 export const CallToActionBlock: Block = {
   slug: "callToAction",
   labels: {
-    singular: "Call to action",
-    plural: "Calls to action",
+    singular: "Conversion / sponsorship CTA",
+    plural: "Conversion / sponsorship CTAs",
   },
   fields: [
     ...sectionControls,

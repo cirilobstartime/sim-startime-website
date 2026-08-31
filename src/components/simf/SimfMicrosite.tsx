@@ -5,7 +5,6 @@ import {
   CheckCircle,
   MapPin,
 } from "@phosphor-icons/react/dist/ssr";
-import Image from "next/image";
 import Link from "next/link";
 import type {
   Button,
@@ -354,7 +353,15 @@ function Landing({
       {sponsorship ? (
         <section className="simf-sponsorship simf-section" id="sponsorship">
           <div className="simf-sponsorship__media">
-            <Image alt="" fill sizes="100vw" src="/assets/simf-microsite/photos/fleet-formation.webp" />
+            <CmsImage
+              alt=""
+              media={
+                sponsorship.steps?.find(
+                  (step) => step.visible !== false && step.media,
+                )?.media
+              }
+              sizes="100vw"
+            />
           </div>
           <div className="simf-sponsorship__shade" />
           <div className="simf-shell simf-sponsorship__content">

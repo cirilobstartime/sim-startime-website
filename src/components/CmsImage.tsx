@@ -7,6 +7,7 @@ type CmsImageProps = {
   media?: MediaValue;
   priority?: boolean;
   sizes?: string;
+  title?: string;
 };
 
 export function getMediaURL(media?: MediaValue): string {
@@ -41,12 +42,19 @@ export function getMediaAlt(media?: MediaValue, fallback = ""): string {
   return fallback;
 }
 
+export function getMediaTitle(media?: MediaValue, fallback = ""): string {
+  if (typeof media === "object" && media?.title) return media.title;
+  if (typeof media === "object" && media?.alt) return media.alt;
+  return fallback;
+}
+
 export function CmsImage({
   alt,
   className,
   media,
   priority = false,
   sizes = "100vw",
+  title,
 }: CmsImageProps) {
   const src = getMediaURL(media);
 
@@ -61,6 +69,7 @@ export function CmsImage({
       priority={priority}
       sizes={sizes}
       src={src}
+      title={title || getMediaTitle(media, alt) || undefined}
       unoptimized={src.endsWith(".svg")}
     />
   );

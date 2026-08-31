@@ -25,6 +25,7 @@ try {
     collection: "media",
     data: {
       alt: "Disposable WebP pipeline verification",
+      title: "Disposable WebP pipeline verification",
       usageNotes: "Temporary automated conversion check",
     },
     filePath: sourcePath,

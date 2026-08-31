@@ -97,6 +97,18 @@ function replaceMedia(
   return value;
 }
 
+function nameSections(sections: PageSection[]): PageSection[] {
+  return sections.map((section) => ({
+    ...section,
+    blockName:
+      section.blockName ||
+      section.internalLabel ||
+      ("heading" in section && typeof section.heading === "string"
+        ? section.heading
+        : section.blockType),
+  }));
+}
+
 function assetAlt(assetPath: string): string {
   return path
     .basename(assetPath, path.extname(assetPath))
@@ -194,6 +206,7 @@ for (const assetPath of allMediaPaths) {
       collection: "media",
       data: {
         alt: assetAlt(assetPath),
+        title: assetAlt(assetPath),
         usageNotes: `SIMF microsite source: ${assetPath}`,
       },
       filePath: absolutePath,
@@ -280,7 +293,9 @@ for (const pageType of selectedPageTypes) {
 
   for (const locale of locales) {
     const page = pageSource(locale, pageType);
-    const sections = replaceMedia(page.sections, mediaIDs) as PageSection[];
+    const sections = nameSections(
+      replaceMedia(page.sections, mediaIDs) as PageSection[],
+    );
     for (const item of sections) {
       if (item.blockType === "form" && typeof item.form === "object") {
         item.form = formIDs.get(item.form.formKey) || item.form;

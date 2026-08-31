@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import type { Locale, MediaValue } from "@/content/types";
-import { getMediaURL } from "../CmsImage";
+import { getMediaTitle, getMediaURL } from "../CmsImage";
 
 type Props = {
   homeHref: string;
@@ -64,6 +64,7 @@ export function SimfHeader({
             height={iconOnly ? 66 : 48}
             priority
             src={renderedLogoURL}
+            title={getMediaTitle(logo) || undefined}
             unoptimized={iconOnly}
             width={iconOnly ? 66 : 154}
           />

@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import type { Locale, SimfFooterSection } from "@/content/types";
-import { getMediaURL } from "../CmsImage";
+import { getMediaTitle, getMediaURL } from "../CmsImage";
 
 type Props = {
   footer?: SimfFooterSection;
@@ -47,6 +47,7 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
             className={iconOnly ? "simf-footer__logo--icon" : undefined}
             height={iconOnly ? 78 : 48}
             src={renderedLogoURL}
+            title={getMediaTitle(footer?.logo) || undefined}
             unoptimized={iconOnly}
             width={iconOnly ? 78 : 210}
           />

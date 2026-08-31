@@ -3,9 +3,11 @@ import type { Field } from "payload";
 export const sectionControls: Field[] = [
   {
     name: "internalLabel",
+    label: "Section name in CMS",
     type: "text",
     admin: {
-      hidden: true,
+      description:
+        "An editor-friendly name for finding this section. It is not displayed on the website.",
     },
   },
   {
