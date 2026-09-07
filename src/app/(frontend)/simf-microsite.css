@@ -18444,3 +18444,56 @@ body .simf-homepage-about .simf-option-hero__review-lead {
     font-size: 10px;
   }
 }
+
+/* Present every uploaded image in its original colour. Text-over-image cards
+   keep a lighter directional shade only, so their copy remains legible without
+   obscuring the photography. Keep these final overrides at the end of the
+   stylesheet so page-specific refinements cannot restore an image grade. */
+.simf-site img {
+  filter: none !important;
+}
+
+.simf-content-page .simf-content-card--image-overlay::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, 0.01) 10%, rgba(5, 9, 20, 0.1) 48%, rgba(5, 9, 20, 0.66) 100%),
+    linear-gradient(90deg, rgba(5, 9, 20, 0.14), transparent 72%) !important;
+}
+
+[dir="rtl"].simf-content-page .simf-content-card--image-overlay::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, 0.01) 10%, rgba(5, 9, 20, 0.1) 48%, rgba(5, 9, 20, 0.66) 100%),
+    linear-gradient(270deg, rgba(5, 9, 20, 0.14), transparent 72%) !important;
+}
+
+.simf-homepage-about .simf-option-audience__media::after,
+.simf-homepage-about .simf-option-audience__list article:hover .simf-option-audience__media::after {
+  opacity: 0.1 !important;
+}
+
+.simf-homepage-about .simf-option-audience__list article::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, 0.01) 8%, rgba(5, 9, 20, 0.08) 46%, rgba(5, 9, 20, 0.66) 100%),
+    linear-gradient(90deg, rgba(5, 9, 20, 0.14), transparent 76%) !important;
+}
+
+[dir="rtl"] .simf-homepage-about .simf-option-audience__list article::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, 0.01) 8%, rgba(5, 9, 20, 0.08) 46%, rgba(5, 9, 20, 0.66) 100%),
+    linear-gradient(270deg, rgba(5, 9, 20, 0.14), transparent 76%) !important;
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__media::after {
+  background:
+    linear-gradient(180deg, rgba(5, 10, 23, 0.01), rgba(5, 10, 23, 0.6)),
+    linear-gradient(90deg, rgba(5, 10, 23, 0.12), transparent 72%) !important;
+}
+
+[dir="rtl"].simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__media::after {
+  background:
+    linear-gradient(180deg, rgba(5, 10, 23, 0.01), rgba(5, 10, 23, 0.6)),
+    linear-gradient(270deg, rgba(5, 10, 23, 0.12), transparent 72%) !important;
+}

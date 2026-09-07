@@ -22,6 +22,7 @@ import { eventPageSchema } from "@/lib/structuredData";
 import { CmsImage } from "../CmsImage";
 import { SimfCountdown } from "./SimfCountdown";
 import { SimfFooter } from "./SimfFooter";
+import { formatMetricValue } from "./formatMetricValue";
 import { SimfHeader } from "./SimfHeader";
 import { SimfMetricSwiper } from "./SimfMetricSwiper";
 import { SimfOptionMotion } from "./SimfOptionMotion";
@@ -336,7 +337,7 @@ export function SimfHomepageOption({
               <div className="simf-option-legacy__metrics">
                 {legacy.metrics.map((metric) => (
                   <div key={metric.label}>
-                    <strong dir="ltr">{metric.value}</strong>
+                    <strong dir="ltr">{formatMetricValue(locale, metric.value)}</strong>
                     <span>{metric.label}</span>
                   </div>
                 ))}

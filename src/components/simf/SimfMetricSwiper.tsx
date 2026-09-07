@@ -3,6 +3,7 @@
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useEffect, useRef } from "react";
 import type { Locale, MetricRailSection } from "@/content/types";
+import { formatMetricValue } from "./formatMetricValue";
 
 export function SimfMetricSwiper({
   autoPlay = false,
@@ -60,7 +61,7 @@ export function SimfMetricSwiper({
                 ar && /[\u0600-\u06ff]/.test(metric.value) ? "rtl" : "ltr"
               }
             >
-              {metric.value}
+              {formatMetricValue(locale, metric.value)}
             </strong>
             <span>{metric.label}</span>
           </div>

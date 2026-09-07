@@ -35,6 +35,7 @@ import { SimfHeader } from "./SimfHeader";
 import { SimfMetricSwiper } from "./SimfMetricSwiper";
 import { SimfCountdown } from "./SimfCountdown";
 import { SimfFooter } from "./SimfFooter";
+import { formatMetricValue } from "./formatMetricValue";
 import { SimfSpeakerRail } from "./SimfSpeakerRail";
 import { SimfStickySponsor } from "./SimfStickySponsor";
 
@@ -232,7 +233,7 @@ function Landing({
             <SectionHead body={legacy.body} eyebrow={legacy.eyebrow} heading={legacy.heading} />
             <div className="simf-legacy__metrics">
               {legacy.metrics.map((metric) => (
-                <div key={metric.label}><strong dir="ltr">{metric.value}</strong><span>{metric.label}</span></div>
+                <div key={metric.label}><strong dir="ltr">{formatMetricValue(locale, metric.value)}</strong><span>{metric.label}</span></div>
               ))}
             </div>
             {legacy.editions.some((edition) => edition.visible !== false) ? (

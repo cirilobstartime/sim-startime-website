@@ -35,6 +35,7 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
       !link.href.replace(/\/+$/, "").endsWith("/about") &&
       !link.href.includes("#about"),
   );
+  const copyrightParts = (footer?.copyright || "").split(/(Startime|ستارتايم)/gi);
   return (
     <footer className="simf-footer">
       <div className="simf-shell simf-footer__grid">
@@ -110,7 +111,22 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
         </div>
       </div>
       <div className="simf-shell simf-footer__bottom">
-        <p>{footer?.copyright}</p>
+        <p>
+          {copyrightParts.map((part, index) =>
+            /^(Startime|ستارتايم)$/i.test(part) ? (
+              <Link
+                href="https://startime.sa"
+                key={`${part}-${index}`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {part}
+              </Link>
+            ) : (
+              part
+            ),
+          )}
+        </p>
         <div>
           <Link href={footer?.privacyHref || "https://startime.sa/privacy-policy"}>
             {footer?.privacyLabel || (ar ? "سياسة الخصوصية" : "Privacy Policy")}

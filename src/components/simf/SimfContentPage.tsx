@@ -48,6 +48,7 @@ import { standardPageSchema } from "@/lib/structuredData";
 import { CmsImage, getMediaURL } from "../CmsImage";
 import { LeadForm } from "../LeadForm";
 import { SimfFooter } from "./SimfFooter";
+import { formatMetricValue } from "./formatMetricValue";
 import { SimfHeader } from "./SimfHeader";
 import { SimfContentMotion } from "./SimfContentMotion";
 import { SimfPartnerRail } from "./SimfPartnerRail";
@@ -503,7 +504,7 @@ function MediaSection({
   );
 }
 
-function Metrics({ section }: { section: MetricRailSection }) {
+function Metrics({ locale, section }: { locale: Locale; section: MetricRailSection }) {
   const visual = appearance(section);
   return (
     <section
@@ -516,7 +517,7 @@ function Metrics({ section }: { section: MetricRailSection }) {
         <div className="simf-content-metrics__rail">
           {section.metrics.map((metric) => (
             <div key={`${metric.value}-${metric.label}`}>
-              <strong dir="ltr">{metric.value}</strong>
+              <strong dir="ltr">{formatMetricValue(locale, metric.value)}</strong>
               <span>{metric.label}</span>
             </div>
           ))}
@@ -824,7 +825,7 @@ export function SimfContentPage({
             );
           }
           if (section.blockType === "metricRail") {
-            return <Metrics key={section.id || section.anchorID} section={section} />;
+            return <Metrics key={section.id || section.anchorID} locale={locale} section={section} />;
           }
           if (section.blockType === "timeline") {
             return <ValueTimeline key={section.id || section.anchorID} section={section} />;
