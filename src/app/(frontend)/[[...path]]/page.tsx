@@ -208,6 +208,25 @@ function resolveRoute(path?: string[]) {
   };
 }
 
+const retiredUpdateRedirects: Record<string, string> = {
+  "/updates/preparatory-activities-fourth-simf-november-2026":
+    "/updates/preparatory-activities-simf-2026",
+  "/ar/updates/preparatory-activities-fourth-simf-november-2026":
+    "/ar/updates/preparatory-activities-simf-2026",
+  "/updates/startime-signs-contract-organize-fourth-simf":
+    "/updates/startime-organizing-contract-simf-2026",
+  "/ar/updates/startime-signs-contract-organize-fourth-simf":
+    "/ar/updates/startime-organizing-contract-simf-2026",
+  "/updates/future-seabed-security-maritime-supply-chains":
+    "/updates/seabed-security-supply-chains-simf-2026",
+  "/ar/updates/future-seabed-security-maritime-supply-chains":
+    "/ar/updates/seabed-security-supply-chains-simf-2026",
+  "/updates/saudi-arabia-a-pivotal-forc-in-safeguarding-global-maritime-security":
+    "/updates/saudi-arabia-global-maritime-security",
+  "/ar/updates/saudi-arabia-a-pivota-force-in-securing-strategic-maritime-corridors-and-safeguarding-seabed-security":
+    "/ar/updates/saudi-arabia-global-maritime-security",
+};
+
 function mediaURL(media?: MediaValue): string | undefined {
   if (!media) return undefined;
   return typeof media === "string" ? media : media.url || undefined;
@@ -449,17 +468,16 @@ export default async function PublicPage({ params }: PageProps) {
   }
   const route = resolveRoute(path);
   const oldPath = `/${path?.join("/") || ""}`;
+  const retiredUpdateTarget = retiredUpdateRedirects[oldPath];
+  if (retiredUpdateTarget) permanentRedirect(retiredUpdateTarget);
   const redirectTargetLocale: Locale =
     route.locale === "ar" && siteSettings.enableArabic ? "ar" : "en";
-  const shouldCheckRedirect = !route.valid;
+  const shouldCheckRedirect = !route.valid || Boolean(route.updateSlug);
   const destination = shouldCheckRedirect
     ? await getCMSRedirect(route.locale, oldPath, redirectTargetLocale)
     : null;
   if (destination) {
-    const target =
-      redirectTargetLocale === "ar"
-        ? `/ar/${destination.slug}`.replace(/\/+$/, "")
-        : `/${destination.slug}`.replace(/\/+$/, "") || "/";
+    const target = destination.path;
     const normalizedSource = oldPath.replace(/\/+$/, "") || "/";
     if (target !== normalizedSource) {
       if (destination.permanent) permanentRedirect(target);

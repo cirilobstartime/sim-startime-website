@@ -627,6 +627,8 @@ function landingSections(locale: Locale): PageSection[] {
     heading: ar
       ? "إرث متنامٍ من الحوار والتعاون البحري"
       : "A Growing Legacy of Maritime Dialogue and Cooperation",
+    ctaHref: "/programme",
+    ctaLabel: ar ? "استكشف البرنامج" : "Explore the Programme",
     metrics: ar
       ? [
           { value: "40+", label: "دولة مشاركة" },

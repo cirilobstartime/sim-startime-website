@@ -51,6 +51,21 @@ function normalizeLegacyArticleContent(doc: Record<string, unknown>) {
   };
 }
 
+function addAutomaticPublicationDate(
+  doc: Record<string, unknown>,
+  originalDoc?: Record<string, unknown>,
+) {
+  const status = doc._status ?? originalDoc?._status;
+  const publishedAt = doc.publishedAt ?? originalDoc?.publishedAt;
+  if (status === "published" && !publishedAt) {
+    return {
+      ...doc,
+      publishedAt: new Date().toISOString(),
+    };
+  }
+  return doc;
+}
+
 export const Updates: CollectionConfig = {
   slug: "updates",
   admin: {
@@ -81,6 +96,7 @@ export const Updates: CollectionConfig = {
   },
   hooks: {
     afterRead: [({ doc }) => normalizeLegacyArticleContent(doc)],
+    beforeChange: [({ data, originalDoc }) => addAutomaticPublicationDate(data, originalDoc)],
     beforeValidate: [({ data }) => data ? normalizeLegacyArticleContent(data) : data],
   },
   fields: [
@@ -106,13 +122,19 @@ export const Updates: CollectionConfig = {
               name: "summary",
               type: "textarea",
               localized: true,
-              required: true,
+              admin: {
+                description:
+                  "Optional card and SEO summary. When empty, the website automatically uses the opening text from the article content.",
+              },
             },
             {
               name: "intro",
               type: "textarea",
               localized: true,
-              required: true,
+              admin: {
+                description:
+                  "Optional introduction beneath the article title. When empty, the website automatically uses the opening text from the article content.",
+              },
             },
             {
               name: "featuredImage",
@@ -274,17 +296,17 @@ export const Updates: CollectionConfig = {
               name: "publicationLabel",
               type: "text",
               localized: true,
-              required: true,
               admin: {
                 description:
-                  "Reader-facing publisher and date line, for example “Startime | 18 September 2026”.",
+                  "Optional custom publisher/date line. When empty, the website automatically generates a localized Saudi International Maritime Forum label from the publish date.",
               },
             },
             {
               name: "publishedAt",
               type: "date",
-              required: true,
               admin: {
+                description:
+                  "Optional override. When empty, the current date is assigned automatically when the update is published.",
                 date: { pickerAppearance: "dayOnly" },
               },
             },

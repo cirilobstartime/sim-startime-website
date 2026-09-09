@@ -102,6 +102,7 @@ export function SimfHomepageOption({
   const audience = section<CardGridSection>(page, "audience");
   const sponsorship = section<CallToActionSection>(page, "sponsorship");
   const speakers = section<CardGridSection>(page, "speakers");
+  const speakersCTA = speakers?.buttons?.[0];
   const partners = section<CardGridSection>(page, "partners");
   const footer = section<SimfFooterSection>(page, "footer");
   const homeHref = localePath(locale);
@@ -319,16 +320,16 @@ export function SimfHomepageOption({
                 <ConceptButton
                   href={localePath(
                     locale,
-                    aboutPage ? "/programme" : "/legacy",
+                    legacy.ctaHref || (aboutPage ? "/programme" : "/legacy"),
                   )}
                   label={
-                    aboutPage
+                    legacy.ctaLabel || (aboutPage
                       ? ar
                         ? "استكشف البرنامج"
                         : "Explore the Programme"
                       : ar
                         ? "استكشف إرث الملتقى"
-                        : "Explore the SIMF Legacy"
+                        : "Explore the SIMF Legacy")
                   }
                   style="text"
                   trackingID="simf-option-legacy"
@@ -457,10 +458,15 @@ export function SimfHomepageOption({
             <SimfSpeakerRail
               action={
                 <ConceptButton
-                  href={localePath(locale, "/speakers")}
-                  label={ar ? "استعرض جميع المشاركين" : "Explore All Participants"}
+                  href={
+                    speakersCTA?.href || localePath(locale, "/speakers")
+                  }
+                  label={
+                    speakersCTA?.label ||
+                    (ar ? "استعرض جميع المشاركين" : "Explore All Participants")
+                  }
                   style="outline"
-                  trackingID="simf-option-speakers"
+                  trackingID={speakersCTA?.trackingID || "simf-option-speakers"}
                 />
               }
               locale={locale}

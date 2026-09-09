@@ -10,6 +10,22 @@ export const LegacyBlock: Block = {
     { name: "heading", type: "textarea", required: true },
     { name: "body", type: "textarea" },
     {
+      name: "ctaLabel",
+      label: "Call-to-action label",
+      type: "text",
+      admin: {
+        description: "Button text displayed beside the legacy statistics.",
+      },
+    },
+    {
+      name: "ctaHref",
+      label: "Call-to-action link",
+      type: "text",
+      admin: {
+        description: "Internal path or full URL, for example /programme.",
+      },
+    },
+    {
       name: "metrics",
       type: "array",
       minRows: 1,

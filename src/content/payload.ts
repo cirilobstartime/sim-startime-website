@@ -124,23 +124,89 @@ async function fetchPage(
   }
 }
 
-function normalizeUpdate(value: unknown): PublicUpdate | null {
+function plainText(value: unknown): string {
+  if (!value) return "";
+  if (typeof value === "string") return value.trim();
+  if (Array.isArray(value)) return value.map(plainText).filter(Boolean).join(" ");
+  if (typeof value !== "object") return "";
+
+  const node = value as Record<string, unknown>;
+  if (typeof node.text === "string") return node.text.trim();
+  return plainText(node.children);
+}
+
+function truncateAtWord(value: string, maxLength: number): string {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  if (normalized.length <= maxLength) return normalized;
+  const shortened = normalized.slice(0, maxLength + 1);
+  const lastSpace = shortened.lastIndexOf(" ");
+  return `${shortened.slice(0, lastSpace > maxLength * 0.7 ? lastSpace : maxLength).trim()}…`;
+}
+
+function articleOpening(update: PublicUpdate): string {
+  for (const item of Array.isArray(update.content) ? update.content : []) {
+    const body = plainText(item.richBody || item.body);
+    if (body) return body;
+  }
+  return "";
+}
+
+function automaticPublicationLabel(locale: Locale, publishedAt: string): string {
+  const date = new Intl.DateTimeFormat(
+    locale === "ar" ? "ar-SA-u-nu-latn" : "en-GB",
+    {
+      day: "numeric",
+      month: "long",
+      timeZone: "UTC",
+      year: "numeric",
+    },
+  ).format(new Date(publishedAt));
+  const publisher =
+    locale === "ar"
+      ? "الملتقى البحري السعودي الدولي"
+      : "Saudi International Maritime Forum";
+  return `${publisher} | ${date}`;
+}
+
+function normalizeUpdate(value: unknown, locale: Locale): PublicUpdate | null {
   if (!value || typeof value !== "object") return null;
-  const update = value as PublicUpdate & { visible?: boolean | null };
+  const update = value as PublicUpdate & {
+    createdAt?: string | null;
+    updatedAt?: string | null;
+    visible?: boolean | null;
+  };
+  const publishedAt = update.publishedAt || update.createdAt || update.updatedAt;
   if (
     update.visible === false ||
     !update.title ||
     !update.slug ||
-    !update.summary ||
-    !update.publishedAt
+    !publishedAt
   ) {
     return null;
   }
+  const content = Array.isArray(update.content)
+    ? update.content.filter((item) => item.visible !== false)
+    : [];
+  const opening = articleOpening({ ...update, content });
+  const summary =
+    update.summary?.trim() ||
+    truncateAtWord(opening, 220) ||
+    update.intro?.trim() ||
+    update.title;
+  const intro =
+    update.intro?.trim() ||
+    truncateAtWord(opening, 360) ||
+    update.summary?.trim() ||
+    null;
   return {
     ...update,
-    content: Array.isArray(update.content)
-      ? update.content.filter((item) => item.visible !== false)
-      : [],
+    content,
+    intro,
+    publicationLabel:
+      update.publicationLabel?.trim() ||
+      automaticPublicationLabel(locale, publishedAt),
+    publishedAt,
+    summary,
   };
 }
 
@@ -164,8 +230,12 @@ async function fetchUpdates(locale: Locale): Promise<PublicUpdate[]> {
       },
     });
     return result.docs
-      .map((item) => normalizeUpdate(item))
-      .filter((item): item is PublicUpdate => Boolean(item));
+      .map((item) => normalizeUpdate(item, locale))
+      .filter((item): item is PublicUpdate => Boolean(item))
+      .sort(
+        (a, b) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+      );
   } catch {
     return getSimfUpdates(locale);
   }
@@ -193,7 +263,7 @@ async function fetchUpdate(
         ],
       },
     });
-    return normalizeUpdate(result.docs[0]);
+    return normalizeUpdate(result.docs[0], locale);
   } catch {
     return (
       getSimfUpdates(locale).find((item) => item.slug === slug) || null
@@ -291,7 +361,7 @@ export async function getCMSRedirect(
   sourceLocale: Locale,
   fromPath: string,
   targetLocale: Locale = sourceLocale,
-): Promise<{ permanent: boolean; slug: string } | null> {
+): Promise<{ path: string; permanent: boolean } | null> {
   try {
     const payload = await getPayload({ config: configPromise });
     const localeRelativePath =
@@ -317,17 +387,20 @@ export async function getCMSRedirect(
         item.sourceLocale === sourceLocale &&
         candidatePaths.includes(item.fromPath),
     );
-    const target =
+    const targetPage =
       redirect?.targetPage && typeof redirect.targetPage === "object"
         ? redirect.targetPage
         : null;
-    if (!redirect || !target?.slug || target.visible === false) return null;
+    if (!redirect) return null;
+    if (!targetPage?.slug || targetPage.visible === false) return null;
+    const pageSlug =
+      targetPage.pageType === "simf-microsite-sponsor"
+        ? "sponsor"
+        : String(targetPage.pageType || "").replace("simf-microsite-", "");
+    const prefix = targetLocale === "ar" ? "/ar" : "";
     return {
+      path: `${prefix}/${pageSlug}`.replace(/\/+$/, "") || "/",
       permanent: redirect.permanent !== false,
-      slug:
-        target.pageType === "simf-microsite-sponsor"
-          ? "sponsor"
-          : String(target.pageType || "").replace("simf-microsite-", ""),
     };
   } catch (error) {
     console.error("Unable to resolve CMS redirect.", error);

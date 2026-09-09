@@ -389,7 +389,11 @@ function PartnerCategory({
     "co-sponsor": ar ? "راعٍ مشارك" : "Co-Sponsor",
     "hospitality-sponsor": ar ? "راعي الضيافة" : "Hospitality Sponsor",
     "official-carrier": ar ? "الناقل الرسمي" : "Official Carrier",
+    "official-contractor": ar ? "المقاول الرسمي" : "Official Contractor",
     "media-partner": ar ? "شريك إعلامي" : "Media Partner",
+    "marketing-partner": ar ? "شريك تسويقي" : "Marketing Partner",
+    "licensed-to": ar ? "الجهة المرخّص لها" : "Licensed To",
+    "advisory-arm": ar ? "الذراع الاستشاري" : "Advisory Arm",
     partner: ar ? "شريك" : "Partner",
   } as const;
   return (

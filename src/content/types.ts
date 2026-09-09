@@ -101,7 +101,11 @@ export type PartnerCategorySection = BaseSection & {
       | "co-sponsor"
       | "hospitality-sponsor"
       | "official-carrier"
+      | "official-contractor"
       | "media-partner"
+      | "marketing-partner"
+      | "licensed-to"
+      | "advisory-arm"
       | "partner"
       | null;
     visible?: boolean | null;
@@ -292,6 +296,8 @@ export type CountdownSection = BaseSection & {
 export type LegacySection = BaseSection & {
   blockType: "legacy";
   body?: string | null;
+  ctaHref?: string | null;
+  ctaLabel?: string | null;
   editions: Array<{
     date: string;
     href?: string | null;

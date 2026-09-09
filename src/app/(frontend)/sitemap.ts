@@ -67,6 +67,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
+    const updates = await payload.find({
+      collection: "updates",
+      depth: 0,
+      draft: false,
+      fallbackLocale: false,
+      limit: 100,
+      locale,
+      overrideAccess: true,
+      where: {
+        and: [
+          { visible: { equals: true } },
+          { _status: { equals: "published" } },
+          { "seo.includeInSitemap": { not_equals: false } },
+          { "seo.indexable": { not_equals: false } },
+        ],
+      },
+    });
+    for (const update of updates.docs) {
+      if (!update.slug) continue;
+      const suffix = `/updates/${update.slug}`;
+      const localizedPath = locale === "ar" ? `/ar${suffix}` : suffix;
+      entries.push({
+        alternates: {
+          languages: {
+            en: `${origin}${suffix}`,
+            ...(siteSettings.enableArabic
+              ? { ar: `${origin}/ar${suffix}` }
+              : {}),
+          },
+        },
+        changeFrequency: "monthly",
+        lastModified: update.updatedAt,
+        priority: update.featured ? 0.75 : 0.65,
+        url: `${origin}${localizedPath}`,
+      });
+    }
+
   }
   return entries;
 }

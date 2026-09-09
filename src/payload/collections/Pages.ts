@@ -212,7 +212,11 @@ export const Pages: CollectionConfig = {
                   name: "description",
                   type: "textarea",
                   localized: true,
-                  maxLength: 180,
+                  maxLength: 500,
+                  admin: {
+                    description:
+                      "Search engines usually display roughly 150–180 characters. Longer approved copy is allowed so existing English and Arabic content remains editable without truncation.",
+                  },
                 },
                 {
                   name: "openGraphImage",

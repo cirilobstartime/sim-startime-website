@@ -4062,11 +4062,35 @@ body:has(.simf-site) .cookie-consent .button--ghost {
   --footer-end: #36576e;
 }
 
+.simf-partner-category__footer-label--official-contractor {
+  --footer-start: #252a31;
+  --footer-mid: #9d7847;
+  --footer-end: #353c45;
+}
+
 .simf-partner-category__footer-label--media-partner,
 .simf-partner-category__footer-label--partner {
   --footer-start: #1f3c5c;
   --footer-mid: #5c8fbd;
   --footer-end: #294f79;
+}
+
+.simf-partner-category__footer-label--marketing-partner {
+  --footer-start: #0b4651;
+  --footer-mid: #2da3a4;
+  --footer-end: #123b54;
+}
+
+.simf-partner-category__footer-label--licensed-to {
+  --footer-start: #2f2459;
+  --footer-mid: #806bb3;
+  --footer-end: #263b70;
+}
+
+.simf-partner-category__footer-label--advisory-arm {
+  --footer-start: #553126;
+  --footer-mid: #b57b4d;
+  --footer-end: #443039;
 }
 
 @media (min-width: 801px) {

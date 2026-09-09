@@ -89,6 +89,10 @@ export const PartnerCategoryBlock: Block = {
             { label: "Co-Sponsor", value: "co-sponsor" },
             { label: "Hospitality Sponsor", value: "hospitality-sponsor" },
             { label: "Official Carrier", value: "official-carrier" },
+            { label: "Official Contractor", value: "official-contractor" },
+            { label: "Marketing Partner", value: "marketing-partner" },
+            { label: "Licensed To", value: "licensed-to" },
+            { label: "Advisory Arm", value: "advisory-arm" },
           ],
           admin: {
             description:

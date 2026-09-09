@@ -115,7 +115,7 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
           {copyrightParts.map((part, index) =>
             /^(Startime|ستارتايم)$/i.test(part) ? (
               <Link
-                href="https://startime.sa"
+                href={ar ? "https://startime.sa/ar" : "https://startime.sa"}
                 key={`${part}-${index}`}
                 rel="noopener noreferrer"
                 target="_blank"
