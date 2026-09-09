@@ -1,6 +1,7 @@
 import * as targetedSchemaUpdates from "./20260802_133500_targeted_schema_updates";
 import * as mediaTitles from "./20260831_120000_media_titles";
 import * as responsiveMedia from "./20260910_012000_responsive_media";
+import * as comingSoonMode from "./20260910_023000_coming_soon_mode";
 
 export const migrations = [
   {
@@ -17,5 +18,10 @@ export const migrations = [
     up: responsiveMedia.up,
     down: responsiveMedia.down,
     name: "20260910_012000_responsive_media",
+  },
+  {
+    up: comingSoonMode.up,
+    down: comingSoonMode.down,
+    name: "20260910_023000_coming_soon_mode",
   },
 ];

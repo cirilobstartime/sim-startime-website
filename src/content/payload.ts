@@ -14,6 +14,7 @@ import {
 import type {
   Locale,
   MarketingSettings,
+  MediaValue,
   PageSection,
   PublicPage,
   PublicUpdate,
@@ -335,15 +336,35 @@ async function fetchMarketing(locale: Locale): Promise<MarketingSettings> {
   }
 }
 
-async function fetchSiteSettings(): Promise<SiteSettings> {
+async function fetchSiteSettings(locale: Locale = "en"): Promise<SiteSettings> {
   try {
     const payload = await getPayload({ config: configPromise });
     const settings = await payload.findGlobal({
       slug: "site-settings",
       depth: 1,
+      fallbackLocale: false,
+      locale,
       overrideAccess: true,
     });
     return {
+      comingSoon: settings.comingSoon
+        ? {
+            backgroundImage: settings.comingSoon.backgroundImage as
+              | MediaValue
+              | undefined,
+            contactEmail: settings.comingSoon.contactEmail,
+            contactLabel: settings.comingSoon.contactLabel,
+            eventDate: settings.comingSoon.eventDate,
+            label: settings.comingSoon.label,
+            message: settings.comingSoon.message,
+            mobileBackgroundImage: settings.comingSoon.mobileBackgroundImage as
+              | MediaValue
+              | undefined,
+            title: settings.comingSoon.title,
+            venue: settings.comingSoon.venue,
+          }
+        : undefined,
+      comingSoonEnabled: settings.comingSoonEnabled === true,
       enableArabic: settings.enableArabic !== false,
       footerLogo: (settings.footerLogo || settings.headerLogo) as
         | SiteSettings["footerLogo"]
@@ -359,7 +380,7 @@ async function fetchSiteSettings(): Promise<SiteSettings> {
         | undefined,
     };
   } catch {
-    return { enableArabic: false };
+    return { comingSoonEnabled: false, enableArabic: false };
   }
 }
 

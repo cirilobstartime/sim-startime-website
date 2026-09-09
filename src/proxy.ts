@@ -16,6 +16,7 @@ export function proxy(request: NextRequest) {
     request.nextUrl.pathname === "/ar" ||
     request.nextUrl.pathname.startsWith("/ar/");
   requestHeaders.set("x-startime-locale", isArabic ? "ar" : "en");
+  requestHeaders.set("x-startime-pathname", request.nextUrl.pathname);
   requestHeaders.set("x-nonce", nonce);
   requestHeaders.set("Content-Security-Policy", contentSecurityPolicy);
   const response = NextResponse.next({ request: { headers: requestHeaders } });

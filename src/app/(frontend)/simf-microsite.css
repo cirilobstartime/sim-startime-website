@@ -18623,3 +18623,338 @@ body .simf-homepage-about .simf-option-hero__review-lead {
     linear-gradient(180deg, rgba(5, 10, 23, 0.01), rgba(5, 10, 23, 0.6)),
     linear-gradient(270deg, rgba(5, 10, 23, 0.12), transparent 72%) !important;
 }
+
+/* CMS-controlled public holding page. The Content Studio and APIs do not use
+   this route, so editors retain full access while the public site is paused. */
+.simf-coming-soon {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #070b18;
+  color: #fff;
+  isolation: isolate;
+}
+
+.simf-coming-soon__media,
+.simf-coming-soon__media picture,
+.simf-coming-soon__veil,
+.simf-coming-soon__lines {
+  position: absolute;
+  inset: 0;
+}
+
+.simf-coming-soon__media img {
+  object-fit: cover;
+  object-position: center;
+  animation: simf-coming-soon-drift 18s ease-out both;
+}
+
+.simf-coming-soon__veil {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(5, 9, 23, 0.96) 0%, rgba(8, 15, 38, 0.84) 48%, rgba(8, 15, 38, 0.28) 100%),
+    linear-gradient(180deg, rgba(5, 9, 23, 0.28), rgba(5, 9, 23, 0.78));
+}
+
+[dir="rtl"].simf-coming-soon .simf-coming-soon__veil {
+  background:
+    linear-gradient(270deg, rgba(5, 9, 23, 0.96) 0%, rgba(8, 15, 38, 0.84) 48%, rgba(8, 15, 38, 0.28) 100%),
+    linear-gradient(180deg, rgba(5, 9, 23, 0.28), rgba(5, 9, 23, 0.78));
+}
+
+.simf-coming-soon__lines {
+  z-index: 2;
+  opacity: 0.42;
+  background:
+    linear-gradient(90deg, transparent 0 8%, rgba(255, 255, 255, 0.07) 8% calc(8% + 1px), transparent calc(8% + 1px) 92%, rgba(255, 255, 255, 0.07) 92% calc(92% + 1px), transparent calc(92% + 1px)),
+    linear-gradient(180deg, transparent 0 16%, rgba(255, 255, 255, 0.06) 16% calc(16% + 1px), transparent calc(16% + 1px) 84%, rgba(255, 255, 255, 0.06) 84% calc(84% + 1px), transparent calc(84% + 1px));
+  pointer-events: none;
+}
+
+.simf-coming-soon__frame {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  width: min(1500px, calc(100% - 96px));
+  min-height: 100svh;
+  margin-inline: auto;
+  grid-template-rows: auto 1fr auto;
+  padding-block: 34px 28px;
+}
+
+.simf-coming-soon__header {
+  display: flex;
+  min-height: 74px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.simf-coming-soon__header > a:first-child {
+  display: inline-flex;
+  align-items: center;
+}
+
+.simf-coming-soon__header > a:first-child > img {
+  width: 74px;
+  height: 74px;
+  object-fit: contain;
+}
+
+.simf-coming-soon__cms-logo {
+  position: relative;
+  display: block;
+  width: clamp(142px, 13vw, 188px);
+  height: 74px;
+}
+
+.simf-coming-soon__cms-logo picture {
+  position: absolute;
+  inset: 0;
+}
+
+.simf-coming-soon__cms-logo img {
+  object-fit: contain;
+  object-position: left center;
+}
+
+[dir="rtl"].simf-coming-soon .simf-coming-soon__cms-logo img {
+  object-position: right center;
+}
+
+.simf-coming-soon__locale {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+
+.simf-coming-soon__locale:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.simf-coming-soon__content {
+  display: flex;
+  width: min(760px, 68vw);
+  align-self: center;
+  flex-direction: column;
+  padding-block: 50px;
+}
+
+.simf-coming-soon__label {
+  margin: 0 0 22px;
+  color: #c7d0e6;
+  font-size: 12px;
+  font-weight: 720;
+  letter-spacing: 0.2em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.simf-coming-soon h1 {
+  max-width: 13ch;
+  margin: 0;
+  font-size: clamp(48px, 5.8vw, 88px);
+  font-weight: 570;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+[dir="rtl"].simf-coming-soon h1 {
+  max-width: 15ch;
+  font-size: clamp(46px, 5.2vw, 78px);
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+}
+
+.simf-coming-soon__message {
+  max-width: 650px;
+  margin: 30px 0 0;
+  color: rgba(238, 243, 255, 0.76);
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.7;
+}
+
+.simf-coming-soon__event {
+  display: flex;
+  max-width: 760px;
+  margin-top: 42px;
+  border-block: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.simf-coming-soon__event > div {
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  gap: 13px;
+  padding: 18px 28px 18px 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.simf-coming-soon__event > div + div {
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.18);
+  padding-inline-start: 28px;
+}
+
+[dir="rtl"].simf-coming-soon .simf-coming-soon__event > div {
+  padding: 18px 0 18px 28px;
+}
+
+[dir="rtl"].simf-coming-soon .simf-coming-soon__event > div + div {
+  padding-inline-start: 28px;
+}
+
+.simf-coming-soon__event svg,
+.simf-coming-soon__contact svg {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 auto;
+}
+
+.simf-coming-soon__contact {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 52px;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding: 14px 19px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  backdrop-filter: blur(12px);
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.simf-coming-soon__contact:hover {
+  border-color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.simf-coming-soon__contact svg:last-child {
+  width: 17px;
+  height: 17px;
+  margin-inline-start: 10px;
+}
+
+[dir="rtl"].simf-coming-soon .simf-coming-soon__contact svg:last-child {
+  transform: scaleX(-1);
+}
+
+.simf-coming-soon__footer {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.simf-coming-soon__footer > span:nth-child(2) {
+  width: min(160px, 14vw);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+@keyframes simf-coming-soon-drift {
+  from { transform: scale(1.035); }
+  to { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .simf-coming-soon__media img {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .simf-coming-soon__frame {
+    width: min(100% - 40px, 620px);
+    padding-block: 22px 20px;
+  }
+
+  .simf-coming-soon__header {
+    min-height: 60px;
+  }
+
+  .simf-coming-soon__header > a:first-child > img {
+    width: 58px;
+    height: 58px;
+  }
+
+  .simf-coming-soon__cms-logo {
+    width: 136px;
+    height: 58px;
+  }
+
+  .simf-coming-soon__locale {
+    width: 42px;
+    height: 42px;
+  }
+
+  .simf-coming-soon__content {
+    width: 100%;
+    padding-block: 42px 34px;
+  }
+
+  .simf-coming-soon__label {
+    margin-bottom: 18px;
+    font-size: 10px;
+    letter-spacing: 0.17em;
+  }
+
+  .simf-coming-soon h1,
+  [dir="rtl"].simf-coming-soon h1 {
+    max-width: 12ch;
+    font-size: clamp(41px, 12vw, 58px);
+  }
+
+  .simf-coming-soon__message {
+    margin-top: 24px;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .simf-coming-soon__event {
+    flex-direction: column;
+    margin-top: 32px;
+  }
+
+  .simf-coming-soon__event > div,
+  [dir="rtl"].simf-coming-soon .simf-coming-soon__event > div {
+    min-height: 60px;
+    padding: 14px 0;
+  }
+
+  .simf-coming-soon__event > div + div,
+  [dir="rtl"].simf-coming-soon .simf-coming-soon__event > div + div {
+    border-block-start: 1px solid rgba(255, 255, 255, 0.18);
+    border-inline-start: 0;
+    padding-inline-start: 0;
+  }
+
+  .simf-coming-soon__footer {
+    gap: 10px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .simf-coming-soon__footer > span:nth-child(2) {
+    width: 40px;
+  }
+}

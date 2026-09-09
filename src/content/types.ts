@@ -395,6 +395,18 @@ export type PageSection =
   | UpdateIndexSection;
 
 export type SiteSettings = {
+  comingSoon?: {
+    backgroundImage?: MediaValue;
+    contactEmail?: string | null;
+    contactLabel?: string | null;
+    eventDate?: string | null;
+    label?: string | null;
+    message?: string | null;
+    mobileBackgroundImage?: MediaValue;
+    title?: string | null;
+    venue?: string | null;
+  } | null;
+  comingSoonEnabled: boolean;
   enableArabic: boolean;
   footerLogo?: MediaValue;
   headerLogo?: MediaValue;

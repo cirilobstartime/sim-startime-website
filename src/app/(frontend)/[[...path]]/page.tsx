@@ -4,6 +4,7 @@ import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { SimfMicrosite } from "@/components/simf/SimfMicrosite";
 import { SimfContentPage } from "@/components/simf/SimfContentPage";
 import { SimfHomepageOption } from "@/components/simf/SimfHomepageOption";
+import { SimfComingSoon } from "@/components/simf/SimfComingSoon";
 import {
   SimfUpdateArticle,
   SimfUpdatesArchive,
@@ -149,6 +150,8 @@ function resolveRoute(path?: string[]) {
       ? (publicContentKey as SimfContentPageKey)
       : undefined;
   const sponsor = segments.length === 1 && segments[0] === "sponsor";
+  const comingSoon =
+    segments.length === 1 && segments[0] === "coming-soon";
   const valid =
     segments.length === 0 ||
     about ||
@@ -156,6 +159,7 @@ function resolveRoute(path?: string[]) {
     updatesArchive ||
     Boolean(updateSlug) ||
     sponsor ||
+    comingSoon ||
     Boolean(contentKey);
   const pageType = about
     ? ("simf-microsite-about" as const)
@@ -202,6 +206,7 @@ function resolveRoute(path?: string[]) {
     contentKey,
     about,
     homepageReview,
+    comingSoon,
     updateSlug,
     updatesArchive,
     valid,
@@ -278,7 +283,20 @@ export async function generateMetadata({
       robots: { follow: false, index: false },
     };
   }
-  const siteSettings = await getSiteSettings();
+  const siteSettings = await getSiteSettings("en");
+  if (route.comingSoon) {
+    const title =
+      siteSettings.comingSoon?.title ||
+      "Coming Soon | Saudi International Maritime Forum 2026";
+    const description =
+      siteSettings.comingSoon?.message ||
+      "A new digital experience for the Saudi International Maritime Forum 2026 is coming soon.";
+    return {
+      title,
+      description,
+      robots: { follow: true, index: false },
+    };
+  }
   if (route.locale === "ar" && !siteSettings.enableArabic) {
     return {
       title: "Page Not Found | Saudi International Maritime Forum 2026",
@@ -449,7 +467,21 @@ export default async function PublicPage({ params }: PageProps) {
   if (path?.[0] === "en") {
     permanentRedirect(path.length > 1 ? `/${path.slice(1).join("/")}` : "/");
   }
-  const siteSettings = await getSiteSettings();
+  const siteSettings = await getSiteSettings("en");
+  const isComingSoonPath =
+    (path?.length === 1 && path[0] === "coming-soon") ||
+    (path?.length === 2 && path[0] === "ar" && path[1] === "coming-soon");
+  if (siteSettings.comingSoonEnabled && !isComingSoonPath) {
+    redirect("/coming-soon");
+  }
+
+  if (isComingSoonPath) {
+    if (path?.[0] === "ar") {
+      redirect("/coming-soon");
+    }
+    return <SimfComingSoon settings={siteSettings} />;
+  }
+
   if (path?.[0] === "ar" && !siteSettings.enableArabic) {
     permanentRedirect(
       path.length === 2 && path[1] === "contact" ? "/contact" : "/",

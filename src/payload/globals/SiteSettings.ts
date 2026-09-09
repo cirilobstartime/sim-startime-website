@@ -73,5 +73,97 @@ export const SiteSettings: GlobalConfig = {
           "When disabled, Arabic pages and the AR language switch are hidden. Re-enable this to restore the switch and every Arabic page that is individually visible and published.",
       },
     },
+    {
+      type: "collapsible",
+      label: "Coming soon mode",
+      admin: {
+        initCollapsed: false,
+      },
+      fields: [
+        {
+          name: "comingSoonEnabled",
+          label: "Enable coming soon mode",
+          type: "checkbox",
+          defaultValue: false,
+          admin: {
+            description:
+              "When enabled, every public website URL temporarily redirects to the coming soon page. The Content Studio, APIs, media, form submissions, and code deployments remain available. Turn this off to restore the full website immediately.",
+          },
+        },
+        {
+          name: "comingSoon",
+          label: "Coming soon page content",
+          type: "group",
+          fields: [
+            {
+              name: "label",
+              label: "Small heading",
+              type: "text",
+              admin: {
+                description:
+                  "Optional. Example: Saudi International Maritime Forum 2026.",
+              },
+            },
+            {
+              name: "title",
+              label: "Main heading",
+              type: "text",
+              admin: {
+                description:
+                  "Leave empty to use the built-in English or Arabic coming soon heading.",
+              },
+            },
+            {
+              name: "message",
+              label: "Supporting message",
+              type: "textarea",
+            },
+            {
+              name: "eventDate",
+              label: "Event date",
+              type: "text",
+            },
+            {
+              name: "venue",
+              label: "Venue",
+              type: "text",
+            },
+            {
+              name: "contactLabel",
+              label: "Contact link text",
+              type: "text",
+            },
+            {
+              name: "contactEmail",
+              label: "Contact email address",
+              type: "email",
+              defaultValue: "sim@startime.sa",
+            },
+            {
+              name: "backgroundImage",
+              label:
+                "Desktop background image — 1920 × 1080 px (2×: 3840 × 2160; 3×: 5760 × 3240)",
+              type: "upload",
+              relationTo: "media",
+              admin: {
+                description:
+                  "Optional full-screen background (16:9). Leave empty to use the built-in SIM maritime image. JPEG/PNG uploads become WebP automatically.",
+              },
+            },
+            {
+              name: "mobileBackgroundImage",
+              label:
+                "Optional mobile background — 1080 × 1920 px (2×: 2160 × 3840; 3×: 3240 × 5760)",
+              type: "upload",
+              relationTo: "media",
+              admin: {
+                description:
+                  "Optional phone-specific portrait image (9:16). Leave empty to use the desktop background. JPEG/PNG uploads become WebP automatically.",
+              },
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
