@@ -220,7 +220,6 @@ async function main() {
           collection: "updates",
           data: {
             category: localizedUpdate.category,
-            content: localizedUpdate.content,
             featured: false,
             slug: localizedUpdate.slug,
             title: localizedUpdate.title,
