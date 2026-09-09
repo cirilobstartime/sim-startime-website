@@ -203,9 +203,29 @@ async function main() {
     for (const update of allUpdates.docs) {
       if (retainedIDs.has(update.id)) continue;
       for (const locale of ["en", "ar"] as const) {
+        // Legacy updates can be missing one or more required localized values.
+        // Payload validates the complete localized document even for a narrow
+        // visibility change, so carry forward the current locale with English
+        // fallback while hiding it. This keeps legacy copy intact and makes
+        // the importer safe to rerun against older production data.
+        const localizedUpdate = await payload.findByID({
+          collection: "updates",
+          depth: 0,
+          fallbackLocale: "en",
+          id: update.id,
+          locale,
+          overrideAccess: true,
+        });
         await payload.update({
           collection: "updates",
-          data: { featured: false, visible: false },
+          data: {
+            category: localizedUpdate.category,
+            content: localizedUpdate.content,
+            featured: false,
+            slug: localizedUpdate.slug,
+            title: localizedUpdate.title,
+            visible: false,
+          },
           id: update.id,
           locale,
           overrideAccess: true,
