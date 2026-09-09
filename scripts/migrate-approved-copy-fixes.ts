@@ -79,10 +79,13 @@ try {
       setValue(section, "privacyNote", null, "Arabic contact duplicate privacy note");
     }
   }
-  if (apply && changes.length > contactChangeStart) {
+  if (
+    apply &&
+    (changes.length > contactChangeStart || contactPage._status !== "published")
+  ) {
     await payload.update({
       collection: "pages",
-      data: { sections: contactSections } as never,
+      data: { _status: "published", sections: contactSections } as never,
       draft: false,
       id: contactPage.id as number | string,
       locale: "ar",
@@ -121,10 +124,13 @@ try {
       setValue(card, "workplace", null, `${card.internalLabel} organization line`);
     }
   }
-  if (apply && changes.length > homeChangeStart) {
+  if (
+    apply &&
+    (changes.length > homeChangeStart || homePage._status !== "published")
+  ) {
     await payload.update({
       collection: "pages",
-      data: { sections: homeSections } as never,
+      data: { _status: "published", sections: homeSections } as never,
       draft: false,
       id: homePage.id as number | string,
       locale: "ar",
@@ -160,10 +166,13 @@ try {
       setValue(speaker, "workplace", null, `Speaker directory ${index + 1} organization`);
     }
   }
-  if (apply && changes.length > speakerChangeStart) {
+  if (
+    apply &&
+    (changes.length > speakerChangeStart || speakersPage._status !== "published")
+  ) {
     await payload.update({
       collection: "pages",
-      data: { sections: speakerSections } as never,
+      data: { _status: "published", sections: speakerSections } as never,
       draft: false,
       id: speakersPage.id as number | string,
       locale: "ar",
