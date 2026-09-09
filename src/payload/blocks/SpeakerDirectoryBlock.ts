@@ -77,6 +77,16 @@ export const SpeakerDirectoryBlock: Block = {
               "Portrait section image (3:4), framed from head to at least mid-torso. 2×/3× files are allowed; JPEG/PNG uploads become WebP automatically.",
           },
         },
+        {
+          name: "mobilePortrait",
+          label: "Optional mobile speaker portrait — 900 × 1200 px (2×: 1800 × 2400; 3×: 2700 × 3600)",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            description:
+              "Optional phone-specific portrait using the same 3:4 ratio. Leave empty to use the desktop portrait automatically. JPEG/PNG uploads become WebP automatically.",
+          },
+        },
       ],
     },
   ],

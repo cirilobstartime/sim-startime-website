@@ -1489,7 +1489,7 @@ function partnersSections(locale: Locale): PageSection[] {
         : "Organizations supporting the Forum’s institutional and strategic framework.",
       layout: "columns",
       cards: cardsForRoles(
-        ar ? "الجهة المرخّص لها" : "Licensed to",
+        ar ? "مرخص لـ" : "Licensed to",
         ar ? "الشريك الاستراتيجي" : "Strategic Partner",
       ),
     },
@@ -1504,7 +1504,7 @@ function partnersSections(locale: Locale): PageSection[] {
         ? "الرعاة المعتمدون الذين يدعمون حضور الملتقى وتأثيره."
         : "Confirmed sponsors supporting the Forum’s reach and impact.",
       layout: "columns",
-      cards: cardsForRoles(ar ? "راعٍ ذهبي" : "Gold Sponsor"),
+      cards: cardsForRoles(ar ? "الراعي الذهبي" : "Gold Sponsor"),
     },
     {
       ...approved,
@@ -1517,7 +1517,7 @@ function partnersSections(locale: Locale): PageSection[] {
         ? "منصات متخصصة تدعم التغطية المهنية وانتشار معرفة الملتقى."
         : "Specialist platforms supporting professional coverage and wider awareness.",
       layout: "columns",
-      cards: cardsForRoles(ar ? "شريك إعلامي" : "Media Partner"),
+      cards: cardsForRoles(ar ? "الشريك الإعلامي" : "Media Partner"),
     },
     {
       ...approved,

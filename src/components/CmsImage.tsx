@@ -5,6 +5,7 @@ type CmsImageProps = {
   alt?: string;
   className?: string;
   media?: MediaValue;
+  mobileMedia?: MediaValue;
   priority?: boolean;
   sizes?: string;
   title?: string;
@@ -52,25 +53,30 @@ export function CmsImage({
   alt,
   className,
   media,
+  mobileMedia,
   priority = false,
   sizes = "100vw",
   title,
 }: CmsImageProps) {
   const src = getMediaURL(media);
+  const mobileSrc = getMediaURL(mobileMedia);
 
   if (!src) return null;
 
   return (
-    <Image
-      alt={alt || getMediaAlt(media)}
-      className={className}
-      fill
-      loading={priority ? "eager" : undefined}
-      priority={priority}
-      sizes={sizes}
-      src={src}
-      title={title || getMediaTitle(media, alt) || undefined}
-      unoptimized={src.endsWith(".svg")}
-    />
+    <picture>
+      {mobileSrc ? <source media="(max-width: 767px)" srcSet={mobileSrc} /> : null}
+      <Image
+        alt={alt || getMediaAlt(media)}
+        className={className}
+        fill
+        loading={priority ? "eager" : undefined}
+        priority={priority}
+        sizes={sizes}
+        src={src}
+        title={title || getMediaTitle(media, alt) || undefined}
+        unoptimized={src.endsWith(".svg")}
+      />
+    </picture>
   );
 }

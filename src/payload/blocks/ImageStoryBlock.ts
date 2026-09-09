@@ -29,6 +29,16 @@ export const ImageStoryBlock: Block = {
               "Editorial section image (4:3). Higher-resolution 2×/3× files are allowed; JPEG/PNG uploads become WebP automatically.",
           },
         },
+        {
+          name: "mobileMedia",
+          label: "Optional mobile image-story image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            description:
+              "Optional portrait image for phones (4:5). Leave empty to use the desktop image automatically. JPEG/PNG uploads become WebP automatically.",
+          },
+        },
         { name: "caption", type: "text" },
       ],
     },

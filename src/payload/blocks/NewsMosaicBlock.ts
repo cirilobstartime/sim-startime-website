@@ -56,6 +56,16 @@ export const NewsMosaicBlock: Block = {
               "News/mosaic section image (3:2). Keep the main subject near center; JPEG/PNG uploads become WebP automatically.",
           },
         },
+        {
+          name: "mobileMedia",
+          label: "Optional mobile news image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            description:
+              "Optional portrait news image for phones (4:5). Leave empty to use the desktop news image automatically. JPEG/PNG uploads become WebP automatically.",
+          },
+        },
         { name: "href", type: "text" },
       ],
     },

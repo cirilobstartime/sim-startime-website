@@ -57,6 +57,7 @@ export type CardGridSection = BaseSection & {
     id?: string | null;
     internalLabel?: string | null;
     media?: MediaValue;
+    mobileMedia?: MediaValue;
     meta?: string | null;
     title: string;
     visible?: boolean | null;
@@ -86,6 +87,7 @@ export type PartnerCategorySection = BaseSection & {
     href?: string | null;
     id?: string | null;
     logo: MediaValue;
+    mobileLogo?: MediaValue;
     name: string;
     openInNewTab?: boolean | null;
     tier?:
@@ -123,6 +125,7 @@ export type SpeakerDirectorySection = BaseSection & {
     id?: string | null;
     name: string;
     portrait: MediaValue;
+    mobilePortrait?: MediaValue;
     role?: string | null;
     visible?: boolean | null;
     workplace?: string | null;
@@ -140,6 +143,7 @@ export type TimelineSection = BaseSection & {
     id?: string | null;
     label?: string | null;
     media?: MediaValue;
+    mobileMedia?: MediaValue;
     title: string;
     visible?: boolean | null;
   }>;
@@ -152,6 +156,7 @@ export type CallToActionSection = BaseSection & {
   eyebrow?: string | null;
   heading: string;
   media?: MediaValue;
+  mobileMedia?: MediaValue;
 };
 
 export type FormDefinition = {
@@ -235,6 +240,7 @@ export type MediaFeatureSection = BaseSection & {
   eyebrow?: string | null;
   heading: string;
   media?: MediaValue;
+  mobileMedia?: MediaValue;
   mediaPosition?: "start" | "end" | "background" | null;
   theme?: "dark" | "light" | null;
 };
@@ -246,7 +252,7 @@ export type ImageStorySection = BaseSection & {
   ctaLabel?: string | null;
   eyebrow?: string | null;
   heading: string;
-  images: Array<{ caption?: string | null; media: MediaValue }>;
+  images: Array<{ caption?: string | null; media: MediaValue; mobileMedia?: MediaValue }>;
 };
 
 export type NewsMosaicSection = BaseSection & {
@@ -255,6 +261,7 @@ export type NewsMosaicSection = BaseSection & {
     href?: string | null;
     kicker?: string | null;
     media: MediaValue;
+    mobileMedia?: MediaValue;
     summary?: string | null;
     title: string;
   }>;
@@ -275,6 +282,7 @@ export type VideoFeatureSection = BaseSection & {
   eyebrow?: string | null;
   heading: string;
   poster?: MediaValue;
+  mobilePoster?: MediaValue;
   video?: MediaValue;
   videoSource?: "upload" | "youtube" | null;
   youtubeURL?: string | null;
@@ -303,6 +311,7 @@ export type LegacySection = BaseSection & {
     href?: string | null;
     location: string;
     media?: MediaValue;
+    mobileMedia?: MediaValue;
     title: string;
     visible?: boolean | null;
     year: string;
@@ -331,6 +340,7 @@ export type SimfFooterSection = BaseSection & {
   importantLinks?: Array<{ href: string; label: string }> | null;
   linksHeading?: string | null;
   logo?: MediaValue;
+  mobileLogo?: MediaValue;
   logoAlt?: string | null;
   phone: string;
   privacyHref?: string | null;
@@ -346,6 +356,7 @@ export type SimfHeaderSection = BaseSection & {
   languageSwitchLabel: string;
   links: Array<{ href: string; label: string }>;
   logo?: MediaValue;
+  mobileLogo?: MediaValue;
   logoAlt: string;
   menuCloseLabel: string;
   menuOpenLabel: string;
@@ -387,6 +398,8 @@ export type SiteSettings = {
   enableArabic: boolean;
   footerLogo?: MediaValue;
   headerLogo?: MediaValue;
+  mobileFooterLogo?: MediaValue;
+  mobileHeaderLogo?: MediaValue;
 };
 
 export type PublicPage = {
@@ -415,6 +428,7 @@ export type PublicUpdate = {
     heading?: string | null;
     highlight?: boolean | null;
     media?: MediaValue;
+    mobileMedia?: MediaValue;
     mediaAlt?: string | null;
     mediaCaption?: string | null;
     richBody?: RichTextValue | null;
@@ -422,6 +436,7 @@ export type PublicUpdate = {
   }>;
   featured?: boolean | null;
   featuredImage: MediaValue;
+  mobileFeaturedImage?: MediaValue;
   featuredImageCaption?: string | null;
   intro?: string | null;
   publishedAt: string;

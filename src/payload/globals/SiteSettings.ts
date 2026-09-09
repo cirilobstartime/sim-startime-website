@@ -32,6 +32,16 @@ export const SiteSettings: GlobalConfig = {
           },
         },
         {
+          name: "mobileHeaderLogo",
+          label: "Optional mobile header logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900)",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            description:
+              "Optional phone-specific shared header logo. Leave empty to use the desktop header logo automatically. JPEG/PNG uploads become WebP automatically.",
+          },
+        },
+        {
           name: "footerLogo",
           label: "Footer logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900)",
           type: "upload",
@@ -39,6 +49,16 @@ export const SiteSettings: GlobalConfig = {
           admin: {
             description:
               "Shared footer logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900). Use transparent artwork; leave empty to reuse the header logo. JPEG/PNG uploads become WebP automatically.",
+          },
+        },
+        {
+          name: "mobileFooterLogo",
+          label: "Optional mobile footer logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900)",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            description:
+              "Optional phone-specific shared footer logo. Leave empty to use the desktop footer logo automatically. JPEG/PNG uploads become WebP automatically.",
           },
         },
       ],

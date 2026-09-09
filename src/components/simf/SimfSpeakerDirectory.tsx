@@ -36,6 +36,7 @@ export function SimfSpeakerDirectory({
                 <CmsImage
                   alt={speaker.name}
                   media={speaker.portrait}
+                  mobileMedia={speaker.mobilePortrait}
                   sizes="(max-width: 720px) 82vw, (max-width: 1100px) 33vw, 24vw"
                 />
                 <SimfCountryFlag

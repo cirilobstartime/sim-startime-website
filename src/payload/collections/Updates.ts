@@ -148,6 +148,16 @@ export const Updates: CollectionConfig = {
               },
             },
             {
+              name: "mobileFeaturedImage",
+              label: "Optional mobile featured image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
+              type: "upload",
+              relationTo: "media",
+              admin: {
+                description:
+                  "Optional portrait article image for phones (4:5). Leave empty to use the desktop featured image automatically. JPEG/PNG uploads become WebP automatically.",
+              },
+            },
+            {
               name: "featuredImageCaption",
               type: "text",
               localized: true,
@@ -192,6 +202,16 @@ export const Updates: CollectionConfig = {
                   admin: {
                     description:
                       "Optional section image. Use a 16:9 landscape image; 2× or 3× files are allowed. JPEG/PNG uploads are converted to WebP automatically.",
+                  },
+                },
+                {
+                  name: "mobileMedia",
+                  label: "Optional mobile article section image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
+                  type: "upload",
+                  relationTo: "media",
+                  admin: {
+                    description:
+                      "Optional portrait section image for phones (4:5). Leave empty to use the desktop section image automatically. JPEG/PNG uploads become WebP automatically.",
                   },
                 },
                 {

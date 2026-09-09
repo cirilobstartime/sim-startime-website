@@ -138,6 +138,7 @@ export function SimfHomepageOption({
         locale={locale}
         logo={header?.logo}
         logoAlt={header?.logoAlt}
+        mobileLogo={header?.mobileLogo}
         menuCloseLabel={header?.menuCloseLabel}
         menuOpenLabel={header?.menuOpenLabel}
         nav={nav}
@@ -167,6 +168,7 @@ export function SimfHomepageOption({
               <CmsImage
                 alt=""
                 media={hero.media}
+                mobileMedia={hero.mobileMedia}
                 priority
                 sizes="100vw"
               />
@@ -272,6 +274,7 @@ export function SimfHomepageOption({
                         <CmsImage
                           alt={card.title}
                           media={card.media}
+                          mobileMedia={card.mobileMedia}
                           sizes="190px"
                         />
                       </div>
@@ -304,6 +307,7 @@ export function SimfHomepageOption({
                 <CmsImage
                   alt=""
                   media={about.media}
+                  mobileMedia={about.mobileMedia}
                   sizes="(max-width: 800px) 100vw, 52vw"
                 />
               </div>
@@ -373,6 +377,7 @@ export function SimfHomepageOption({
                   autoplay={experience.autoplay !== false}
                   locale={locale}
                   poster={experience.poster}
+                  mobilePoster={experience.mobilePoster}
                   video={experience.video}
                   youtubeURL={experience.youtubeURL}
                 />
@@ -381,6 +386,7 @@ export function SimfHomepageOption({
                   autoplay={experience.autoplay !== false}
                   locale={locale}
                   poster={experience.poster}
+                  mobilePoster={experience.mobilePoster}
                   video={experience.video}
                   youtubeURL={experience.youtubeURL}
                 />
@@ -412,6 +418,7 @@ export function SimfHomepageOption({
                             <CmsImage
                               alt=""
                               media={card.media}
+                              mobileMedia={card.mobileMedia}
                               sizes={
                                 index === 0
                                   ? "(max-width: 800px) 86vw, 40vw"
@@ -504,6 +511,7 @@ export function SimfHomepageOption({
                           <CmsImage
                             alt={card.title}
                             media={card.media}
+                            mobileMedia={card.mobileMedia}
                             sizes="220px"
                           />
                         </div>
@@ -526,6 +534,7 @@ export function SimfHomepageOption({
               <CmsImage
                 alt=""
                 media={sponsorship.media}
+                mobileMedia={sponsorship.mobileMedia}
                 sizes="100vw"
               />
             </div>

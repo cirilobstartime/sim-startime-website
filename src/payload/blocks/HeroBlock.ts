@@ -57,7 +57,7 @@ export const HeroBlock: Block = {
               relationTo: "media",
               admin: {
                 description:
-                  "Portrait hero/background image for phones (4:5). Keep the focal subject clear of text; JPEG/PNG uploads become WebP automatically.",
+                  "Optional portrait hero/background image for phones (4:5). Leave empty to use the desktop hero automatically. Keep the focal subject clear of text; JPEG/PNG uploads become WebP automatically.",
               },
             },
           ],

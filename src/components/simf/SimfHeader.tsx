@@ -12,6 +12,7 @@ type Props = {
   locale: Locale;
   logo?: MediaValue;
   logoAlt?: string;
+  mobileLogo?: MediaValue;
   menuCloseLabel?: string;
   menuOpenLabel?: string;
   nav: Array<{ href: string; label: string }>;
@@ -28,6 +29,7 @@ export function SimfHeader({
   locale,
   logo,
   logoAlt = "Startime",
+  mobileLogo,
   menuCloseLabel,
   menuOpenLabel,
   nav,
@@ -45,6 +47,7 @@ export function SimfHeader({
   const renderedLogoURL = iconOnly
     ? `${logoURL}${logoURL.includes("?") ? "&" : "?"}v=full-compass-20260731`
     : logoURL;
+  const mobileLogoURL = getMediaURL(mobileLogo);
   const visibleNav = nav.filter(
     (item) =>
       !item.href.replace(/\/+$/, "").endsWith("/about") &&
@@ -59,15 +62,18 @@ export function SimfHeader({
           className={`simf-header__brand${iconOnly ? " simf-header__brand--icon" : ""}`}
           href={homeHref}
         >
-          <Image
-            alt={logoAlt}
-            height={iconOnly ? 66 : 48}
-            priority
-            src={renderedLogoURL}
-            title={getMediaTitle(logo) || undefined}
-            unoptimized={iconOnly}
-            width={iconOnly ? 66 : 154}
-          />
+          <picture>
+            {mobileLogoURL ? <source media="(max-width: 767px)" srcSet={mobileLogoURL} /> : null}
+            <Image
+              alt={logoAlt}
+              height={iconOnly ? 66 : 48}
+              priority
+              src={renderedLogoURL}
+              title={getMediaTitle(logo) || undefined}
+              unoptimized={iconOnly}
+              width={iconOnly ? 66 : 154}
+            />
+          </picture>
         </Link>
         <nav
           aria-label={navigationLabel || (ar ? "التنقل الرئيسي" : "Main navigation")}

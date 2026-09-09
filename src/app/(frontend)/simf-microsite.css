@@ -5436,7 +5436,8 @@ body:has(.simf-site) .cookie-consent .button--ghost {
   object-fit: contain;
 }
 
-.simf-homepage-about .simf-footer__about > img {
+.simf-homepage-about .simf-footer__about > img,
+.simf-homepage-about .simf-footer__about > picture > img {
   width: 78px;
   height: 78px;
   object-fit: contain;
@@ -5952,7 +5953,8 @@ body:has(.simf-site) .cookie-consent .button--ghost {
     max-height: 54px;
   }
 
-  .simf-homepage-about .simf-footer__about > img {
+  .simf-homepage-about .simf-footer__about > img,
+  .simf-homepage-about .simf-footer__about > picture > img {
     width: 68px;
     height: 68px;
   }
@@ -6915,7 +6917,8 @@ body
 
 /* Multi-page SIMF editorial system */
 .simf-header__brand img,
-.simf-footer__about > img {
+.simf-footer__about > img,
+.simf-footer__about > picture > img {
   filter: brightness(0) invert(1);
 }
 
@@ -7704,7 +7707,8 @@ body
   max-height: 66px;
 }
 
-.simf-site .simf-footer__about > .simf-footer__logo--icon {
+.simf-site .simf-footer__about > .simf-footer__logo--icon,
+.simf-site .simf-footer__about > picture > .simf-footer__logo--icon {
   width: 78px;
   height: 78px;
   object-fit: contain;
@@ -8303,7 +8307,8 @@ body
   background: #101936;
 }
 
-.simf-footer__about > img {
+.simf-footer__about > img,
+.simf-footer__about > picture > img {
   width: 154px;
   height: 48px;
   object-fit: contain;
@@ -12800,7 +12805,8 @@ body
   background: #050914;
 }
 
-.simf-site .simf-footer__about > img {
+.simf-site .simf-footer__about > img,
+.simf-site .simf-footer__about > picture > img {
   width: min(210px, 100%);
   height: 52px;
 }
@@ -17396,7 +17402,8 @@ body .simf-homepage-about .simf-option-hero__review-lead {
   object-fit: contain;
 }
 
-.simf-site .simf-footer__about > img.simf-footer__logo--icon {
+.simf-site .simf-footer__about > img.simf-footer__logo--icon,
+.simf-site .simf-footer__about > picture > img.simf-footer__logo--icon {
   width: 96px;
   height: 96px;
   max-width: none;
@@ -17411,7 +17418,8 @@ body .simf-homepage-about .simf-option-hero__review-lead {
     max-height: 62px;
   }
 
-  .simf-site .simf-footer__about > img.simf-footer__logo--icon {
+  .simf-site .simf-footer__about > img.simf-footer__logo--icon,
+.simf-site .simf-footer__about > picture > img.simf-footer__logo--icon {
     width: 88px;
     height: 88px;
   }
@@ -17441,7 +17449,8 @@ body .simf-homepage-about .simf-option-hero__review-lead {
   object-position: center;
 }
 
-.simf-site .simf-footer__about > img.simf-footer__logo--icon {
+.simf-site .simf-footer__about > img.simf-footer__logo--icon,
+.simf-site .simf-footer__about > picture > img.simf-footer__logo--icon {
   width: 96px;
   height: 96px;
   padding: 4px;

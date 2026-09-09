@@ -16,6 +16,16 @@ export const SimfHeaderBlock: Block = {
           "Page-specific logo override — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900). Usually leave unchanged and manage the shared logo in Website settings. Transparent JPEG/PNG uploads become WebP automatically.",
       },
     },
+    {
+      name: "mobileLogo",
+      label: "Optional mobile header logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900)",
+      type: "upload",
+      relationTo: "media",
+      admin: {
+        description:
+          "Optional phone-specific header logo. Leave empty to use the desktop header logo automatically. JPEG/PNG uploads become WebP automatically.",
+      },
+    },
     { name: "logoAlt", label: "Header logo accessible name", type: "text", required: true },
     {
       name: "navigationLabel",

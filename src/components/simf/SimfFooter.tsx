@@ -30,6 +30,7 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
   const renderedLogoURL = iconOnly
     ? `${logoURL}${logoURL.includes("?") ? "&" : "?"}v=full-compass-20260731`
     : logoURL;
+  const mobileLogoURL = getMediaURL(footer?.mobileLogo);
   const importantLinks = footer?.importantLinks?.filter(
     (link) =>
       !link.href.replace(/\/+$/, "").endsWith("/about") &&
@@ -40,18 +41,21 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
     <footer className="simf-footer">
       <div className="simf-shell simf-footer__grid">
         <div className="simf-footer__about">
-          <Image
-            alt={
-              footer?.logoAlt ||
-              (ar ? "الملتقى البحري السعودي الدولي" : "Saudi International Maritime Forum")
-            }
-            className={iconOnly ? "simf-footer__logo--icon" : undefined}
-            height={iconOnly ? 78 : 48}
-            src={renderedLogoURL}
-            title={getMediaTitle(footer?.logo) || undefined}
-            unoptimized={iconOnly}
-            width={iconOnly ? 78 : 210}
-          />
+          <picture>
+            {mobileLogoURL ? <source media="(max-width: 767px)" srcSet={mobileLogoURL} /> : null}
+            <Image
+              alt={
+                footer?.logoAlt ||
+                (ar ? "الملتقى البحري السعودي الدولي" : "Saudi International Maritime Forum")
+              }
+              className={iconOnly ? "simf-footer__logo--icon" : undefined}
+              height={iconOnly ? 78 : 48}
+              src={renderedLogoURL}
+              title={getMediaTitle(footer?.logo) || undefined}
+              unoptimized={iconOnly}
+              width={iconOnly ? 78 : 210}
+            />
+          </picture>
           <p>
             {footer?.bio ||
               (ar

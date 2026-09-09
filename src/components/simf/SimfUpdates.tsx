@@ -89,7 +89,7 @@ function SponsorCTA({
   return (
     <section className="simf-update-cta">
       <div className="simf-update-cta__media">
-        <CmsImage alt="" media={cta.media} sizes="100vw" />
+        <CmsImage alt="" media={cta.media} mobileMedia={cta.mobileMedia} sizes="100vw" />
       </div>
       <div className="simf-update-cta__veil" />
       <div className="simf-shell simf-update-cta__content">
@@ -127,7 +127,7 @@ function UpdateCard({
   return (
     <Link className="simf-update-card" href={href}>
       <div className="simf-update-card__image">
-        <CmsImage alt="" media={update.featuredImage} sizes="(max-width: 760px) 100vw, 33vw" />
+        <CmsImage alt="" media={update.featuredImage} mobileMedia={update.mobileFeaturedImage} sizes="(max-width: 760px) 100vw, 33vw" />
       </div>
       <div className="simf-update-card__copy">
         <p className="simf-update-card__meta">
@@ -171,6 +171,7 @@ export function SimfUpdatesArchive({
         locale={locale}
         logo={header?.logo}
         logoAlt={header?.logoAlt}
+        mobileLogo={header?.mobileLogo}
         menuCloseLabel={header?.menuCloseLabel}
         menuOpenLabel={header?.menuOpenLabel}
         nav={header?.links || siteNav(locale)}
@@ -192,6 +193,7 @@ export function SimfUpdatesArchive({
               <CmsImage
                 alt=""
                 media={hero.media}
+                mobileMedia={hero.mobileMedia}
                 priority
                 sizes="(max-width: 760px) 100vw, 55vw"
               />
@@ -209,7 +211,7 @@ export function SimfUpdatesArchive({
             {lead ? (
               <Link className="simf-update-feature" href={`${route.archive}/${lead.slug}`}>
                 <div className="simf-update-feature__image">
-                  <CmsImage alt="" media={lead.featuredImage} sizes="(max-width: 760px) 100vw, 50vw" />
+                  <CmsImage alt="" media={lead.featuredImage} mobileMedia={lead.mobileFeaturedImage} sizes="(max-width: 760px) 100vw, 50vw" />
                 </div>
                 <div className="simf-update-feature__copy">
                   <p className="simf-update-card__meta">
@@ -277,6 +279,7 @@ export function SimfUpdateArticle({
         locale={locale}
         logo={header?.logo}
         logoAlt={header?.logoAlt}
+        mobileLogo={header?.mobileLogo}
         menuCloseLabel={header?.menuCloseLabel}
         menuOpenLabel={header?.menuOpenLabel}
         nav={header?.links || siteNav(locale)}
@@ -306,7 +309,7 @@ export function SimfUpdateArticle({
           </header>
           <figure className="simf-shell simf-update-article__hero">
             <div>
-              <CmsImage alt="" media={update.featuredImage} priority sizes="100vw" />
+              <CmsImage alt="" media={update.featuredImage} mobileMedia={update.mobileFeaturedImage} priority sizes="100vw" />
             </div>
             {update.featuredImageCaption ? (
               <figcaption>{update.featuredImageCaption}</figcaption>
@@ -333,6 +336,7 @@ export function SimfUpdateArticle({
                         <CmsImage
                           alt={item.mediaAlt || ""}
                           media={item.media}
+                          mobileMedia={item.mobileMedia}
                           sizes="(max-width: 760px) 100vw, 760px"
                         />
                       </div>

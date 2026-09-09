@@ -14,12 +14,14 @@ import { getMediaURL } from "../CmsImage";
 export function SimfVideoPlayer({
   autoplay = true,
   locale,
+  mobilePoster,
   poster,
   video,
   youtubeURL,
 }: {
   autoplay?: boolean;
   locale: Locale;
+  mobilePoster?: MediaValue;
   poster?: MediaValue;
   video?: MediaValue;
   youtubeURL?: string | null;
@@ -33,6 +35,8 @@ export function SimfVideoPlayer({
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(false);
   const ar = locale === "ar";
+  const desktopPosterURL = getMediaURL(poster);
+  const mobilePosterURL = getMediaURL(mobilePoster);
   const youtubeID = useMemo(() => {
     if (!youtubeURL) return null;
     return youtubeURL.match(
@@ -41,6 +45,18 @@ export function SimfVideoPlayer({
   }, [youtubeURL]);
 
   const youtubeTime = useRef(0);
+
+  useEffect(() => {
+    const element = media.current;
+    if (!element || !mobilePosterURL) return;
+    const query = window.matchMedia("(max-width: 767px)");
+    const updatePoster = () => {
+      element.poster = query.matches ? mobilePosterURL : desktopPosterURL;
+    };
+    updatePoster();
+    query.addEventListener("change", updatePoster);
+    return () => query.removeEventListener("change", updatePoster);
+  }, [desktopPosterURL, mobilePosterURL]);
 
   const youtubeCommand = useCallback((command: string, args: Array<boolean | number | string> = []) => {
     youtube.current?.contentWindow?.postMessage(
@@ -194,7 +210,7 @@ export function SimfVideoPlayer({
         onPlay={() => setPlaying(true)}
         playsInline
         muted={muted}
-        poster={getMediaURL(poster)}
+        poster={desktopPosterURL}
         preload="metadata"
         ref={media}
         tabIndex={hasStarted ? 0 : -1}

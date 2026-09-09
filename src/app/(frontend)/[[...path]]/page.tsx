@@ -236,16 +236,29 @@ function applySharedBranding(
   page: PublicPage,
   settings: SiteSettings,
 ): PublicPage {
-  if (!settings.headerLogo && !settings.footerLogo) return page;
+  if (
+    !settings.headerLogo &&
+    !settings.mobileHeaderLogo &&
+    !settings.footerLogo &&
+    !settings.mobileFooterLogo
+  ) return page;
 
   return {
     ...page,
     sections: page.sections.map((section) => {
-      if (section.blockType === "simfHeader" && settings.headerLogo) {
-        return { ...section, logo: settings.headerLogo };
+      if (section.blockType === "simfHeader") {
+        return {
+          ...section,
+          logo: settings.headerLogo || section.logo,
+          mobileLogo: settings.mobileHeaderLogo || section.mobileLogo,
+        };
       }
-      if (section.blockType === "simfFooter" && settings.footerLogo) {
-        return { ...section, logo: settings.footerLogo };
+      if (section.blockType === "simfFooter") {
+        return {
+          ...section,
+          logo: settings.footerLogo || section.logo,
+          mobileLogo: settings.mobileFooterLogo || section.mobileLogo,
+        };
       }
       return section;
     }),

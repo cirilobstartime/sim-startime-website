@@ -351,6 +351,12 @@ async function fetchSiteSettings(): Promise<SiteSettings> {
       headerLogo: settings.headerLogo as
         | SiteSettings["headerLogo"]
         | undefined,
+      mobileFooterLogo: (settings.mobileFooterLogo || settings.mobileHeaderLogo) as
+        | SiteSettings["mobileFooterLogo"]
+        | undefined,
+      mobileHeaderLogo: settings.mobileHeaderLogo as
+        | SiteSettings["mobileHeaderLogo"]
+        | undefined,
     };
   } catch {
     return { enableArabic: false };

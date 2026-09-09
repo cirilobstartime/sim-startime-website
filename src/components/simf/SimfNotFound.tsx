@@ -41,6 +41,7 @@ export function SimfNotFound({
         locale={locale}
         logo={header?.logo}
         logoAlt={header?.logoAlt}
+        mobileLogo={header?.mobileLogo}
         menuCloseLabel={header?.menuCloseLabel}
         menuOpenLabel={header?.menuOpenLabel}
         nav={navigation}

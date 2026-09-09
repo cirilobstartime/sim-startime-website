@@ -16,6 +16,16 @@ export const SimfFooterBlock: Block = {
           "Page-specific footer logo override — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900). Usually leave unchanged and manage the shared logo in Website settings. JPEG/PNG uploads become WebP automatically.",
       },
     },
+    {
+      name: "mobileLogo",
+      label: "Optional mobile footer logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900)",
+      type: "upload",
+      relationTo: "media",
+      admin: {
+        description:
+          "Optional phone-specific footer logo. Leave empty to use the desktop footer logo automatically. JPEG/PNG uploads become WebP automatically.",
+      },
+    },
     { name: "logoAlt", label: "Footer logo accessible name", type: "text", required: true },
     { name: "bio", type: "textarea", required: true },
     { name: "contactHeading", type: "text", required: true },

@@ -143,7 +143,7 @@ function Landing({
       {hero ? (
         <section className="simf-hero" id="top">
           <div className="simf-hero__media">
-            <CmsImage alt="" media={hero.media} priority sizes="100vw" />
+            <CmsImage alt="" media={hero.media} mobileMedia={hero.mobileMedia} priority sizes="100vw" />
           </div>
           <div className="simf-hero__veil" />
           <div className="simf-shell simf-hero__content">
@@ -194,7 +194,7 @@ function Landing({
               {authority.cards.filter((card) => card.visible !== false).map((card) => (
                 <article key={card.title}>
                   <div className="simf-authority__logo">
-                    <CmsImage alt={card.title} media={card.media} sizes="220px" />
+                    <CmsImage alt={card.title} media={card.media} mobileMedia={card.mobileMedia} sizes="220px" />
                   </div>
                   <div>
                     {card.meta ? <span>{card.meta}</span> : null}
@@ -221,7 +221,7 @@ function Landing({
               ) : null}
             </div>
             <div className="simf-about__visual simf-media-frame">
-              <CmsImage alt={about.heading} media={about.media} sizes="(max-width: 800px) 100vw, 50vw" />
+              <CmsImage alt={about.heading} media={about.media} mobileMedia={about.mobileMedia} sizes="(max-width: 800px) 100vw, 50vw" />
             </div>
           </div>
         </section>
@@ -249,7 +249,7 @@ function Landing({
                     </div>
                     {edition.media ? (
                       <div className="simf-legacy__image">
-                        <CmsImage alt="" media={edition.media} sizes="(max-width: 800px) 82vw, 33vw" />
+                        <CmsImage alt="" media={edition.media} mobileMedia={edition.mobileMedia} sizes="(max-width: 800px) 82vw, 33vw" />
                       </div>
                     ) : null}
                   </article>
@@ -284,7 +284,7 @@ function Landing({
                     {card.body ? <p>{card.body}</p> : null}
                   </div>
                   <div className="simf-programme__image">
-                    <CmsImage alt="" media={card.media} sizes="(max-width: 800px) 100vw, 46vw" />
+                    <CmsImage alt="" media={card.media} mobileMedia={card.mobileMedia} sizes="(max-width: 800px) 100vw, 46vw" />
                   </div>
                 </article>
               ))}
@@ -308,7 +308,7 @@ function Landing({
       {goals ? (
         <section className="simf-goals simf-section">
           <div className="simf-shell simf-goals__grid">
-            <div className="simf-goals__image"><CmsImage alt="" media={goals.media} sizes="(max-width: 800px) 100vw, 50vw" /></div>
+            <div className="simf-goals__image"><CmsImage alt="" media={goals.media} mobileMedia={goals.mobileMedia} sizes="(max-width: 800px) 100vw, 50vw" /></div>
             <SectionHead body={goals.body} eyebrow={goals.eyebrow} heading={goals.heading} />
           </div>
         </section>
@@ -360,6 +360,11 @@ function Landing({
                 sponsorship.steps?.find(
                   (step) => step.visible !== false && step.media,
                 )?.media
+              }
+              mobileMedia={
+                sponsorship.steps?.find(
+                  (step) => step.visible !== false && step.media,
+                )?.mobileMedia
               }
               sizes="100vw"
             />
@@ -429,7 +434,7 @@ function Landing({
                   <article key={card.title}>
                     <span>{card.meta}</span>
                     <div className="simf-partners__logo">
-                      <CmsImage alt={card.title} media={card.media} sizes="230px" />
+                      <CmsImage alt={card.title} media={card.media} mobileMedia={card.mobileMedia} sizes="230px" />
                     </div>
                     <h3>{card.title}</h3>
                   </article>
@@ -450,6 +455,7 @@ function Landing({
                     href: `${locale === "ar" ? "/ar" : ""}/updates/${update.slug}`,
                     kicker: `${update.publicationLabel} · ${update.category || ""}`,
                     media: update.featuredImage,
+                    mobileMedia: update.mobileFeaturedImage,
                     summary: update.summary,
                     title: update.title,
                   }))
@@ -457,7 +463,7 @@ function Landing({
               ).map((article, index) => (
                 <Link className={index === 0 ? "is-featured" : ""} href={resolveHref(article.href || "#", locale, isSubdomain)} key={article.title}>
                   <div className="simf-news__image">
-                    <CmsImage alt="" media={article.media} sizes={index === 0 ? "60vw" : "40vw"} />
+                    <CmsImage alt="" media={article.media} mobileMedia={article.mobileMedia} sizes={index === 0 ? "60vw" : "40vw"} />
                   </div>
                   <div className="simf-news__copy">
                     {article.kicker ? <span>{article.kicker}</span> : null}
@@ -489,7 +495,7 @@ function Landing({
       {contact?.blockType === "callToAction" ? (
         <section className="simf-final-cta simf-section" id="contact">
           <div className="simf-final-cta__media">
-            <CmsImage alt="" media={contact.media} sizes="100vw" />
+            <CmsImage alt="" media={contact.media} mobileMedia={contact.mobileMedia} sizes="100vw" />
           </div>
           <div className="simf-final-cta__shade" />
           <div className="simf-shell simf-final-cta__content">
@@ -523,7 +529,7 @@ function SponsorPage({
       {hero ? (
         <section className="simf-inner-hero simf-sponsor-hero">
           <div className="simf-inner-hero__media">
-            <CmsImage alt="" media={hero.media} priority sizes="100vw" />
+            <CmsImage alt="" media={hero.media} mobileMedia={hero.mobileMedia} priority sizes="100vw" />
           </div>
           <div className="simf-inner-hero__shade" />
           <div className="simf-shell simf-inner-hero__content">
@@ -642,6 +648,7 @@ export function SimfMicrosite({
         locale={locale}
         logo={header?.logo}
         logoAlt={header?.logoAlt}
+        mobileLogo={header?.mobileLogo}
         menuCloseLabel={header?.menuCloseLabel}
         menuOpenLabel={header?.menuOpenLabel}
         nav={nav}

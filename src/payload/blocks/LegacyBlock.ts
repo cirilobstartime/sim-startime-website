@@ -52,6 +52,16 @@ export const LegacyBlock: Block = {
               "Editorial section image for an edition (14:9 landscape). 2×/3× files are allowed; JPEG/PNG uploads become WebP automatically.",
           },
         },
+        {
+          name: "mobileMedia",
+          label: "Optional mobile legacy image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            description:
+              "Optional portrait edition image for phones (4:5). Leave empty to use the desktop edition image automatically. JPEG/PNG uploads become WebP automatically.",
+          },
+        },
         { name: "href", type: "text" },
         { name: "visible", type: "checkbox", defaultValue: true },
       ],

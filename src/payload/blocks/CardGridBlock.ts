@@ -84,6 +84,16 @@ export const CardGridBlock: Block = {
           },
         },
         {
+          name: "mobileMedia",
+          label: "Optional mobile image — speaker 900 × 1200; logo 800 × 450; editorial 1080 × 1350 px",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            description:
+              "Optional phone-specific image. Speaker 2×: 1800 × 2400; 3×: 2700 × 3600. Logo 2×: 1600 × 900; 3×: 2400 × 1350. Editorial 2×: 2160 × 2700; 3×: 3240 × 4050. Leave empty to use the desktop image automatically. JPEG/PNG uploads become WebP automatically.",
+          },
+        },
+        {
           name: "icon",
           label: "Card icon",
           type: "select",

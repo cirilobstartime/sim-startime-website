@@ -1,5 +1,5 @@
 import type { Block } from "payload";
-import { mediaField, sectionControls } from "./shared";
+import { mediaField, mobileMediaField, sectionControls } from "./shared";
 
 export const MediaFeatureBlock: Block = {
   slug: "mediaFeature",
@@ -13,6 +13,7 @@ export const MediaFeatureBlock: Block = {
     { name: "heading", type: "textarea", required: true },
     { name: "body", type: "textarea" },
     mediaField,
+    mobileMediaField,
     {
       name: "mediaPosition",
       type: "select",

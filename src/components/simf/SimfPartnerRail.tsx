@@ -84,7 +84,12 @@ export function SimfPartnerRail({
         {partners.map((card) => (
           <article key={card.id || card.title}>
             <div>
-              <CmsImage alt={card.title} media={card.media} sizes="220px" />
+              <CmsImage
+                alt={card.title}
+                media={card.media}
+                mobileMedia={card.mobileMedia}
+                sizes="220px"
+              />
             </div>
             {card.meta ? (
               <span className="simf-option-partners__type">{card.meta}</span>

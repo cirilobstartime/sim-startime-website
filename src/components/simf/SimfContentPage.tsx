@@ -55,6 +55,7 @@ import { SimfPartnerRail } from "./SimfPartnerRail";
 import { SimfPartnerCategoryLayout } from "./SimfPartnerCategoryLayout";
 import { SimfSpeakerDirectory } from "./SimfSpeakerDirectory";
 import { SimfStickySponsor } from "./SimfStickySponsor";
+import { SimfVideoPlayer } from "./SimfVideoPlayer";
 
 type Props = {
   locale: Locale;
@@ -201,6 +202,7 @@ function CardSection({
       id: speaker.id,
       name: speaker.title,
       portrait: speaker.media || null,
+      mobilePortrait: speaker.mobileMedia || null,
       role: speaker.body,
       visible: speaker.visible,
       workplace: speaker.workplace,
@@ -294,6 +296,7 @@ function CardSection({
                     <CmsImage
                       alt={partnerCategory ? card.title : ""}
                       media={card.media}
+                      mobileMedia={card.mobileMedia}
                       sizes={partnerCategory ? "230px" : "(max-width: 720px) 100vw, 34vw"}
                     />
                   </div>
@@ -397,23 +400,23 @@ function PartnerCategory({
       ? "media-partner"
       : null;
   const tierLabels = {
-    supervision: ar ? "إشراف" : "Supervision",
+    supervision: ar ? "الإشراف" : "Supervision",
     organizer: ar ? "المنظم" : "Organizer",
-    strategic: ar ? "استراتيجي" : "Strategic",
-    diamond: ar ? "ماسي" : "Diamond",
-    platinum: ar ? "بلاتيني" : "Platinum",
-    gold: ar ? "ذهبي" : "Gold",
-    silver: ar ? "فضي" : "Silver",
-    sector: ar ? "راعٍ قطاعي" : "Sector Sponsor",
-    "co-sponsor": ar ? "راعٍ مشارك" : "Co-Sponsor",
+    strategic: ar ? "الشريك الاستراتيجي" : "Strategic",
+    diamond: ar ? "الراعي الماسي" : "Diamond",
+    platinum: ar ? "الراعي البلاتيني" : "Platinum",
+    gold: ar ? "الراعي الذهبي" : "Gold",
+    silver: ar ? "الراعي الفضي" : "Silver",
+    sector: ar ? "راعي القطاع" : "Sector Sponsor",
+    "co-sponsor": ar ? "الراعي المشارك" : "Co-Sponsor",
     "hospitality-sponsor": ar ? "راعي الضيافة" : "Hospitality Sponsor",
     "official-carrier": ar ? "الناقل الرسمي" : "Official Carrier",
     "official-contractor": ar ? "المقاول الرسمي" : "Official Contractor",
-    "media-partner": ar ? "شريك إعلامي" : "Media Partner",
-    "marketing-partner": ar ? "شريك تسويقي" : "Marketing Partner",
-    "licensed-to": ar ? "الجهة المرخّص لها" : "Licensed To",
+    "media-partner": ar ? "الشريك الإعلامي" : "Media Partner",
+    "marketing-partner": ar ? "شريك التسويق" : "Marketing Partner",
+    "licensed-to": ar ? "مرخص لـ" : "Licensed To",
     "advisory-arm": ar ? "الذراع الاستشاري" : "Advisory Arm",
-    partner: ar ? "شريك" : "Partner",
+    partner: ar ? "الشريك الداعم" : "Partner",
   } as const;
   return (
     <section
@@ -448,6 +451,7 @@ function PartnerCategory({
                     <CmsImage
                       alt={logo.name}
                       media={logo.logo}
+                      mobileMedia={logo.mobileLogo}
                       sizes={featured ? "410px" : "340px"}
                     />
                   </div>
@@ -508,7 +512,12 @@ function MediaSection({
     >
       <div className="simf-shell simf-content-media__layout">
         <div className="simf-content-media__visual">
-          <CmsImage alt="" media={section.media} sizes="(max-width: 800px) 100vw, 50vw" />
+          <CmsImage
+            alt=""
+            media={section.media}
+            mobileMedia={section.mobileMedia}
+            sizes="(max-width: 800px) 100vw, 50vw"
+          />
         </div>
         <div className="simf-content-media__copy">
           <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
@@ -573,6 +582,7 @@ function ValueTimeline({ section }: { section: TimelineSection }) {
                   <CmsImage
                     alt=""
                     media={step.media}
+                    mobileMedia={step.mobileMedia}
                     sizes="(max-width: 800px) 82vw, 25vw"
                   />
                 </div>
@@ -595,8 +605,7 @@ function ValueTimeline({ section }: { section: TimelineSection }) {
   );
 }
 
-function Film({ section }: { section: VideoFeatureSection }) {
-  const src = getMediaURL(section.video);
+function Film({ locale, section }: { locale: Locale; section: VideoFeatureSection }) {
   const visual = appearance(section);
   return (
     <section
@@ -606,18 +615,15 @@ function Film({ section }: { section: VideoFeatureSection }) {
     >
       <div className="simf-shell">
         <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
-        {src ? (
-          <video
-            autoPlay={Boolean(section.autoplay)}
-            controls
-            loop={Boolean(section.autoplay)}
-            muted={Boolean(section.autoplay)}
-            playsInline
-            poster={getMediaURL(section.poster)}
-            preload="metadata"
-          >
-            <source src={src} />
-          </video>
+        {section.video || section.youtubeURL ? (
+          <SimfVideoPlayer
+            autoplay={section.autoplay !== false}
+            locale={locale}
+            mobilePoster={section.mobilePoster}
+            poster={section.poster}
+            video={section.video}
+            youtubeURL={section.youtubeURL}
+          />
         ) : null}
       </div>
     </section>
@@ -633,7 +639,12 @@ function CTA({ section }: { section: CallToActionSection }) {
       style={visual.style}
     >
       <div className="simf-content-cta__media">
-        <CmsImage alt="" media={section.media} sizes="100vw" />
+        <CmsImage
+          alt=""
+          media={section.media}
+          mobileMedia={section.mobileMedia}
+          sizes="100vw"
+        />
       </div>
       <div className="simf-content-cta__shade" />
       <div className="simf-shell simf-content-cta__content">
@@ -736,6 +747,7 @@ export function SimfContentPage({
         locale={locale}
         logo={header?.logo}
         logoAlt={header?.logoAlt}
+        mobileLogo={header?.mobileLogo}
         menuCloseLabel={header?.menuCloseLabel}
         menuOpenLabel={header?.menuOpenLabel}
         nav={navigation}
@@ -854,7 +866,7 @@ export function SimfContentPage({
             return <ValueTimeline key={section.id || section.anchorID} section={section} />;
           }
           if (section.blockType === "videoFeature") {
-            return <Film key={section.id || section.anchorID} section={section} />;
+            return <Film key={section.id || section.anchorID} locale={locale} section={section} />;
           }
           if (section.blockType === "callToAction") {
             return <CTA key={section.id || section.anchorID} section={section} />;

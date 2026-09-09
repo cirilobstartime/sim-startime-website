@@ -44,6 +44,7 @@ export function SimfConceptTopics({
           <CmsImage
             alt=""
             media={selected.media}
+            mobileMedia={selected.mobileMedia}
             sizes="(max-width: 800px) 100vw, 54vw"
           />
         </div>

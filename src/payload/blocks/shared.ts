@@ -75,7 +75,7 @@ export const sectionControls: Field[] = [
         relationTo: "media",
         admin: {
           description:
-            "Portrait section background for phones (4:5). Higher-resolution 2× or 3× files are allowed; JPEG/PNG uploads are converted to WebP automatically.",
+            "Optional portrait section background for phones (4:5). Leave empty to use the desktop background automatically. Higher-resolution 2× or 3× files are allowed; JPEG/PNG uploads are converted to WebP automatically.",
         },
       },
       {
@@ -145,5 +145,16 @@ export const mediaField: Field = {
   admin: {
     description:
       "Primary section image (8:5 landscape). Higher-resolution 2× or 3× files are allowed at the same ratio; JPEG/PNG uploads become WebP automatically.",
+  },
+};
+
+export const mobileMediaField: Field = {
+  name: "mobileMedia",
+  label: "Optional mobile section image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
+  type: "upload",
+  relationTo: "media",
+  admin: {
+    description:
+      "Optional portrait image for phones (4:5). Leave empty to use the desktop section image automatically. Higher-resolution 2× or 3× files are allowed; JPEG/PNG uploads become WebP automatically.",
   },
 };

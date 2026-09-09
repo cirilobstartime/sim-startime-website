@@ -68,6 +68,7 @@ export function SimfSpeakerRail({
               <CmsImage
                 alt={card.title}
                 media={card.media}
+                mobileMedia={card.mobileMedia}
                 sizes={
                   wideDesktop && index < 3
                     ? "(min-width: 2200px) 720px, (min-width: 1600px) 600px, 340px"
