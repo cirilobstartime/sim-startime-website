@@ -4,6 +4,10 @@ import { getPayload } from "payload";
 import type { Locale } from "@/content/types";
 import { getSiteSettings } from "@/content/payload";
 
+// The sitemap must reflect live CMS publishing and language settings rather
+// than the values present when the application bundle was built.
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (process.env.NEXT_PUBLIC_ALLOW_INDEXING !== "true") return [];
   const payload = await getPayload({ config: configPromise });
