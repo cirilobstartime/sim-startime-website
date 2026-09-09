@@ -5992,7 +5992,7 @@
           {
             "name": "message",
             "groupHeading": null,
-            "label": "كيف يمكن لفريق SIM 2026 مساعدتك؟",
+            "label": "كيف يمكن لفريق الملتقى البحري السعودي الدولي الرابع مساعدتك؟",
             "placeholder": null,
             "helpText": null,
             "type": "textarea",
@@ -6006,7 +6006,7 @@
           {
             "name": "consent",
             "groupHeading": null,
-            "label": "□  أوافق على أن يقوم فريق تنظيم الملتقى بالتواصل معي.",
+            "label": "أوافق على أن يقوم فريق تنظيم الملتقى بالتواصل معي.",
             "placeholder": null,
             "helpText": null,
             "type": "checkbox",
@@ -6760,7 +6760,7 @@
             "form": {
               "__formKey": "simf-contact"
             },
-            "privacyNote": "أوافق على أن يقوم فريق تنظيم الملتقى بالتواصل معي.",
+            "privacyNote": null,
             "successHeading": "شكراً لكم.",
             "successMessage": "تم استلام استفسارك. سيتواصل معك فريق ملتقى 2026 المعني.",
             "appearance": {
@@ -8573,8 +8573,8 @@
             "internalLabel": "Speaker directory",
             "speakers": [
               {
-                "name": "معالي الفريق الأول الركن فياض بن حامد الرويلي",
-                "role": "رئيس هيئة الأركان العامة للقوات المسلحة السعودية",
+                "name": "معالي الفريق أول الركن فياض بن حامد الرويلي",
+                "role": "رئيس هيئة الأركان العامة",
                 "visible": true,
                 "country": "SA",
                 "eyebrow": "قيادة عليا",
@@ -8585,7 +8585,7 @@
               },
               {
                 "name": "معالي الفريق الركن فهد بن عبدالله الغفيلي",
-                "role": "نائب رئيس هيئة الأركان العامة للقوات المسلحة السعودية",
+                "role": "نائب رئيس هيئة الأركان العامة",
                 "visible": true,
                 "country": "SA",
                 "eyebrow": "قيادة عليا",
@@ -8596,7 +8596,7 @@
               },
               {
                 "name": "معالي الفريق الركن محمد بن عبدالرحمن الغريبي",
-                "role": "رئيس الأركان القوات البحرية الملكية السعودية",
+                "role": "رئيس أركان القوات البحرية الملكية السعودية",
                 "visible": true,
                 "country": "SA",
                 "eyebrow": "قيادة عليا",
@@ -10928,14 +10928,14 @@
               {
                 "body": "رئيس هيئة الأركان العامة",
                 "meta": "السعودية",
-                "title": "معالي الفريق أول الركن فياض بن حامد الرويلي",
+                "title": "فياض بن حامد الرويلي",
                 "media": {
                   "__mediaFilename": "His Excellency General Fayyadh bin Hamed Al-Ruwaili.webp"
                 },
                 "visible": true,
-                "eyebrow": "قيادة عليا",
+                "eyebrow": "معالي الفريق أول الركن",
                 "country": "SA",
-                "workplace": "القوات المسلحة السعودية",
+                "workplace": null,
                 "button": {
                   "icon": "arrow-up-right",
                   "style": "primary",
@@ -10946,14 +10946,14 @@
               {
                 "body": "نائب رئيس هيئة الأركان العامة",
                 "meta": "السعودية",
-                "title": "معالي الفريق الركن فهد بن عبدالله الغفيلي",
+                "title": "فهد بن عبدالله الغفيلي",
                 "media": {
                   "__mediaFilename": "His Excellency Lieutenant General Mohammed Bin Abdulrahman Al Gharibi.webp"
                 },
                 "visible": true,
-                "eyebrow": "قيادة عليا",
+                "eyebrow": "معالي الفريق الركن",
                 "country": "SA",
-                "workplace": "القوات المسلحة السعودية",
+                "workplace": null,
                 "button": {
                   "icon": "arrow-up-right",
                   "style": "primary",
@@ -10964,14 +10964,14 @@
               {
                 "body": "رئيس أركان القوات البحرية الملكية السعودية",
                 "meta": "السعودية",
-                "title": "معالي الفريق الركن محمد بن عبدالرحمن الغريبي",
+                "title": "محمد بن عبدالرحمن الغريبي",
                 "media": {
                   "__mediaFilename": "His Excellency Lieutenant General Mohammed Bin Abdulrahman Al Gharibi.webp"
                 },
                 "visible": true,
-                "eyebrow": "قيادة عليا",
+                "eyebrow": "معالي الفريق الركن",
                 "country": "SA",
-                "workplace": "القوات البحرية الملكية السعودية",
+                "workplace": null,
                 "button": {
                   "icon": "arrow-up-right",
                   "style": "primary",

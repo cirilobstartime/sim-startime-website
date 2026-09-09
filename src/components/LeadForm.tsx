@@ -95,6 +95,14 @@ const arabicGroupHeadings: Record<string, string> = {
   "Consent and Submission": "الموافقة والإرسال",
 };
 
+function normalizeConsentText(value: string) {
+  return value
+    .replace(/^[□☐\s]+/u, "")
+    .replace(/[.،\s]+$/u, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function submitLabel(formKey: string, locale: Locale, fallback: string) {
   if (fallback.trim()) return fallback;
   if (locale !== "ar") return "Submit";
@@ -121,6 +129,22 @@ export function LeadForm({
     "idle" | "submitting" | "success" | "error"
   >("idle");
   const [error, setError] = useState("");
+  const normalizedPrivacyNote = privacyNote
+    ? normalizeConsentText(privacyNote)
+    : "";
+  const privacyRepeatsCheckbox = Boolean(
+    normalizedPrivacyNote &&
+      form.fields?.some(
+        (field) =>
+          field.type === "checkbox" &&
+          normalizeConsentText(
+            field.label ||
+              (locale === "ar"
+                ? arabicFieldLabels[field.name] || field.name
+                : field.name),
+          ) === normalizedPrivacyNote,
+      ),
+  );
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -215,11 +239,15 @@ export function LeadForm({
       </div>
       <div className="lead-form__grid">
         {form.fields?.map((field) => {
-          const fieldLabel =
+          const configuredFieldLabel =
             field.label ||
             (locale === "ar"
               ? arabicFieldLabels[field.name] || field.name
               : field.name);
+          const fieldLabel =
+            field.type === "checkbox"
+              ? configuredFieldLabel.replace(/^[□☐\s]+/u, "")
+              : configuredFieldLabel;
           const groupHeading =
             locale === "ar" && field.groupHeading
               ? arabicGroupHeadings[field.groupHeading] || field.groupHeading
@@ -291,7 +319,9 @@ export function LeadForm({
           );
         })}
       </div>
-      {privacyNote ? <p className="lead-form__privacy">{privacyNote}</p> : null}
+      {privacyNote && !privacyRepeatsCheckbox ? (
+        <p className="lead-form__privacy">{privacyNote}</p>
+      ) : null}
       {error ? (
         <p className="lead-form__error" role="alert">
           {error}

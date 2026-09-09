@@ -177,6 +177,14 @@ function CardIcon({ name }: { name?: string | null }) {
   return null;
 }
 
+function programmeDayTitle(title: string) {
+  const separator = title.indexOf(":");
+  if (separator < 0) return null;
+  const day = title.slice(0, separator).trim();
+  const topic = title.slice(separator + 1).trim();
+  return day && topic ? { day, topic } : null;
+}
+
 function CardSection({
   locale,
   section,
@@ -275,6 +283,10 @@ function CardSection({
             const imageOverlay = Boolean(
               card.media && !partnerCategory && !imageAboveCopy,
             );
+            const programmeTitle =
+              section.anchorID === "programme-days"
+                ? programmeDayTitle(card.title)
+                : null;
             const content = (
               <>
                 {card.media ? (
@@ -294,7 +306,14 @@ function CardSection({
                   ) : null}
                   {card.eyebrow ? <span>{card.eyebrow}</span> : null}
                   {card.meta && partnerCategory ? <small>{card.meta}</small> : null}
-                  <h3>{card.title}</h3>
+                  {programmeTitle ? (
+                    <h3 className="simf-programme-day-title">
+                      <span>{programmeTitle.day}</span>
+                      <small>{programmeTitle.topic}</small>
+                    </h3>
+                  ) : (
+                    <h3>{card.title}</h3>
+                  )}
                   {card.body ? <p>{card.body}</p> : null}
                   {card.button?.label ? (
                     <span className="simf-content-card__link">

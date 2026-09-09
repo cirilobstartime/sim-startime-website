@@ -18514,6 +18514,99 @@ body .simf-homepage-about .simf-option-hero__review-lead {
     linear-gradient(90deg, rgba(5, 10, 23, 0.12), transparent 72%) !important;
 }
 
+/* Compact heading scale approved for long English and Arabic editorial copy. */
+.simf-content-page .simf-inner-hero__content h1 {
+  font-size: clamp(42px, 4.4vw, 62px);
+}
+
+.simf-option-about__copy h2,
+.simf-option-section-head h2,
+.simf-option-film__copy h2,
+.simf-option-legacy h2,
+.simf-option-partners h2,
+.simf-option-sponsor h2,
+.simf-content-page .simf-section-head h2,
+.simf-update-feature__copy h2,
+.simf-update-cta__content h2 {
+  font-size: clamp(28px, 3vw, 42px);
+}
+
+.simf-related-updates__head h2 {
+  font-size: clamp(27px, 2.7vw, 38px);
+}
+
+.simf-updates-hero__copy h1 {
+  font-size: clamp(40px, 4.7vw, 64px);
+}
+
+.simf-site[lang="ar"] .simf-option-about__copy h2,
+.simf-site[lang="ar"] .simf-option-section-head h2,
+.simf-site[lang="ar"] .simf-option-film__copy h2,
+.simf-site[lang="ar"] .simf-option-legacy h2,
+.simf-site[lang="ar"] .simf-option-partners h2,
+.simf-site[lang="ar"] .simf-option-sponsor h2,
+.simf-site[lang="ar"].simf-content-page .simf-section-head h2,
+.simf-site[lang="ar"] .simf-update-feature__copy h2,
+.simf-site[lang="ar"] .simf-update-cta__content h2 {
+  font-size: clamp(27px, 2.8vw, 38px);
+}
+
+/* The sponsor introduction is unusually long, so give it a quieter editorial
+   scale without changing the CMS copy or the surrounding section layout. */
+.simf-content-page--sponsor
+  .simf-content-sponsor-rail
+  .simf-section-head h2 {
+  font-size: clamp(24px, 2.25vw, 32px);
+  line-height: 1.12;
+}
+
+.simf-site[lang="ar"].simf-content-page--sponsor
+  .simf-content-sponsor-rail
+  .simf-section-head h2 {
+  font-size: clamp(25px, 2.2vw, 32px);
+}
+
+.simf-site[lang="ar"].simf-content-page
+  .simf-content-section--key-topics
+  .simf-section-head h2 {
+  font-size: clamp(26px, 2.5vw, 36px);
+}
+
+/* Programme cards use a clear day -> topic -> description hierarchy. */
+.simf-content-section--programme-days .simf-programme-day-title {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.simf-content-section--programme-days .simf-programme-day-title > span {
+  font-size: clamp(23px, 2vw, 28px);
+  font-weight: 650;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.simf-content-section--programme-days .simf-programme-day-title > small {
+  font-size: clamp(17px, 1.55vw, 21px);
+  font-weight: 520;
+  line-height: 1.35;
+}
+
+@media (max-width: 800px) {
+  .simf-content-page .simf-inner-hero__content h1,
+  .simf-updates-hero__copy h1 {
+    font-size: clamp(36px, 10vw, 46px);
+  }
+
+  .simf-content-section--programme-days .simf-programme-day-title > span {
+    font-size: 23px;
+  }
+
+  .simf-content-section--programme-days .simf-programme-day-title > small {
+    font-size: 17px;
+  }
+}
+
 [dir="rtl"].simf-content-page--sponsor
   .simf-content-section--sponsorship-value
   .simf-content-card__media::after {

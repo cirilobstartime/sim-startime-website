@@ -15,15 +15,15 @@ function splitLegacyCredentials(value: string) {
     },
     "رئيس هيئة الأركان العامة": {
       role: "رئيس هيئة الأركان العامة",
-      workplace: "القوات المسلحة السعودية",
+      workplace: "",
     },
     "نائب رئيس هيئة الأركان العامة": {
       role: "نائب رئيس هيئة الأركان العامة",
-      workplace: "القوات المسلحة السعودية",
+      workplace: "",
     },
     "رئيس أركان القوات البحرية الملكية السعودية": {
-      role: "رئيس الأركان",
-      workplace: "القوات البحرية الملكية السعودية",
+      role: "رئيس أركان القوات البحرية الملكية السعودية",
+      workplace: "",
     },
   };
   if (knownRoles[normalized]) return knownRoles[normalized];

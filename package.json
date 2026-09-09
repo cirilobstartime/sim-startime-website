@@ -16,6 +16,7 @@
     "payload:generate:types": "mkdir -p src/generated && payload generate:types",
     "payload:generate:importmap": "payload generate:importmap",
     "migrate:partner-badges": "tsx scripts/migrate-partner-badge-tiers.ts",
+    "migrate:approved-copy-fixes": "tsx scripts/migrate-approved-copy-fixes.ts",
     "import:press-releases": "tsx scripts/import-simf-press-releases.ts",
     "export:approved-content": "tsx scripts/export-approved-live-content.ts",
     "import:approved-content": "tsx scripts/import-approved-live-content.ts",
