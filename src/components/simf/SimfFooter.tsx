@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Locale, SimfFooterSection } from "@/content/types";
 import { getMediaTitle, getMediaURL } from "../CmsImage";
+import { CmsText } from "./CmsText";
 
 type Props = {
   footer?: SimfFooterSection;
@@ -57,10 +58,10 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
             />
           </picture>
           <p>
-            {footer?.bio ||
+            <CmsText value={footer?.bio ||
               (ar
                 ? "الملتقى البحري السعودي الدولي الرابع"
-                : "Fourth Saudi International Maritime Forum")}
+                : "Fourth Saudi International Maritime Forum")} />
           </p>
           <div className="simf-footer__social">
             {footer?.socialLinks?.map((link) => (
@@ -68,6 +69,7 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
                 aria-label={link.platform}
                 href={link.href}
                 key={link.platform}
+                prefetch={false}
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -83,10 +85,10 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
           </div>
         </div>
         <div className="simf-footer__contact">
-          <h2>{footer?.contactHeading || (ar ? "تواصل معنا" : "Contact")}</h2>
+          <h2><CmsText value={footer?.contactHeading || (ar ? "تواصل معنا" : "Contact")} /></h2>
           <p>
             <MapPin aria-hidden />
-            <span>{footer?.address}</span>
+            <span>{footer?.address ? <CmsText value={footer.address} /> : null}</span>
           </p>
           <Link href={`tel:${footer?.phone || "920010500"}`}>
             <Phone aria-hidden />
@@ -98,16 +100,17 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
           </Link>
         </div>
         <div className="simf-footer__links">
-          <h2>{footer?.linksHeading || (ar ? "استكشف SIM" : "Explore SIM")}</h2>
+          <h2><CmsText value={footer?.linksHeading || (ar ? "استكشف SIM" : "Explore SIM")} /></h2>
           <div className="simf-footer__links-grid">
             {importantLinks?.map((link) => (
               <Link
                 href={link.href}
                 key={link.label}
+                prefetch={false}
                 rel={isExternal(link.href) ? "noopener noreferrer" : undefined}
                 target={isExternal(link.href) ? "_blank" : undefined}
               >
-                {link.label}
+                <CmsText value={link.label} />
                 <ArrowUpRight aria-hidden />
               </Link>
             ))}
@@ -121,6 +124,7 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
               <Link
                 href={ar ? "https://startime.sa/ar" : "https://startime.sa"}
                 key={`${part}-${index}`}
+                prefetch={false}
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -132,10 +136,10 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
           )}
         </p>
         <div>
-          <Link href={footer?.privacyHref || "https://startime.sa/privacy-policy"}>
-            {footer?.privacyLabel || (ar ? "سياسة الخصوصية" : "Privacy Policy")}
+          <Link href={footer?.privacyHref || "https://startime.sa/privacy-policy"} prefetch={false}>
+            <CmsText value={footer?.privacyLabel || (ar ? "سياسة الخصوصية" : "Privacy Policy")} />
           </Link>
-          <Link href={homeHref}>{footer?.homeLabel || (ar ? "الرئيسية" : "Home")}</Link>
+          <Link href={homeHref} prefetch={false}><CmsText value={footer?.homeLabel || (ar ? "الرئيسية" : "Home")} /></Link>
         </div>
       </div>
     </footer>

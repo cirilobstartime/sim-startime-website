@@ -43,8 +43,10 @@ export const TimelineBlock: Block = {
         },
         {
           name: "icon",
+          label: "Step icon",
           type: "select",
           options: [
+            { label: "No icon", value: "none" },
             { label: "Compass", value: "compass" },
             { label: "Lightbulb", value: "lightbulb" },
             { label: "Handshake", value: "handshake" },
@@ -54,6 +56,11 @@ export const TimelineBlock: Block = {
             { label: "Chart", value: "chart" },
             { label: "Sparkle", value: "sparkle" },
           ],
+          admin: {
+            description:
+              "Optional content icon. Select No icon when this timeline step should have no icon.",
+            isClearable: true,
+          },
         },
       ],
     },

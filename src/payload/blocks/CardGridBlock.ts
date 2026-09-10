@@ -98,6 +98,7 @@ export const CardGridBlock: Block = {
           label: "Card icon",
           type: "select",
           options: [
+            { label: "No icon", value: "none" },
             { label: "Shield", value: "shield" },
             { label: "Anchor", value: "anchor" },
             { label: "Circuitry", value: "circuitry" },
@@ -120,6 +121,11 @@ export const CardGridBlock: Block = {
             { label: "Phone", value: "phone" },
             { label: "Map pin", value: "map-pin" },
           ],
+          admin: {
+            description:
+              "Optional content icon. Select No icon when this card should contain text or imagery only.",
+            isClearable: true,
+          },
         },
         {
           name: "meta",

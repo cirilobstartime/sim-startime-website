@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CardGridSection, Locale } from "@/content/types";
 import { CmsImage } from "../CmsImage";
+import { CmsText } from "./CmsText";
 
 export function SimfPartnerRail({
   locale,
@@ -92,9 +93,9 @@ export function SimfPartnerRail({
               />
             </div>
             {card.meta ? (
-              <span className="simf-option-partners__type">{card.meta}</span>
+              <span className="simf-option-partners__type"><CmsText value={card.meta} /></span>
             ) : showNames ? (
-              <span>{card.title}</span>
+              <span><CmsText value={card.title} /></span>
             ) : null}
           </article>
         ))}

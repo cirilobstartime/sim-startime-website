@@ -1,6 +1,12 @@
 import type { CollectionConfig, Where } from "payload";
+import { absoluteHttpURLValidation } from "@/lib/publicHref";
 import { authenticatedStaff } from "../access";
 import { pageBlocks } from "../blocks";
+import {
+  PUBLIC_CACHE_TAGS,
+  revalidateCollectionAfterChange,
+  revalidateCollectionAfterDelete,
+} from "../hooks/revalidatePublicContent";
 
 const pageBlockOptions: Record<string, string[]> = {
   "simf-microsite-home": [
@@ -155,6 +161,8 @@ export const Pages: CollectionConfig = {
     update: authenticatedStaff,
   },
   hooks: {
+    afterChange: [revalidateCollectionAfterChange([PUBLIC_CACHE_TAGS.pages])],
+    afterDelete: [revalidateCollectionAfterDelete([PUBLIC_CACHE_TAGS.pages])],
     beforeValidate: [({ data }) => ensureSectionNames(data)],
   },
   fields: [
@@ -244,6 +252,7 @@ export const Pages: CollectionConfig = {
                   name: "canonicalURL",
                   type: "text",
                   localized: true,
+                  validate: absoluteHttpURLValidation,
                 },
                 {
                   name: "indexable",

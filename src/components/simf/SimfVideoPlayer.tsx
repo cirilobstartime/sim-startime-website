@@ -190,6 +190,7 @@ export function SimfVideoPlayer({
             }
           }}
           ref={youtube}
+          loading="lazy"
           src={`https://www.youtube.com/embed/${youtubeID}?autoplay=0&mute=1&controls=0&disablekb=1&enablejsapi=1&playsinline=1&rel=0&modestbranding=1`}
           title={ar ? "فيلم الملتقى البحري السعودي الدولي" : "Saudi International Maritime Forum film"}
         />
@@ -211,7 +212,7 @@ export function SimfVideoPlayer({
         playsInline
         muted={muted}
         poster={desktopPosterURL}
-        preload="metadata"
+        preload="none"
         ref={media}
         tabIndex={hasStarted ? 0 : -1}
       >

@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { publicHrefValidation } from "@/lib/publicHref";
 import { sectionControls } from "./shared";
 
 export const NewsMosaicBlock: Block = {
@@ -66,10 +67,10 @@ export const NewsMosaicBlock: Block = {
               "Optional portrait news image for phones (4:5). Leave empty to use the desktop news image automatically. JPEG/PNG uploads become WebP automatically.",
           },
         },
-        { name: "href", type: "text" },
+        { name: "href", type: "text", validate: publicHrefValidation },
       ],
     },
     { name: "ctaLabel", type: "text" },
-    { name: "ctaHref", type: "text" },
+    { name: "ctaHref", type: "text", validate: publicHrefValidation },
   ],
 };

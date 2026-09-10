@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { publicHrefValidation } from "@/lib/publicHref";
 import { sectionControls } from "./shared";
 
 export const LegacyBlock: Block = {
@@ -21,6 +22,7 @@ export const LegacyBlock: Block = {
       name: "ctaHref",
       label: "Call-to-action link",
       type: "text",
+      validate: publicHrefValidation,
       admin: {
         description: "Internal path or full URL, for example /programme.",
       },
@@ -30,7 +32,15 @@ export const LegacyBlock: Block = {
       type: "array",
       minRows: 1,
       fields: [
-        { name: "value", type: "text", required: true },
+        {
+          name: "value",
+          type: "text",
+          required: true,
+          admin: {
+            description:
+              "Enter the complete value exactly as it should appear, including symbol position (for example +40, 40+, %80, or 80%).",
+          },
+        },
         { name: "label", type: "text", required: true },
       ],
     },
@@ -62,7 +72,7 @@ export const LegacyBlock: Block = {
               "Optional portrait edition image for phones (4:5). Leave empty to use the desktop edition image automatically. JPEG/PNG uploads become WebP automatically.",
           },
         },
-        { name: "href", type: "text" },
+        { name: "href", type: "text", validate: publicHrefValidation },
         { name: "visible", type: "checkbox", defaultValue: true },
       ],
     },

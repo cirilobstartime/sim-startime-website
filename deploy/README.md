@@ -339,6 +339,42 @@ curl -I https://sim.startime.sa/
 
 Never reload Nginx if `sudo nginx -t` reports an error.
 
+### Compression and cache verification
+
+The maintained Nginx configurations enable gzip for CSS, JavaScript, JSON,
+XML, SVG, and text responses. Next.js also keeps response compression enabled.
+Do not add an HTML proxy cache: public HTML carries request-specific CSP
+nonces and locale behavior, while admin pages, APIs, and form submissions must
+remain private and uncached.
+
+Hashed Next.js assets are immutable, and public CMS media uses a long shared
+cache. Media URLs include a CMS update version, so replacing an image produces
+a fresh URL. Page, update, navigation, footer, and marketing data is cached in
+the application and invalidated immediately by the corresponding Payload CMS
+save or delete hook.
+
+After every Nginx or application release, verify the effective policy:
+
+```bash
+sudo nginx -t
+curl --compressed -sSI https://sim.startime.sa/ | grep -Ei '^(HTTP|content-encoding|cache-control|content-security-policy|vary):'
+curl --compressed -sSI https://sim.startime.sa/content-admin | grep -Ei '^(HTTP|cache-control|content-security-policy):'
+curl --compressed -sSI https://sim.startime.sa/api/media/file/KNOWN-FILE.webp | grep -Ei '^(HTTP|content-encoding|cache-control|vary):'
+```
+
+Expected results:
+
+- public HTML is successful and remains `private`/`no-store`;
+- `/content-admin` and submission APIs remain `private, no-store`;
+- hashed `/_next/static/` assets are `public` and `immutable`;
+- `/api/media/file/` is public with browser and shared-cache lifetimes;
+- compressible responses include `Vary: Accept-Encoding` and, when large
+  enough, `Content-Encoding: gzip`.
+
+If a compression directive makes `nginx -t` fail, do not reload Nginx. Restore
+the last valid site configuration and confirm the server's installed Nginx
+modules before enabling optional module-specific directives such as Brotli.
+
 DNS can be checked before requesting a certificate:
 
 ```bash

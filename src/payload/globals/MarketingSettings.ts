@@ -1,5 +1,10 @@
 import type { GlobalConfig } from "payload";
+import { publicHrefValidation } from "@/lib/publicHref";
 import { authenticatedStaff } from "../access";
+import {
+  PUBLIC_CACHE_TAGS,
+  revalidateGlobalAfterChange,
+} from "../hooks/revalidatePublicContent";
 
 export const MarketingSettings: GlobalConfig = {
   slug: "marketing-settings",
@@ -12,6 +17,11 @@ export const MarketingSettings: GlobalConfig = {
   access: {
     read: () => true,
     update: authenticatedStaff,
+  },
+  hooks: {
+    afterChange: [
+      revalidateGlobalAfterChange([PUBLIC_CACHE_TAGS.marketing]),
+    ],
   },
   fields: [
     {
@@ -50,7 +60,7 @@ export const MarketingSettings: GlobalConfig = {
               name: "enableAnalytics",
               label: "Enable analytics tags",
               type: "checkbox",
-              defaultValue: false,
+              defaultValue: true,
             },
             {
               name: "defaultConsentDenied",
@@ -161,6 +171,7 @@ export const MarketingSettings: GlobalConfig = {
               label: "Privacy policy URL",
               type: "text",
               localized: true,
+              validate: publicHrefValidation,
             },
           ],
         },
@@ -169,7 +180,7 @@ export const MarketingSettings: GlobalConfig = {
   ],
   versions: {
     max: 20,
-    // Payload 3.86 currently passes an undefined locale while counting
+    // Payload can pass an undefined locale while counting
     // localized draft versions for Globals in the Admin UI. Keep localized
     // field values and drafts, but use the stable shared publication status
     // for this site-wide configuration singleton.

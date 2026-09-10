@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { publicHrefValidation } from "@/lib/publicHref";
 import { sectionControls } from "./shared";
 
 export const PartnerCategoryBlock: Block = {
@@ -113,6 +114,7 @@ export const PartnerCategoryBlock: Block = {
           name: "href",
           label: "Organization website",
           type: "text",
+          validate: publicHrefValidation,
         },
         {
           name: "openInNewTab",

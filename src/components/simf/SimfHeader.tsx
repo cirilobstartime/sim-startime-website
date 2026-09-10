@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Locale, MediaValue } from "@/content/types";
 import { getMediaTitle, getMediaURL } from "../CmsImage";
+import { CmsText } from "./CmsText";
 
 type Props = {
   homeHref: string;
@@ -61,6 +62,7 @@ export function SimfHeader({
           aria-label={logoAlt}
           className={`simf-header__brand${iconOnly ? " simf-header__brand--icon" : ""}`}
           href={homeHref}
+          prefetch={false}
         >
           <picture>
             {mobileLogoURL ? <source media="(max-width: 767px)" srcSet={mobileLogoURL} /> : null}
@@ -89,12 +91,13 @@ export function SimfHeader({
               href={item.href}
               key={item.href}
               onClick={() => setOpen(false)}
+              prefetch={false}
             >
-              {item.label}
+              <CmsText value={item.label} />
             </Link>
           ))}
-          <Link className="simf-header__mobile-cta" href={sponsorHref}>
-            {sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")}
+          <Link className="simf-header__mobile-cta" href={sponsorHref} prefetch={false}>
+            <CmsText value={sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")} />
             <ArrowUpRight aria-hidden />
           </Link>
         </nav>
@@ -112,8 +115,9 @@ export function SimfHeader({
             className="simf-button simf-button--small"
             data-track="simf-header-sponsor"
             href={sponsorHref}
+            prefetch={false}
           >
-            {sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")}
+            <CmsText value={sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")} />
             <ArrowUpRight aria-hidden />
           </Link>
           <button

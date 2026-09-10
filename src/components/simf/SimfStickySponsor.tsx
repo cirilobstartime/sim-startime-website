@@ -3,6 +3,7 @@
 import { ArrowUpRight } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CmsText } from "./CmsText";
 
 type Props = {
   href: string;
@@ -36,7 +37,7 @@ export function SimfStickySponsor({ href, label }: Props) {
       href={href}
       tabIndex={visible ? undefined : -1}
     >
-      <span>{label}</span>
+      <span><CmsText value={label} /></span>
       <ArrowUpRight aria-hidden />
     </Link>
   );

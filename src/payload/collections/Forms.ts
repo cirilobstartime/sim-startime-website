@@ -1,5 +1,10 @@
 import type { CollectionConfig } from "payload";
 import { authenticatedStaff } from "../access";
+import {
+  PUBLIC_CACHE_TAGS,
+  revalidateCollectionAfterChange,
+  revalidateCollectionAfterDelete,
+} from "../hooks/revalidatePublicContent";
 
 export const Forms: CollectionConfig = {
   slug: "forms",
@@ -16,6 +21,10 @@ export const Forms: CollectionConfig = {
     delete: authenticatedStaff,
     read: ({ req }) => (req.user ? true : { active: { equals: true } }),
     update: authenticatedStaff,
+  },
+  hooks: {
+    afterChange: [revalidateCollectionAfterChange([PUBLIC_CACHE_TAGS.pages])],
+    afterDelete: [revalidateCollectionAfterDelete([PUBLIC_CACHE_TAGS.pages])],
   },
   fields: [
     { name: "internalTitle", type: "text", required: true },

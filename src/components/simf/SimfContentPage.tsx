@@ -24,6 +24,7 @@ import {
   Phone,
   UsersThree,
 } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import type {
@@ -47,6 +48,8 @@ import { createFormToken } from "@/lib/formSecurity";
 import { standardPageSchema } from "@/lib/structuredData";
 import { CmsImage, getMediaURL } from "../CmsImage";
 import { LeadForm } from "../LeadForm";
+import { CmsHeroBackground } from "./CmsHeroBackground";
+import { CmsText } from "./CmsText";
 import { SimfFooter } from "./SimfFooter";
 import { formatMetricValue } from "./formatMetricValue";
 import { SimfHeader } from "./SimfHeader";
@@ -98,7 +101,7 @@ function Action({ button }: { button: Button }) {
       rel={external ? "noopener noreferrer" : undefined}
       target={button.openInNewTab || external ? "_blank" : undefined}
     >
-      {button.label}
+      <CmsText value={button.label} />
       {icon}
     </Link>
   );
@@ -145,9 +148,9 @@ function SectionHeading({
 }) {
   return (
     <div className="simf-section-head">
-      {eyebrow ? <p className="simf-eyebrow">{eyebrow}</p> : null}
-      <h2>{heading}</h2>
-      {body ? <p>{body}</p> : null}
+      {eyebrow ? <p className="simf-eyebrow"><CmsText value={eyebrow} /></p> : null}
+      <h2><CmsText value={heading} /></h2>
+      {body ? <p><CmsText value={body} /></p> : null}
     </div>
   );
 }
@@ -195,6 +198,8 @@ function CardSection({
 }) {
   const cards = section.cards.filter((card) => card.visible !== false);
   const visual = appearance(section);
+  const lifecycleSection =
+    section.anchorID === "forum-lifecycle" || section.anchorID === "sponsorship-value";
   if (section.anchorID === "all-speakers") {
     const speakers = section.cards.map((speaker) => ({
       country: speaker.country || speaker.meta,
@@ -262,9 +267,9 @@ function CardSection({
               <details key={card.id || card.title} open={index === 0}>
                 <summary>
                   <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{card.title}</strong>
+                  <strong><CmsText value={card.title} /></strong>
                 </summary>
-                {card.body ? <p>{card.body}</p> : null}
+                {card.body ? <p><CmsText value={card.body} /></p> : null}
               </details>
             ))}
           </div>
@@ -282,8 +287,16 @@ function CardSection({
         <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
         <div className={`simf-content-cards__grid simf-content-cards__grid--${section.layout || "editorial"}`}>
           {cards.map((card, index) => {
+            const lifecycleIcon =
+              lifecycleSection
+                ? [
+                    "/assets/simf-microsite/sponsor/lifecycle-before.svg?v=brand-blue-20260910",
+                    "/assets/simf-microsite/sponsor/lifecycle-during.svg?v=brand-blue-20260910",
+                    "/assets/simf-microsite/sponsor/lifecycle-after.svg?v=brand-blue-20260910",
+                  ][index]
+                : null;
             const imageOverlay = Boolean(
-              card.media && !partnerCategory && !imageAboveCopy,
+              card.media && !lifecycleIcon && !partnerCategory && !imageAboveCopy,
             );
             const programmeTitle =
               section.anchorID === "programme-days"
@@ -291,7 +304,7 @@ function CardSection({
                 : null;
             const content = (
               <>
-                {card.media ? (
+                {!lifecycleIcon && card.media ? (
                   <div className="simf-content-card__media">
                     <CmsImage
                       alt={partnerCategory ? card.title : ""}
@@ -302,25 +315,31 @@ function CardSection({
                   </div>
                 ) : null}
                 <div className="simf-content-card__copy">
-                  {card.icon ? (
+                  {lifecycleIcon ? (
+                    <div className="simf-content-card__lifecycle-icon" aria-hidden="true">
+                      {/* The supplied SVG is decorative; the card heading carries its meaning. */}
+                      <Image alt="" height={579} src={lifecycleIcon} width={654} />
+                    </div>
+                  ) : null}
+                  {card.icon && card.icon !== "none" && section.anchorID !== "executive-track" ? (
                     <div className="simf-content-card__icon">
                       <CardIcon name={card.icon} />
                     </div>
                   ) : null}
-                  {card.eyebrow ? <span>{card.eyebrow}</span> : null}
-                  {card.meta && partnerCategory ? <small>{card.meta}</small> : null}
+                  {card.eyebrow ? <span><CmsText value={card.eyebrow} /></span> : null}
+                  {card.meta && partnerCategory ? <small><CmsText value={card.meta} /></small> : null}
                   {programmeTitle ? (
                     <h3 className="simf-programme-day-title">
-                      <span>{programmeTitle.day}</span>
-                      <small>{programmeTitle.topic}</small>
+                      <span><CmsText value={programmeTitle.day} /></span>
+                      <small><CmsText value={programmeTitle.topic} /></small>
                     </h3>
                   ) : (
-                    <h3>{card.title}</h3>
+                    <h3><CmsText value={card.title} /></h3>
                   )}
-                  {card.body ? <p>{card.body}</p> : null}
+                  {card.body ? <p><CmsText value={card.body} /></p> : null}
                   {card.button?.label ? (
                     <span className="simf-content-card__link">
-                      {card.button.label}
+                      <CmsText value={card.button.label} />
                       <ArrowUpRight aria-hidden />
                     </span>
                   ) : null}
@@ -460,7 +479,7 @@ function PartnerCategory({
                   <span
                     className={`simf-partner-category__footer-label simf-partner-category__footer-label--${selectedTier}`}
                   >
-                    {tierLabels[selectedTier]}
+                    <CmsText value={tierLabels[selectedTier]} />
                   </span>
                 ) : null}
               </>
@@ -550,7 +569,7 @@ function Metrics({ locale, section }: { locale: Locale; section: MetricRailSecti
           {section.metrics.map((metric) => (
             <div key={`${metric.value}-${metric.label}`}>
               <strong dir="ltr">{formatMetricValue(locale, metric.value)}</strong>
-              <span>{metric.label}</span>
+              <span><CmsText value={metric.label} /></span>
             </div>
           ))}
         </div>
@@ -593,9 +612,9 @@ function ValueTimeline({ section }: { section: TimelineSection }) {
                   : String(index + 1).padStart(2, "0")}
               </span>
               <div>
-                {step.label ? <small>{step.label}</small> : null}
-                <h3>{step.title}</h3>
-                {step.body ? <p>{step.body}</p> : null}
+                {step.label ? <small><CmsText value={step.label} /></small> : null}
+                <h3><CmsText value={step.title} /></h3>
+                {step.body ? <p><CmsText value={step.body} /></p> : null}
               </div>
             </article>
           ))}
@@ -621,8 +640,13 @@ function Film({ locale, section }: { locale: Locale; section: VideoFeatureSectio
             locale={locale}
             mobilePoster={section.mobilePoster}
             poster={section.poster}
-            video={section.video}
-            youtubeURL={section.youtubeURL}
+            video={section.videoSource === "youtube" ? undefined : section.video}
+            youtubeURL={
+              section.videoSource === "youtube" ||
+              (!section.videoSource && !section.video)
+                ? section.youtubeURL
+                : null
+            }
           />
         ) : null}
       </div>
@@ -765,35 +789,33 @@ export function SimfContentPage({
             __html: JSON.stringify(structuredData).replaceAll("<", "\\u003c"),
           }}
           nonce={nonce}
+          suppressHydrationWarning
           type="application/ld+json"
         />
         {hero && hero.blockType === "hero" ? (
           <section className="simf-inner-hero">
             <div className="simf-inner-hero__media">
-              <CmsImage
-                alt=""
-                className={hero.mobileMedia ? "simf-inner-hero__image--desktop" : undefined}
+              <CmsHeroBackground
+                desktopBackgroundType={hero.desktopBackgroundType}
+                desktopBackgroundVideo={hero.desktopBackgroundVideo}
+                desktopBackgroundYouTubeURL={hero.desktopBackgroundYouTubeURL}
+                locale={locale}
                 media={hero.media}
+                mobileBackgroundType={hero.mobileBackgroundType}
+                mobileBackgroundVideo={hero.mobileBackgroundVideo}
+                mobileBackgroundYouTubeURL={hero.mobileBackgroundYouTubeURL}
+                mobileMedia={hero.mobileMedia}
                 priority
                 sizes="100vw"
               />
-              {hero.mobileMedia ? (
-                <CmsImage
-                  alt=""
-                  className="simf-inner-hero__image--mobile"
-                  media={hero.mobileMedia}
-                  priority
-                  sizes="100vw"
-                />
-              ) : null}
             </div>
             <div className="simf-inner-hero__shade" />
             <div className="simf-shell simf-inner-hero__content">
-              {hero.eyebrow ? <p className="simf-eyebrow">{hero.eyebrow}</p> : null}
-              <h1>{hero.heading}</h1>
-              {hero.body ? <p>{hero.body}</p> : null}
+              {hero.eyebrow ? <p className="simf-eyebrow"><CmsText value={hero.eyebrow} /></p> : null}
+              <h1><CmsText value={hero.heading} /></h1>
+              {hero.body ? <p><CmsText value={hero.body} /></p> : null}
               {hero.note ? (
-                <p className="simf-inner-hero__note">{hero.note}</p>
+                <p className="simf-inner-hero__note"><CmsText value={hero.note} /></p>
               ) : null}
               {hero.eventDetails?.length ? (
                 <div className="simf-inner-hero__details">
@@ -805,8 +827,8 @@ export function SimfContentPage({
                         <MapPin aria-hidden />
                       )}
                       <span>
-                        <small>{detail.label}</small>
-                        <strong>{detail.value}</strong>
+                        <small><CmsText value={detail.label} /></small>
+                        <strong><CmsText value={detail.value} /></strong>
                       </span>
                     </div>
                   ))}

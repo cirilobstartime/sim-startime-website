@@ -1,3 +1,5 @@
+import { CmsText } from "./CmsText";
+
 function splitLegacyCredentials(value: string) {
   const normalized = value.trim();
   const knownRoles: Record<string, { role: string; workplace: string }> = {
@@ -48,8 +50,8 @@ export function SimfSpeakerRole({
   const organization = workplace?.trim() || legacy.workplace;
   return (
     <p className="simf-speaker-role">
-      {role ? <strong>{role}</strong> : null}
-      {organization ? <span>{organization}</span> : null}
+      {role ? <strong><CmsText value={role} /></strong> : null}
+      {organization ? <span><CmsText value={organization} /></span> : null}
     </p>
   );
 }

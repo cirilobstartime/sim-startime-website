@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { publicHrefValidation } from "@/lib/publicHref";
 import { sectionControls } from "./shared";
 
 export const SimfHeaderBlock: Block = {
@@ -38,11 +39,11 @@ export const SimfHeaderBlock: Block = {
       type: "array",
       fields: [
         { name: "label", type: "text", required: true },
-        { name: "href", type: "text", required: true },
+        { name: "href", type: "text", required: true, validate: publicHrefValidation },
       ],
     },
     { name: "sponsorLabel", type: "text", required: true },
-    { name: "sponsorHref", type: "text", required: true },
+    { name: "sponsorHref", type: "text", required: true, validate: publicHrefValidation },
     {
       name: "languageSwitchLabel",
       type: "text",

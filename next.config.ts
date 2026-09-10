@@ -2,10 +2,14 @@ import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  compress: true,
+  distDir: process.env.NEXT_DIST_DIR || ".next",
+  poweredByHeader: false,
   output:
     process.env.NEXT_OUTPUT_STANDALONE === "true" ? "standalone" : undefined,
   experimental: {
     cpus: 1,
+    optimizePackageImports: ["@phosphor-icons/react"],
   },
   async headers() {
     const publicAssetHeaders = [
@@ -65,7 +69,7 @@ const nextConfig: NextConfig = {
           {
             key: "Cache-Control",
             value:
-              "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+              "public, max-age=604800, s-maxage=2592000, stale-while-revalidate=604800",
           },
         ],
       },
@@ -73,6 +77,11 @@ const nextConfig: NextConfig = {
   },
   images: {
     deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920, 2048],
+    localPatterns: [
+      { pathname: "/api/media/file/**" },
+      { pathname: "/assets/**" },
+      { pathname: "/icon.png" },
+    ],
     minimumCacheTTL: 604800,
     remotePatterns: [
       {

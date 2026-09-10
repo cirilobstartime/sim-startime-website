@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useEffect, useRef } from "react";
 import type { Locale, MetricRailSection } from "@/content/types";
 import { formatMetricValue } from "./formatMetricValue";
+import { CmsText } from "./CmsText";
 
 export function SimfMetricSwiper({
   autoPlay = false,
@@ -63,7 +64,7 @@ export function SimfMetricSwiper({
             >
               {formatMetricValue(locale, metric.value)}
             </strong>
-            <span>{metric.label}</span>
+            <span><CmsText value={metric.label} /></span>
           </div>
         ))}
       </div>

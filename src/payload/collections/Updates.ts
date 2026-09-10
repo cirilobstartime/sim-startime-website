@@ -1,5 +1,11 @@
 import type { CollectionConfig } from "payload";
+import { absoluteHttpURLValidation } from "@/lib/publicHref";
 import { authenticatedStaff } from "../access";
+import {
+  PUBLIC_CACHE_TAGS,
+  revalidateCollectionAfterChange,
+  revalidateCollectionAfterDelete,
+} from "../hooks/revalidatePublicContent";
 
 type LegacyUpdateSection = {
   body?: unknown;
@@ -95,6 +101,8 @@ export const Updates: CollectionConfig = {
     update: authenticatedStaff,
   },
   hooks: {
+    afterChange: [revalidateCollectionAfterChange([PUBLIC_CACHE_TAGS.updates])],
+    afterDelete: [revalidateCollectionAfterDelete([PUBLIC_CACHE_TAGS.updates])],
     afterRead: [({ doc }) => normalizeLegacyArticleContent(doc)],
     beforeChange: [({ data, originalDoc }) => addAutomaticPublicationDate(data, originalDoc)],
     beforeValidate: [({ data }) => data ? normalizeLegacyArticleContent(data) : data],
@@ -273,6 +281,7 @@ export const Updates: CollectionConfig = {
                   name: "canonicalURL",
                   type: "text",
                   localized: true,
+                  validate: absoluteHttpURLValidation,
                 },
                 {
                   name: "indexable",

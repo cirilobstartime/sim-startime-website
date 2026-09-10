@@ -15,7 +15,15 @@ export const MetricRailBlock: Block = {
       minRows: 1,
       admin: { description: "Unlimited repeatable facts. Reorder to control the moving rail." },
       fields: [
-        { name: "value", type: "text", required: true },
+        {
+          name: "value",
+          type: "text",
+          required: true,
+          admin: {
+            description:
+              "Enter the complete value exactly as it should appear, including symbol position (for example +40, 40+, %80, or 80%).",
+          },
+        },
         { name: "label", type: "textarea", required: true },
       ],
     },

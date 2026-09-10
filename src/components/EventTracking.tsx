@@ -33,7 +33,6 @@ export function EventTracking() {
           ? event.target.closest<HTMLElement>("a, button")
           : null;
       if (!target) return;
-      if (target.closest(".cookie-consent")) return;
       const href =
         target instanceof HTMLAnchorElement
           ? target.getAttribute("href") || ""
@@ -117,7 +116,11 @@ export function EventTracking() {
     const onPlay = (event: Event) => {
       const video =
         event.target instanceof HTMLVideoElement ? event.target : null;
-      if (!video || playedVideos.current.has(video)) return;
+      if (
+        !video ||
+        video.dataset.backgroundVideo === "true" ||
+        playedVideos.current.has(video)
+      ) return;
       playedVideos.current.add(video);
       pushDataLayerEvent({
         event: "startime_video_start",
@@ -127,21 +130,26 @@ export function EventTracking() {
     };
 
     const reached = new Set<number>();
+    let scrollFrame: number | null = null;
     const onScroll = () => {
-      const available =
-        document.documentElement.scrollHeight - window.innerHeight;
-      if (available <= 0) return;
-      const depth = Math.round((window.scrollY / available) * 100);
-      for (const threshold of [25, 50, 75, 90]) {
-        if (depth >= threshold && !reached.has(threshold)) {
-          reached.add(threshold);
-          pushDataLayerEvent({
-            event: "startime_scroll_depth",
-            page_path: window.location.pathname,
-            percent_scrolled: threshold,
-          });
+      if (scrollFrame !== null) return;
+      scrollFrame = window.requestAnimationFrame(() => {
+        scrollFrame = null;
+        const available =
+          document.documentElement.scrollHeight - window.innerHeight;
+        if (available <= 0) return;
+        const depth = Math.round((window.scrollY / available) * 100);
+        for (const threshold of [25, 50, 75, 90]) {
+          if (depth >= threshold && !reached.has(threshold)) {
+            reached.add(threshold);
+            pushDataLayerEvent({
+              event: "startime_scroll_depth",
+              page_path: window.location.pathname,
+              percent_scrolled: threshold,
+            });
+          }
         }
-      }
+      });
     };
 
     document.addEventListener("click", onClick);
@@ -155,6 +163,7 @@ export function EventTracking() {
       document.removeEventListener("play", onPlay, true);
       document.removeEventListener("submit", onSubmit);
       window.removeEventListener("scroll", onScroll);
+      if (scrollFrame !== null) window.cancelAnimationFrame(scrollFrame);
     };
   }, []);
 

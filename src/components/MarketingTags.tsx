@@ -15,12 +15,10 @@ export function MarketingTags({
     ? settings.ga4MeasurementID
     : "";
   if (!settings.enableAnalytics || (!gtmID && !ga4ID)) return null;
-  const initialConsent = settings.defaultConsentDenied ? "denied" : "granted";
-
   return (
     <>
       <Script id="startime-consent-default" nonce={nonce} strategy="afterInteractive">
-        {`window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments)};var stConsent=document.cookie.match(/(?:^|;\\s*)st_cookie_consent=(accepted|rejected)(?:;|$)/);var stState=stConsent?(stConsent[1]==='accepted'?'granted':'denied'):'${initialConsent}';gtag('consent','default',{ad_storage:stState,analytics_storage:stState,ad_user_data:stState,ad_personalization:stState,wait_for_update:500});`}
+        {`window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments)};gtag('consent','default',{ad_storage:'granted',analytics_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});window.dataLayer.push({event:'startime_analytics_ready',consent_state:'granted'});`}
       </Script>
       {gtmID ? (
         <>

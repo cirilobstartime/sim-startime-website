@@ -1,5 +1,9 @@
 import type { GlobalConfig } from "payload";
 import { authenticatedStaff } from "../access";
+import {
+  PUBLIC_CACHE_TAGS,
+  revalidateGlobalAfterChange,
+} from "../hooks/revalidatePublicContent";
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
@@ -12,6 +16,14 @@ export const SiteSettings: GlobalConfig = {
   access: {
     read: () => true,
     update: authenticatedStaff,
+  },
+  hooks: {
+    afterChange: [
+      revalidateGlobalAfterChange([
+        PUBLIC_CACHE_TAGS.siteSettings,
+        PUBLIC_CACHE_TAGS.pages,
+      ]),
+    ],
   },
   fields: [
     {

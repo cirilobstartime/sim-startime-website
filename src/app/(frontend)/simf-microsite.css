@@ -40,27 +40,6 @@
   text-align: right;
 }
 
-body:has(.simf-site) .cookie-consent {
-  border-color: rgba(40, 56, 112, 0.35);
-  background: rgba(7, 7, 13, 0.97);
-  color: #eef3f5;
-}
-
-body:has(.simf-site) .cookie-consent a {
-  color: var(--violet-light, #ADB7D0);
-}
-
-body:has(.simf-site) .cookie-consent .button--primary {
-  border-color: #283870;
-  background: #283870;
-  color: #fff;
-}
-
-body:has(.simf-site) .cookie-consent .button--ghost {
-  border-color: rgba(255, 255, 255, 0.36);
-  color: #fff;
-}
-
 .simf-site *,
 .simf-site *::before,
 .simf-site *::after {
@@ -2365,7 +2344,7 @@ body:has(.simf-site) .cookie-consent .button--ghost {
 
 .simf-content-page .simf-inner-hero__content .simf-eyebrow {
   margin-bottom: 20px;
-  color: #7f8ca5;
+  color: #aebbd0;
 }
 
 .simf-content-page .simf-inner-hero__content h1 {
@@ -2885,7 +2864,7 @@ body:has(.simf-site) .cookie-consent .button--ghost {
 }
 
 .simf-content-page .simf-content-value__steps article > span {
-  color: #7f8ca5;
+  color: #aebbd0;
   font-size: 13px;
   letter-spacing: 0.12em;
 }
@@ -4194,7 +4173,7 @@ body:has(.simf-site) .cookie-consent .button--ghost {
 .simf-homepage-about
   .simf-option-hero__review-title
   .simf-option-hero__ordinal {
-  color: #7f8ca5;
+  color: #aebbd0;
 }
 
 .simf-homepage-about .simf-option-hero__review-lead {
@@ -5312,7 +5291,7 @@ body:has(.simf-site) .cookie-consent .button--ghost {
   width: 19px;
   height: 19px;
   flex: 0 0 auto;
-  color: #7f8ca5;
+  color: #aebbd0;
 }
 
 .simf-site[data-page="sponsor"] .simf-inner-hero__details small,
@@ -5458,7 +5437,7 @@ body:has(.simf-site) .cookie-consent .button--ghost {
 }
 
 .simf-homepage-about .simf-option-hero__patronage > span:first-child {
-  color: #7f8ca5;
+  color: #aebbd0;
 }
 
 .simf-homepage-about .simf-option-hero__patronage > span:nth-child(2) {
@@ -5469,9 +5448,15 @@ body:has(.simf-site) .cookie-consent .button--ghost {
 
 .simf-homepage-about .simf-option-hero__minister {
   display: inline;
-  color: #7f8ca5;
+  color: #aebbd0;
   font-size: 13px;
   font-weight: 520;
+}
+
+.simf-site[lang="en"][data-page="homepage-option"]
+  .simf-option-hero__minister {
+  display: block;
+  margin-top: 4px;
 }
 
 .simf-homepage-about .simf-option-hero h1 {
@@ -5713,7 +5698,7 @@ body:has(.simf-site) .cookie-consent .button--ghost {
   width: 19px;
   height: 19px;
   flex: 0 0 auto;
-  color: #7f8ca5;
+  color: #aebbd0;
 }
 
 .simf-content-page .simf-inner-hero__details small,
@@ -5867,7 +5852,7 @@ body:has(.simf-site) .cookie-consent .button--ghost {
 }
 
 .simf-content-page .simf-content-accordion__items summary span {
-  color: #7f8ca5;
+  color: #aebbd0;
   font-size: 12px;
 }
 
@@ -6574,16 +6559,93 @@ body:has(.simf-site) .cookie-consent .button--ghost {
   margin-bottom: 24px;
 }
 
-.simf-content-page .simf-content-section--forum-lifecycle {
+.simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) {
   background: var(--simf-page-mist);
 }
 
-.simf-content-page .simf-content-section--forum-lifecycle .simf-section-head h2 {
+.simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-section-head h2 {
   color: #101936;
 }
 
-.simf-content-page .simf-content-section--forum-lifecycle .simf-content-card {
-  background: #101936;
+.simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card {
+  min-height: 338px;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid rgba(231, 191, 96, .2);
+  background:
+    radial-gradient(circle at 50% 3%, rgba(52, 70, 119, .34), transparent 48%),
+    linear-gradient(150deg, #121f42 0%, #09142d 58%, #071022 100%);
+  box-shadow: 0 24px 52px rgba(7, 16, 34, .13);
+}
+
+.simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card:hover {
+  border-color: rgba(231, 191, 96, .52);
+  background:
+    radial-gradient(circle at 50% 3%, rgba(61, 81, 137, .42), transparent 48%),
+    linear-gradient(150deg, #16264f 0%, #0b1835 58%, #081329 100%);
+}
+
+.simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card__copy {
+  width: 100%;
+  padding: 38px 34px 34px;
+  text-align: center;
+}
+
+.simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card__copy > span {
+  display: inline-block;
+  margin-top: 2px;
+  color: #e7bf60;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card__copy h3 {
+  margin-top: 12px;
+  color: #fff;
+}
+
+.simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card__copy p {
+  max-width: 42ch;
+  margin: 16px auto 0;
+  color: #d2d9e7;
+}
+
+.simf-content-page .simf-content-card__lifecycle-icon {
+  width: 112px;
+  height: 98px;
+  margin: 0 auto 22px;
+}
+
+.simf-content-page .simf-content-card__lifecycle-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+[dir="rtl"].simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card__copy {
+  text-align: center;
+}
+
+[dir="rtl"].simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card__copy > span {
+  letter-spacing: 0;
+}
+
+@media (max-width: 800px) {
+  .simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card {
+    min-height: 300px;
+  }
+
+  .simf-content-page :is(.simf-content-section--forum-lifecycle, .simf-content-section--sponsorship-value) .simf-content-card__copy {
+    padding: 30px 24px 28px;
+  }
+
+  .simf-content-page .simf-content-card__lifecycle-icon {
+    width: 96px;
+    height: 84px;
+    margin-bottom: 18px;
+  }
 }
 
 .simf-content-page .simf-content-section--official-framework {
@@ -10643,7 +10705,7 @@ body
 .simf-option-hero__patronage {
   max-width: 720px;
   margin: 0 0 22px;
-  color: #7f8ca5;
+  color: #aebbd0;
   font-size: 11px;
   font-weight: 750;
   letter-spacing: 0.14em;
@@ -10730,7 +10792,7 @@ body
 
 .simf-option-hero__details small {
   margin-bottom: 7px;
-  color: #7f8ca5;
+  color: #aebbd0;
   font-size: 9px;
   font-weight: 750;
   letter-spacing: 0.14em;
@@ -10779,7 +10841,7 @@ body
 }
 
 .simf-option-hero__rail .simf-countdown__values span {
-  color: #7f8ca5;
+  color: #aebbd0;
   font-size: 8px;
   letter-spacing: 0.08em;
 }
@@ -11145,7 +11207,7 @@ body
 
 .simf-option-audience__list article > span {
   padding-top: 1px;
-  color: #7f8ca5;
+  color: #aebbd0;
   font-size: clamp(27px, 2.4vw, 36px);
   font-weight: 500;
   letter-spacing: -0.04em;
@@ -11655,7 +11717,7 @@ body
 .simf-site[data-page="homepage-option"] .simf-option-topics .simf-eyebrow,
 .simf-site[data-page="homepage-option"] .simf-option-partners .simf-eyebrow,
 .simf-site[data-page="homepage-option"] .simf-option-sponsor .simf-eyebrow {
-  color: #7f8ca5;
+  color: #aebbd0;
   opacity: 1;
 }
 
@@ -11670,7 +11732,7 @@ body
 .simf-option-hero__lead,
 .simf-option-hero__actions,
 .simf-option-hero__rail {
-  animation: simf-option-hero-enter 760ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+  animation: simf-option-hero-enter 420ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
 }
 
 .simf-option-hero h1 {
@@ -11759,8 +11821,8 @@ body
 
 @keyframes simf-option-hero-enter {
   from {
-    opacity: 0;
-    transform: translateY(22px);
+    opacity: 1;
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -16709,7 +16771,7 @@ body
   .simf-homepage-about
   .simf-option-hero__review-title
   .simf-option-hero__ordinal {
-  color: #7f8ca5;
+  color: #aebbd0;
 }
 
 body .simf-homepage-about .simf-option-hero__review-lead {
@@ -17184,7 +17246,7 @@ body .simf-homepage-about .simf-option-hero__review-lead {
 
 /* Become-a-sponsor conversion refinements. */
 .simf-content-page--sponsor .simf-content-section .simf-eyebrow {
-  color: #7f8ca5 !important;
+  color: #aebbd0 !important;
 }
 
 .simf-content-page--sponsor .simf-content-sponsor-rail__layout {
@@ -18249,7 +18311,7 @@ body .simf-homepage-about .simf-option-hero__review-lead {
 .simf-site[lang="ar"].simf-content-page .simf-content-value__steps h3,
 .simf-site[lang="ar"] .simf-option-audience__list h3 {
   font-size: clamp(18px, 1.45vw, 22px);
-  line-height: 1.38 !important;
+  line-height: 1.42 !important;
 }
 
 .simf-site[lang="ar"].simf-content-page
@@ -18337,7 +18399,7 @@ body .simf-homepage-about .simf-option-hero__review-lead {
   .simf-content-card__copy
   h3 {
   font-size: clamp(18px, 1.55vw, 22px);
-  line-height: 1.38 !important;
+  line-height: 1.42 !important;
 }
 
 /* Keep the audience copy compact enough to remain readable over the photos,
@@ -18365,7 +18427,7 @@ body .simf-homepage-about .simf-option-hero__review-lead {
 
 .simf-site[lang="ar"] .simf-homepage-about .simf-option-audience__list h3 {
   font-size: clamp(17px, 1.28vw, 20px);
-  line-height: 1.38 !important;
+  line-height: 1.42 !important;
 }
 
 @media (min-width: 801px) {
@@ -18525,7 +18587,7 @@ body .simf-homepage-about .simf-option-hero__review-lead {
 
 /* Compact heading scale approved for long English and Arabic editorial copy. */
 .simf-content-page .simf-inner-hero__content h1 {
-  font-size: clamp(42px, 4.4vw, 62px);
+  font-size: clamp(36px, 3.7vw, 54px);
 }
 
 .simf-option-about__copy h2,
@@ -18537,15 +18599,15 @@ body .simf-homepage-about .simf-option-hero__review-lead {
 .simf-content-page .simf-section-head h2,
 .simf-update-feature__copy h2,
 .simf-update-cta__content h2 {
-  font-size: clamp(28px, 3vw, 42px);
+  font-size: clamp(25px, 2.55vw, 37px);
 }
 
 .simf-related-updates__head h2 {
-  font-size: clamp(27px, 2.7vw, 38px);
+  font-size: clamp(25px, 2.4vw, 34px);
 }
 
 .simf-updates-hero__copy h1 {
-  font-size: clamp(40px, 4.7vw, 64px);
+  font-size: clamp(36px, 4vw, 54px);
 }
 
 .simf-site[lang="ar"] .simf-option-about__copy h2,
@@ -18557,7 +18619,8 @@ body .simf-homepage-about .simf-option-hero__review-lead {
 .simf-site[lang="ar"].simf-content-page .simf-section-head h2,
 .simf-site[lang="ar"] .simf-update-feature__copy h2,
 .simf-site[lang="ar"] .simf-update-cta__content h2 {
-  font-size: clamp(27px, 2.8vw, 38px);
+  font-size: clamp(25px, 2.45vw, 35px);
+  line-height: 1.38 !important;
 }
 
 /* The sponsor introduction is unusually long, so give it a quieter editorial
@@ -18604,7 +18667,7 @@ body .simf-homepage-about .simf-option-hero__review-lead {
 @media (max-width: 800px) {
   .simf-content-page .simf-inner-hero__content h1,
   .simf-updates-hero__copy h1 {
-    font-size: clamp(36px, 10vw, 46px);
+    font-size: clamp(31px, 8.5vw, 40px);
   }
 
   .simf-content-section--programme-days .simf-programme-day-title > span {
@@ -18957,4 +19020,1038 @@ body .simf-homepage-about .simf-option-hero__review-lead {
   .simf-coming-soon__footer > span:nth-child(2) {
     width: 40px;
   }
+}
+
+/* Local typography and homepage CTA refinement. Long editorial headings are
+   intentionally quieter, while Arabic retains a little extra breathing room. */
+.simf-content-page .simf-inner-hero__content h1,
+.simf-updates-hero__copy h1,
+.simf-update-article__header h1 {
+  font-size: clamp(34px, 3.4vw, 50px);
+  line-height: 1.08;
+}
+
+.simf-option-about__copy h2,
+.simf-option-section-head h2,
+.simf-option-film__copy h2,
+.simf-option-legacy h2,
+.simf-option-partners h2,
+.simf-option-sponsor h2,
+.simf-content-page .simf-section-head h2,
+.simf-update-feature__copy h2,
+.simf-update-cta__content h2,
+.simf-update-article__body h2,
+.simf-update-article__highlight h2,
+.simf-update-richtext h2,
+.simf-related-updates__head h2 {
+  font-size: clamp(21px, 1.9vw, 29px);
+  line-height: 1.16;
+}
+
+/* Section-level headings can have more-specific page styles earlier in the
+   cascade. Keep the final editorial scale consistent across every page. */
+.simf-site main :is(
+  .simf-section-head,
+  .simf-option-about__copy,
+  .simf-option-section-head,
+  .simf-option-film__copy,
+  .simf-option-legacy__intro,
+  .simf-option-partners__intro,
+  .simf-option-sponsor__content,
+  .simf-update-feature__copy,
+  .simf-update-cta__content,
+  .simf-update-article__body,
+  .simf-update-article__highlight,
+  .simf-update-richtext,
+  .simf-related-updates__head
+) h2 {
+  font-size: clamp(21px, 1.9vw, 29px) !important;
+}
+
+/* Card titles sit one clear level below section headings on every page. */
+.simf-site main article h3,
+.simf-site main .simf-update-card__copy h2,
+.simf-site main .simf-news__copy h3,
+.simf-site main .simf-programme__card h3,
+.simf-site main .simf-sessions__grid h3 {
+  font-size: clamp(18px, 1.45vw, 22px) !important;
+  line-height: 1.28;
+}
+
+.simf-site[lang="ar"] main article h3,
+.simf-site[lang="ar"] main .simf-update-card__copy h2,
+.simf-site[lang="ar"] main .simf-news__copy h3,
+.simf-site[lang="ar"] main .simf-programme__card h3,
+.simf-site[lang="ar"] main .simf-sessions__grid h3 {
+  line-height: 1.46 !important;
+}
+
+/* Audience card indices must remain legible over every image in both
+   languages. */
+.simf-homepage-about .simf-option-audience__list article > span {
+  color: #fff !important;
+  opacity: .94;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .72);
+}
+
+.simf-site[lang="ar"] :is(
+  .simf-updates-hero__copy h1,
+  .simf-update-article__header h1
+),
+.simf-site[lang="ar"].simf-content-page .simf-inner-hero__content h1 {
+  line-height: 1.38 !important;
+}
+
+.simf-site[lang="ar"] :is(
+  .simf-option-about__copy h2,
+  .simf-option-section-head h2,
+  .simf-option-film__copy h2,
+  .simf-option-legacy h2,
+  .simf-option-partners h2,
+  .simf-option-sponsor h2,
+  .simf-content-page .simf-section-head h2,
+  .simf-update-feature__copy h2,
+  .simf-update-cta__content h2,
+  .simf-update-article__body h2,
+  .simf-update-article__highlight h2,
+  .simf-update-richtext h2,
+  .simf-related-updates__head h2
+) {
+  font-size: clamp(21px, 1.85vw, 28px);
+  line-height: 1.42 !important;
+}
+
+.simf-site[lang="ar"][data-page="homepage-option"]
+  .simf-option-hero__patronage > span:nth-child(2) {
+  font-size: clamp(12px, .9vw, 15px);
+}
+
+/* Match the approved English homepage hero colour hierarchy in Arabic. */
+.simf-site[lang="ar"][data-page="homepage-option"]
+  .simf-option-hero__patronage {
+  color: #f5f7fa;
+}
+
+.simf-site[lang="ar"][data-page="homepage-option"]
+  .simf-option-hero__patronage > span:first-child,
+.simf-site[lang="ar"][data-page="homepage-option"]
+  .simf-option-hero__minister {
+  color: #aebbd0;
+}
+
+.simf-site[lang="ar"][data-page="homepage-option"]
+  .simf-option-hero__patronage > span:nth-child(3) {
+  color: #aebbd0;
+}
+
+.simf-site[lang="ar"][data-page="homepage-option"]
+  .simf-option-hero__patronage > span:nth-child(2) {
+  color: #f5f7fa;
+}
+
+.simf-site[lang="ar"][data-page="homepage-option"]
+  :is(.simf-option-hero h1, .simf-option-hero__lead) {
+  color: #fff;
+}
+
+/* The client-review title span had its own muted colour and smaller font,
+   overriding the white Arabic H1 set on its parent. */
+.simf-site[lang="ar"][data-page="homepage-option"]
+  .simf-option-hero__review-title > span:first-child {
+  color: #fff !important;
+  font-size: inherit !important;
+  font-weight: inherit;
+}
+
+/* The Arabic event name is wider than the English title; keep its hierarchy
+   while giving the complete phrase a slightly quieter scale. */
+.simf-site[lang="ar"][dir="rtl"][data-page="homepage-option"]
+  .simf-option-hero
+  .simf-option-hero__review-title {
+  font-size: clamp(46px, 3.8vw, 58px);
+}
+
+/* Keep the final homepage CTA dark and cinematic, but reveal much more of its
+   photograph than the original near-opaque black treatment. */
+.simf-homepage-about .simf-option-sponsor {
+  background: #050914;
+  color: #fff;
+}
+
+.simf-homepage-about .simf-option-sponsor__veil {
+  background:
+    linear-gradient(90deg, rgba(5, 9, 20, .4), rgba(5, 9, 20, .2) 54%, rgba(5, 9, 20, .03)),
+    linear-gradient(180deg, rgba(5, 9, 20, .02), rgba(5, 9, 20, .18));
+}
+
+[dir="rtl"].simf-homepage-about .simf-option-sponsor__veil {
+  background:
+    linear-gradient(270deg, rgba(5, 9, 20, .4), rgba(5, 9, 20, .2) 54%, rgba(5, 9, 20, .03)),
+    linear-gradient(180deg, rgba(5, 9, 20, .02), rgba(5, 9, 20, .18));
+}
+
+@media (min-width: 801px) {
+  /* Keep the patron's name on one line and create a clear pause before the
+     event title. This applies to both homepage languages only. */
+  .simf-homepage-about .simf-option-hero__patronage {
+    max-width: none;
+    margin-bottom: 30px;
+  }
+
+  .simf-homepage-about
+    .simf-option-hero__patronage > span:nth-child(2) {
+    max-width: none;
+    white-space: nowrap;
+  }
+
+  .simf-site[lang="ar"][data-page="homepage-option"]
+    .simf-option-hero h1 {
+    color: #fff;
+    font-size: clamp(50px, 4.2vw, 62px);
+  }
+}
+
+.simf-homepage-about .simf-option-sponsor :is(h2, p) {
+  color: #fff;
+}
+
+.simf-homepage-about .simf-option-sponsor .simf-eyebrow {
+  color: #c8d4ee !important;
+}
+
+.simf-homepage-about
+  .simf-option-sponsor__content > div:first-child > p:not(.simf-eyebrow) {
+  color: #e0e6ef;
+}
+
+.simf-homepage-about .simf-option-sponsor .simf-button--outline,
+.simf-homepage-about .simf-option-sponsor .simf-button--text {
+  border-color: rgba(255, 255, 255, .46);
+  color: #fff;
+}
+
+@media (max-width: 800px) {
+  .simf-content-page .simf-inner-hero__content h1,
+  .simf-updates-hero__copy h1,
+  .simf-update-article__header h1,
+  .simf-coming-soon h1 {
+    font-size: clamp(24px, 6.6vw, 31px) !important;
+  }
+
+  .simf-option-about__copy h2,
+  .simf-option-section-head h2,
+  .simf-option-film__copy h2,
+  .simf-option-legacy h2,
+  .simf-option-partners h2,
+  .simf-option-sponsor h2,
+  .simf-content-page .simf-section-head h2,
+  .simf-update-feature__copy h2,
+  .simf-update-cta__content h2,
+  .simf-update-article__body h2,
+  .simf-site[lang="ar"] :is(
+    .simf-option-about__copy h2,
+    .simf-option-section-head h2,
+    .simf-option-film__copy h2,
+    .simf-option-legacy h2,
+    .simf-option-partners h2,
+    .simf-option-sponsor h2,
+    .simf-section-head h2
+  ) {
+    font-size: clamp(17px, 4.7vw, 22px);
+  }
+
+  .simf-site main :is(
+    .simf-section-head,
+    .simf-option-about__copy,
+    .simf-option-section-head,
+    .simf-option-film__copy,
+    .simf-option-legacy__intro,
+    .simf-option-partners__intro,
+    .simf-option-sponsor__content,
+    .simf-update-feature__copy,
+    .simf-update-cta__content,
+    .simf-update-article__body,
+    .simf-update-article__highlight,
+    .simf-update-richtext,
+    .simf-related-updates__head
+  ) h2 {
+    font-size: clamp(17px, 4.7vw, 22px) !important;
+  }
+
+  .simf-site main article h3,
+  .simf-site main .simf-update-card__copy h2,
+  .simf-site main .simf-news__copy h3,
+  .simf-site main .simf-programme__card h3,
+  .simf-site main .simf-sessions__grid h3 {
+    font-size: clamp(15px, 4.1vw, 18px) !important;
+  }
+
+  /* Both authority logos must be visible together on mobile. */
+  .simf-homepage-about .simf-option-authority__inner > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .simf-homepage-about .simf-option-authority article {
+    min-width: 0;
+    min-height: 154px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 10px;
+    text-align: center;
+  }
+
+  .simf-homepage-about .simf-option-authority article + article {
+    border-top: 0;
+    border-inline-start: 1px solid rgba(16, 25, 54, .14);
+  }
+
+  .simf-homepage-about .simf-option-authority article > div {
+    width: 100%;
+    height: 88px;
+    flex-basis: 88px;
+  }
+
+  .simf-homepage-about .simf-option-authority article span {
+    width: 100%;
+    max-width: none;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  /* Keep the patron's name compact and uninterrupted on mobile. The role sits
+     on its own line without the desktop separator in both languages. */
+  .simf-homepage-about
+    .simf-option-hero__patronage > span:nth-child(2) {
+    width: 100%;
+    max-width: none;
+    font-size: clamp(8px, 2.65vw, 10.5px) !important;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .simf-homepage-about .simf-option-hero__minister {
+    display: block;
+    margin-top: 3px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .simf-site[lang="ar"][data-page="homepage-option"]
+    .simf-option-hero__patronage > span:nth-child(3) {
+    margin-top: 3px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  /* The Arabic forum name is naturally wider than its English counterpart. */
+  .simf-site[lang="ar"][dir="rtl"][data-page="homepage-option"]
+    .simf-option-hero
+    .simf-option-hero__review-title {
+    font-size: clamp(28px, 8vw, 32px);
+    line-height: 1.36 !important;
+  }
+}
+
+/* Give multiline headings a little more air without changing their approved
+   font sizes. Arabic retains the extra rhythm its letterforms require. */
+.simf-site main h1 {
+  line-height: 1.06 !important;
+}
+
+.simf-site main h2 {
+  line-height: 1.22 !important;
+}
+
+.simf-site main h3 {
+  line-height: 1.32 !important;
+}
+
+.simf-site[lang="ar"] main h1 {
+  line-height: 1.34 !important;
+}
+
+.simf-site[lang="ar"] main :is(h2, h3) {
+  line-height: 1.42 !important;
+}
+
+@media (max-width: 800px) {
+  .simf-site main h1 {
+    line-height: 1.1 !important;
+  }
+
+  .simf-site main h2 {
+    line-height: 1.26 !important;
+  }
+
+  .simf-site main h3 {
+    line-height: 1.34 !important;
+  }
+
+  .simf-site[lang="ar"] main h1 {
+    line-height: 1.36 !important;
+  }
+
+  .simf-site[lang="ar"][dir="rtl"][data-page="homepage-option"]
+    main
+    .simf-option-hero__review-title {
+    line-height: 1.36 !important;
+  }
+
+  .simf-site[lang="ar"] main :is(h2, h3) {
+    line-height: 1.46 !important;
+  }
+}
+
+/* CMS-selectable hero backgrounds. The existing image remains underneath as
+   a loading poster and a reduced-motion fallback. */
+.simf-cms-hero-background,
+.simf-cms-hero-background > picture,
+.simf-cms-hero-background > picture > img,
+.simf-cms-hero-background__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.simf-cms-hero-background {
+  overflow: hidden;
+}
+
+.simf-cms-hero-background > picture,
+.simf-cms-hero-background > picture > img {
+  z-index: 0;
+}
+
+.simf-cms-hero-background__video {
+  z-index: 1;
+  border: 0;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.simf-cms-hero-background__youtube {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  min-width: 177.7778vh;
+  height: 56.25vw;
+  min-height: 100%;
+  border: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* One lighter muted-blue treatment for patronage copy and every hero eyebrow,
+   shared by English and Arabic. */
+.simf-site :is(
+  .simf-hero__patronage,
+  .simf-hero .simf-eyebrow,
+  .simf-option-hero__patronage > span:first-child,
+  .simf-inner-hero__content > .simf-eyebrow,
+  .simf-sponsor-hero .simf-eyebrow,
+  .simf-updates-hero__copy > .simf-eyebrow
+) {
+  color: #aebbd0 !important;
+}
+
+/* Legacy hierarchy: years lead the strategic-evolution cards without
+   overpowering their titles, while the supporting copy retains its current
+   readable size. */
+.simf-content-page--legacy
+  .simf-content-section--strategic-evolution
+  .simf-content-value__steps article > span {
+  font-size: clamp(30px, 2.5vw, 36px);
+}
+
+.simf-content-page--legacy
+  .simf-content-section--strategic-evolution
+  .simf-content-value__steps h3 {
+  font-size: clamp(17px, 1.3vw, 19px) !important;
+}
+
+/* On desktop, build the chronology line from the edition rows themselves.
+   It starts immediately below the 2019 year plate and stops immediately
+   above the 2024 plate, so no line appears outside the first/last markers. */
+@media (min-width: 801px) {
+  .simf-content-page--legacy
+    .simf-content-section--previous-editions
+    .simf-content-value__steps::before {
+    display: none;
+  }
+
+  .simf-content-page--legacy
+    .simf-content-section--previous-editions
+    .simf-content-value__steps article::after {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    inset-inline-start: 50%;
+    width: 1px;
+    background: rgba(145, 168, 236, .62);
+    content: "";
+  }
+
+  .simf-content-page--legacy
+    .simf-content-section--previous-editions
+    .simf-content-value__steps article:first-child::after {
+    top: calc(50% + 23px);
+    background: linear-gradient(180deg, #91a8ec, rgba(145, 168, 236, .62));
+  }
+
+  .simf-content-page--legacy
+    .simf-content-section--previous-editions
+    .simf-content-value__steps article:last-child::after {
+    bottom: calc(50% + 23px);
+    background: linear-gradient(180deg, rgba(145, 168, 236, .62), #91a8ec);
+  }
+}
+
+@media (max-width: 800px) {
+  .simf-content-page--legacy
+    .simf-content-section--strategic-evolution
+    .simf-content-value__steps article > span {
+    font-size: 28px;
+  }
+
+  .simf-content-page--legacy
+    .simf-content-section--strategic-evolution
+    .simf-content-value__steps h3 {
+    font-size: clamp(16px, 4.2vw, 18px) !important;
+  }
+}
+
+/* Keep pre-footer conversion bands as image-led as the homepage CTA. The
+   directional tint protects text contrast while allowing substantially more
+   of each CMS-selected background image to remain visible. */
+.simf-content-page .simf-content-cta__shade {
+  background:
+    linear-gradient(90deg, rgba(5, 9, 20, .4), rgba(5, 9, 20, .2) 54%, rgba(5, 9, 20, .03)),
+    linear-gradient(180deg, rgba(5, 9, 20, .02), rgba(5, 9, 20, .18));
+}
+
+[dir="rtl"].simf-content-page .simf-content-cta__shade {
+  background:
+    linear-gradient(270deg, rgba(5, 9, 20, .4), rgba(5, 9, 20, .2) 54%, rgba(5, 9, 20, .03)),
+    linear-gradient(180deg, rgba(5, 9, 20, .02), rgba(5, 9, 20, .18));
+}
+
+.simf-update-cta__veil {
+  background:
+    linear-gradient(90deg, rgba(5, 9, 20, .4), rgba(5, 9, 20, .2) 54%, rgba(5, 9, 20, .03)),
+    linear-gradient(180deg, rgba(5, 9, 20, .02), rgba(5, 9, 20, .18));
+}
+
+[dir="rtl"] .simf-update-cta__veil {
+  background:
+    linear-gradient(270deg, rgba(5, 9, 20, .4), rgba(5, 9, 20, .2) 54%, rgba(5, 9, 20, .03)),
+    linear-gradient(180deg, rgba(5, 9, 20, .02), rgba(5, 9, 20, .18));
+}
+
+.simf-content-page .simf-content-cta .simf-eyebrow,
+.simf-update-cta .simf-eyebrow {
+  color: #aebbd0 !important;
+}
+
+/* Site-wide eyebrow colour system. Light surfaces use the approved About SIM
+   Forum blue; dark, image-overlay, and hero surfaces use the lighter hero
+   blue for dependable contrast in both writing directions. */
+.simf-site main section .simf-eyebrow,
+.simf-homepage-about
+  :is(
+    .simf-option-about,
+    .simf-option-indicators,
+    .simf-option-speakers,
+    .simf-option-partners
+  )
+  .simf-eyebrow {
+  color: #304b8b !important;
+}
+
+.simf-site main
+  :is(
+    .simf-option-hero,
+    .simf-option-legacy,
+    .simf-option-audience,
+    .simf-option-topics,
+    .simf-option-sponsor,
+    .simf-inner-hero,
+    .simf-sponsor-hero,
+    .simf-updates-hero,
+    .simf-update-cta,
+    .simf-content-cta,
+    .simf-content-metrics,
+    .simf-content-film,
+    .simf-content-media--dark,
+    .simf-content-accordion,
+    .simf-content-form,
+    .simf-content-section--theme-dark,
+    .simf-content-section--theme-brand
+  )
+  .simf-eyebrow,
+.simf-content-page
+  .simf-content-value:not(.simf-content-section--sponsorship-process):not(.simf-content-section--strategic-evolution)
+  .simf-eyebrow,
+.simf-content-page
+  .simf-content-cards:not(.simf-content-section--programme-highlights):not(.simf-content-section--sponsorship-opportunities):not(.simf-content-section--strategic-value):not(.simf-content-section--included):not(.simf-content-cards--logos)
+  .simf-eyebrow,
+.simf-content-page
+  .simf-content-section--has-background
+  .simf-eyebrow {
+  color: #aebbd0 !important;
+}
+
+/* Explicit light exceptions for section families whose structural component
+   is also reused on dark pages. */
+.simf-content-page
+  .simf-content-section:is(
+    .simf-content-sponsor-rail,
+    .simf-content-section--sponsor-community,
+    .simf-content-section--sponsorship-opportunities,
+    .simf-content-section--sponsorship-process,
+    .simf-content-section--application
+  )
+  .simf-eyebrow {
+  color: #304b8b !important;
+}
+
+/* Programme and B2G media timelines use one shared card geometry. Keep every
+   image edge and card edge aligned regardless of copy length, while leaving
+   the sequence number as quiet, unboxed text. */
+.simf-content-page
+  :is(.simf-content-section--key-topics, .simf-content-section--journey)
+  .simf-content-value__steps {
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
+
+.simf-content-page
+  :is(.simf-content-section--key-topics, .simf-content-section--journey)
+  .simf-content-value__steps article {
+  height: 100%;
+}
+
+.simf-content-page
+  :is(.simf-content-section--key-topics, .simf-content-section--journey)
+  .simf-content-value__media {
+  height: 240px;
+  min-height: 240px;
+  flex: 0 0 240px;
+}
+
+.simf-content-page
+  :is(.simf-content-section--key-topics, .simf-content-section--journey)
+  .simf-content-value__steps article > span {
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0;
+  padding: 20px 24px 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  line-height: 1.35;
+}
+
+.simf-content-page
+  :is(.simf-content-section--key-topics, .simf-content-section--journey)
+  .simf-content-value__steps article > div:last-child {
+  flex: 1;
+}
+
+/* Slightly stronger than the previous pass: images stay clear, but text sits
+   on a more dependable pre-footer CTA tint in both directions. */
+.simf-homepage-about .simf-option-sponsor__veil,
+.simf-content-page .simf-content-cta__shade,
+.simf-update-cta__veil {
+  background:
+    linear-gradient(90deg, rgba(5, 9, 20, .72), rgba(5, 9, 20, .44) 54%, rgba(5, 9, 20, .10)),
+    linear-gradient(180deg, rgba(5, 9, 20, .06), rgba(5, 9, 20, .28));
+}
+
+[dir="rtl"] .simf-homepage-about .simf-option-sponsor__veil,
+[dir="rtl"].simf-content-page .simf-content-cta__shade,
+[dir="rtl"] .simf-update-cta__veil {
+  background:
+    linear-gradient(270deg, rgba(5, 9, 20, .72), rgba(5, 9, 20, .44) 54%, rgba(5, 9, 20, .10)),
+    linear-gradient(180deg, rgba(5, 9, 20, .06), rgba(5, 9, 20, .28));
+}
+
+/* Add a small amount of depth to image-background cards after the previous
+   image-clarity pass, without restoring filters to the uploaded artwork. */
+.simf-content-page .simf-content-card--image-overlay::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .02) 10%, rgba(5, 9, 20, .14) 48%, rgba(5, 9, 20, .72) 100%),
+    linear-gradient(90deg, rgba(5, 9, 20, .18), transparent 72%) !important;
+}
+
+[dir="rtl"].simf-content-page .simf-content-card--image-overlay::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .02) 10%, rgba(5, 9, 20, .14) 48%, rgba(5, 9, 20, .72) 100%),
+    linear-gradient(270deg, rgba(5, 9, 20, .18), transparent 72%) !important;
+}
+
+.simf-homepage-about .simf-option-audience__list article::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .02) 8%, rgba(5, 9, 20, .12) 46%, rgba(5, 9, 20, .72) 100%),
+    linear-gradient(90deg, rgba(5, 9, 20, .18), transparent 76%) !important;
+}
+
+[dir="rtl"] .simf-homepage-about .simf-option-audience__list article::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .02) 8%, rgba(5, 9, 20, .12) 46%, rgba(5, 9, 20, .72) 100%),
+    linear-gradient(270deg, rgba(5, 9, 20, .18), transparent 76%) !important;
+}
+
+/* Editorial copy receives slightly more breathing room, particularly at phone
+   widths. Eyebrows, labels, controls, and countdown text are intentionally
+   excluded. */
+.simf-site :is(
+  .simf-section-head > p:last-child:not(.simf-eyebrow),
+  .simf-content-card__copy > p,
+  .simf-content-value__steps article p,
+  .simf-content-media__copy .simf-section-head > p:last-child:not(.simf-eyebrow),
+  .simf-option-about__copy > p:not(.simf-eyebrow),
+  .simf-option-section-head > p:not(.simf-eyebrow),
+  .simf-option-audience__list article p,
+  .simf-option-sponsor__content > div:first-child > p:not(.simf-eyebrow),
+  .simf-update-feature__copy > p,
+  .simf-update-card__copy > p,
+  .simf-update-cta__content > div > p:last-child
+) {
+  line-height: 1.76;
+}
+
+@media (max-width: 800px) {
+  .simf-content-page
+    :is(.simf-content-section--key-topics, .simf-content-section--journey)
+    .simf-content-value__media {
+    height: 220px;
+    min-height: 220px;
+    flex-basis: 220px;
+  }
+
+  .simf-site :is(
+    .simf-section-head > p:last-child:not(.simf-eyebrow),
+    .simf-content-card__copy > p,
+    .simf-content-value__steps article p,
+    .simf-content-media__copy .simf-section-head > p:last-child:not(.simf-eyebrow),
+    .simf-option-about__copy > p:not(.simf-eyebrow),
+    .simf-option-section-head > p:not(.simf-eyebrow),
+    .simf-option-audience__list article p,
+    .simf-option-sponsor__content > div:first-child > p:not(.simf-eyebrow),
+    .simf-update-feature__copy > p,
+    .simf-update-card__copy > p,
+    .simf-update-cta__content > div > p:last-child
+  ) {
+    line-height: 1.84;
+  }
+}
+
+/* Image-background cards keep their content fully legible and comfortably
+   inset, even when an editor adds a longer heading or paragraph. */
+.simf-content-page .simf-content-card--image-overlay .simf-content-card__copy {
+  position: relative;
+  z-index: 2;
+  padding-block: 40px;
+}
+
+.simf-content-page--government-b2g
+  .simf-content-section--executive-track
+  .simf-content-card--image-overlay
+  .simf-content-card__copy {
+  padding-block: 40px 24px;
+}
+
+.simf-content-page
+  .simf-content-card--image-overlay
+  .simf-content-card__copy
+  :is(h3, p, span, small),
+.simf-homepage-about .simf-option-audience__list article :is(h3, p, span, small) {
+  color: #fff !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, .88);
+}
+
+/* Slightly reinforce every image-card treatment. Uploaded artwork remains
+   unfiltered; this only improves text contrast over the image. */
+.simf-content-page .simf-content-card--image-overlay::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .1) 8%, rgba(5, 9, 20, .34) 47%, rgba(5, 9, 20, .9) 100%),
+    linear-gradient(90deg, rgba(5, 9, 20, .34), transparent 72%) !important;
+}
+
+[dir="rtl"].simf-content-page .simf-content-card--image-overlay::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .1) 8%, rgba(5, 9, 20, .34) 47%, rgba(5, 9, 20, .9) 100%),
+    linear-gradient(270deg, rgba(5, 9, 20, .34), transparent 72%) !important;
+}
+
+.simf-homepage-about .simf-option-audience__list article {
+  padding-block: clamp(30px, 3vw, 38px);
+}
+
+.simf-homepage-about .simf-option-audience__list article::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .1) 8%, rgba(5, 9, 20, .31) 46%, rgba(5, 9, 20, .88) 100%),
+    linear-gradient(90deg, rgba(5, 9, 20, .32), transparent 76%) !important;
+}
+
+[dir="rtl"] .simf-homepage-about .simf-option-audience__list article::after {
+  background:
+    linear-gradient(180deg, rgba(5, 9, 20, .1) 8%, rgba(5, 9, 20, .31) 46%, rgba(5, 9, 20, .88) 100%),
+    linear-gradient(270deg, rgba(5, 9, 20, .32), transparent 76%) !important;
+}
+
+@media (max-width: 800px) {
+  .simf-content-page .simf-content-card--image-overlay .simf-content-card__copy {
+    padding-block: 34px;
+  }
+
+  .simf-content-page--government-b2g
+    .simf-content-section--executive-track
+    .simf-content-card--image-overlay
+    .simf-content-card__copy {
+    padding-block: 34px 22px;
+  }
+
+  .simf-homepage-about .simf-option-audience__list article {
+    padding-block: 30px;
+  }
+}
+
+/* Final typography calibration: internal-page heroes are deliberately quieter
+   than the homepage hero, while editorial copy and headings retain comfortable
+   rhythm in both languages. */
+.simf-content-page .simf-inner-hero__content h1,
+.simf-updates-page .simf-updates-hero__copy h1,
+.simf-update-article__header h1 {
+  font-size: clamp(30px, 3vw, 46px) !important;
+  line-height: 1.16 !important;
+}
+
+.simf-site main h2 {
+  line-height: 1.3 !important;
+}
+
+.simf-site main h3 {
+  line-height: 1.38 !important;
+}
+
+.simf-site.simf-content-page[dir="rtl"] .simf-inner-hero__content h1,
+[dir="rtl"] .simf-content-page .simf-inner-hero__content h1,
+[dir="rtl"] .simf-updates-page .simf-updates-hero__copy h1,
+[dir="rtl"] .simf-update-article__header h1 {
+  line-height: 1.42 !important;
+}
+
+.simf-site[dir="rtl"] main h2,
+[dir="rtl"] .simf-site main h2,
+.simf-site.simf-content-page[dir="rtl"] main .simf-section-head h2 {
+  line-height: 1.5 !important;
+}
+
+.simf-site[dir="rtl"] main h3,
+[dir="rtl"] .simf-site main h3,
+.simf-site.simf-content-page[dir="rtl"] main section h3,
+.simf-site.simf-content-page[dir="rtl"] main .simf-content-card__copy h3 {
+  line-height: 1.5 !important;
+}
+
+.simf-content-page main section :is(p, li),
+.simf-updates-page main :is(p, li),
+.simf-update-article main :is(p, li),
+.simf-homepage-about main section:not(.simf-option-hero) :is(p, li) {
+  line-height: 1.82 !important;
+}
+
+@media (max-width: 800px) {
+  .simf-content-page .simf-inner-hero__content h1,
+  .simf-updates-page .simf-updates-hero__copy h1,
+  .simf-update-article__header h1 {
+    font-size: clamp(22px, 5.9vw, 28px) !important;
+    line-height: 1.22 !important;
+  }
+
+  .simf-site main h2 {
+    line-height: 1.38 !important;
+  }
+
+  .simf-site main h3 {
+    line-height: 1.44 !important;
+  }
+
+  .simf-site.simf-content-page[dir="rtl"] .simf-inner-hero__content h1,
+  [dir="rtl"] .simf-content-page .simf-inner-hero__content h1,
+  [dir="rtl"] .simf-updates-page .simf-updates-hero__copy h1,
+  [dir="rtl"] .simf-update-article__header h1 {
+    line-height: 1.48 !important;
+  }
+
+  .simf-site[dir="rtl"] main h2,
+  [dir="rtl"] .simf-site main h2,
+  .simf-site.simf-content-page[dir="rtl"] main .simf-section-head h2,
+  .simf-site[dir="rtl"] main h3,
+  [dir="rtl"] .simf-site main h3,
+  .simf-site.simf-content-page[dir="rtl"] main section h3,
+  .simf-site.simf-content-page[dir="rtl"] main .simf-content-card__copy h3 {
+    line-height: 1.56 !important;
+  }
+
+  .simf-content-page main section :is(p, li),
+  .simf-updates-page main :is(p, li),
+  .simf-update-article main :is(p, li),
+  .simf-homepage-about main section:not(.simf-option-hero) :is(p, li) {
+    line-height: 1.92 !important;
+  }
+}
+
+/* Sponsor lifecycle cards: supplied gold icons replace the former photography. */
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-cards__grid {
+  gap: 18px;
+  border-block: 0;
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card {
+  min-height: 356px;
+  border: 1px solid rgba(174, 187, 208, .24);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(55, 75, 130, .4), transparent 50%),
+    linear-gradient(150deg, #142247 0%, #0b1733 58%, #071022 100%);
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card:first-child {
+  border-inline-start: 1px solid rgba(174, 187, 208, .24);
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card:hover {
+  border-color: rgba(174, 187, 208, .52);
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 34px;
+  text-align: center;
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__lifecycle-icon {
+  flex: none;
+  width: 116px;
+  height: 102px;
+  margin: 0 auto 20px;
+  overflow: visible;
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__lifecycle-icon img {
+  transform: scale(2.45);
+  transform-origin: center;
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__copy h3 {
+  margin-top: 0;
+  text-shadow: none;
+}
+
+.simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__copy p {
+  margin-top: 14px;
+  color: #d1d9e6 !important;
+  text-shadow: none;
+}
+
+[dir="rtl"].simf-content-page--sponsor
+  .simf-content-section--sponsorship-value
+  .simf-content-card__copy {
+  text-align: center;
+}
+
+@media (max-width: 800px) {
+  .simf-content-page--sponsor
+    .simf-content-section--sponsorship-value
+    .simf-content-cards__grid {
+    gap: 14px;
+  }
+
+  .simf-content-page--sponsor
+    .simf-content-section--sponsorship-value
+    .simf-content-card {
+    min-height: 300px;
+  }
+
+  .simf-content-page--sponsor
+    .simf-content-section--sponsorship-value
+    .simf-content-card__copy {
+    padding: 28px 24px;
+  }
+
+  .simf-content-page--sponsor
+    .simf-content-section--sponsorship-value
+    .simf-content-card__lifecycle-icon {
+    width: 100px;
+    height: 88px;
+    margin-bottom: 16px;
+  }
+}
+
+/* Keep every inner-page hero legible over photography. Eyebrows retain their
+   shared muted-blue accent. */
+.simf-content-page .simf-inner-hero__content h1,
+.simf-updates-site .simf-updates-hero__copy h1 {
+  color: #fff !important;
+}
+
+.simf-content-page .simf-inner-hero__content > p:not(.simf-eyebrow),
+.simf-updates-site .simf-updates-hero__copy > p:not(.simf-eyebrow) {
+  color: #eef2f7 !important;
+}
+
+.simf-content-page .simf-inner-hero__details :is(svg, small, strong) {
+  color: #f5f7fa !important;
+}
+
+/* Keep pre-footer calls to action legible over their photographic overlays.
+   Eyebrows intentionally retain the shared muted-blue accent. */
+.simf-homepage-about .simf-option-sponsor h2,
+.simf-content-page .simf-content-cta .simf-section-head h2,
+.simf-updates-site .simf-update-cta__content h2 {
+  color: #fff !important;
+}
+
+.simf-homepage-about
+  .simf-option-sponsor__content
+  > div:first-child
+  > p:not(.simf-eyebrow),
+.simf-content-page
+  .simf-content-cta
+  .simf-section-head
+  > p:last-child:not(.simf-eyebrow),
+.simf-updates-site .simf-update-cta__content > div > p:last-child {
+  color: #eef2f7 !important;
 }

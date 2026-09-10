@@ -1,4 +1,5 @@
 import type { Field } from "payload";
+import { publicHrefValidation } from "@/lib/publicHref";
 
 export const sectionControls: Field[] = [
   {
@@ -103,7 +104,12 @@ export const sectionControls: Field[] = [
 
 export const buttonFields: Field[] = [
   { name: "label", type: "text", required: true },
-  { name: "href", type: "text", required: true },
+  {
+    name: "href",
+    type: "text",
+    required: true,
+    validate: publicHrefValidation,
+  },
   {
     name: "style",
     type: "select",

@@ -20,6 +20,8 @@ import type {
 } from "@/content/types";
 import { eventPageSchema } from "@/lib/structuredData";
 import { CmsImage } from "../CmsImage";
+import { CmsHeroBackground } from "./CmsHeroBackground";
+import { CmsText } from "./CmsText";
 import { SimfCountdown } from "./SimfCountdown";
 import { SimfFooter } from "./SimfFooter";
 import { formatMetricValue } from "./formatMetricValue";
@@ -71,7 +73,7 @@ function ConceptButton({
       data-track={trackingID}
       href={href}
     >
-      {label}
+      <CmsText value={label} />
       <ArrowUpRight aria-hidden />
     </Link>
   );
@@ -159,15 +161,22 @@ export function SimfHomepageOption({
             ),
           }}
           nonce={nonce}
+          suppressHydrationWarning
           type="application/ld+json"
         />
 
         {hero ? (
           <section className="simf-option-hero" id="top">
             <div className="simf-option-hero__media">
-              <CmsImage
-                alt=""
+              <CmsHeroBackground
+                desktopBackgroundType={hero.desktopBackgroundType}
+                desktopBackgroundVideo={hero.desktopBackgroundVideo}
+                desktopBackgroundYouTubeURL={hero.desktopBackgroundYouTubeURL}
+                locale={locale}
                 media={hero.media}
+                mobileBackgroundType={hero.mobileBackgroundType}
+                mobileBackgroundVideo={hero.mobileBackgroundVideo}
+                mobileBackgroundYouTubeURL={hero.mobileBackgroundYouTubeURL}
                 mobileMedia={hero.mobileMedia}
                 priority
                 sizes="100vw"
@@ -184,17 +193,18 @@ export function SimfHomepageOption({
 
                           return (
                             <span key={line}>
-                              {copy}
+                              <CmsText value={copy} />
                               {role ? (
                                 <span className="simf-option-hero__minister">
-                                  {" | "}
-                                  {role}
+                                  <span className="simf-option-hero__minister-role">
+                                    <CmsText value={role} />
+                                  </span>
                                 </span>
                               ) : null}
                             </span>
                           );
                         })
-                      : hero.eyebrow}
+                      : <CmsText value={hero.eyebrow} />}
                   </p>
                 ) : null}
                 <h1 className={clientReview ? "simf-option-hero__review-title" : undefined}>
@@ -208,16 +218,16 @@ export function SimfHomepageOption({
                           }
                           key={line}
                         >
-                          {line}
+                          <CmsText value={line} />
                         </span>
                       ))
-                    : hero.heading}
+                    : <CmsText value={hero.heading} />}
                 </h1>
                 {hero.body ? (
                   <p
                     className={`simf-option-hero__lead${clientReview ? " simf-option-hero__review-lead" : ""}`}
                   >
-                    {hero.body}
+                    <CmsText value={hero.body} />
                   </p>
                 ) : null}
                 <div className="simf-option-hero__actions">
@@ -242,8 +252,8 @@ export function SimfHomepageOption({
                         <MapPin aria-hidden />
                       )}
                       <span>
-                        <small>{detail.label}</small>
-                        <strong>{detail.value}</strong>
+                        <small><CmsText value={detail.label} /></small>
+                        <strong><CmsText value={detail.value} /></strong>
                       </span>
                     </div>
                   ))}
@@ -259,7 +269,7 @@ export function SimfHomepageOption({
             <div
               className={`simf-shell simf-option-authority__inner simf-option-authority__inner--${authorityCards.length}`}
             >
-              <p>{authority.heading}</p>
+              <p><CmsText value={authority.heading} /></p>
               <div>
                 {authorityCards.map((card) => (
                     <article
@@ -278,7 +288,7 @@ export function SimfHomepageOption({
                           sizes="190px"
                         />
                       </div>
-                      <span>{card.title}</span>
+                      <span><CmsText value={card.title} /></span>
                     </article>
                   ))}
               </div>
@@ -290,9 +300,9 @@ export function SimfHomepageOption({
           <section className="simf-option-about" id="about">
             <div className="simf-shell simf-option-about__grid">
               <div className="simf-option-about__copy">
-                {about.eyebrow ? <p className="simf-eyebrow">{about.eyebrow}</p> : null}
-                <h2>{about.heading}</h2>
-                {about.body ? <p>{about.body}</p> : null}
+                {about.eyebrow ? <p className="simf-eyebrow"><CmsText value={about.eyebrow} /></p> : null}
+                <h2><CmsText value={about.heading} /></h2>
+                {about.body ? <p><CmsText value={about.body} /></p> : null}
                 <ConceptButton
                   href={about.ctaHref || localePath(locale, "/legacy")}
                   label={
@@ -319,8 +329,8 @@ export function SimfHomepageOption({
           <section className="simf-option-legacy">
             <div className="simf-shell simf-option-legacy__grid">
               <div className="simf-option-legacy__intro">
-                {legacy.eyebrow ? <p className="simf-eyebrow">{legacy.eyebrow}</p> : null}
-                <h2>{legacy.heading}</h2>
+                {legacy.eyebrow ? <p className="simf-eyebrow"><CmsText value={legacy.eyebrow} /></p> : null}
+                <h2><CmsText value={legacy.heading} /></h2>
                 <ConceptButton
                   href={localePath(
                     locale,
@@ -343,7 +353,7 @@ export function SimfHomepageOption({
                 {legacy.metrics.map((metric) => (
                   <div key={metric.label}>
                     <strong dir="ltr">{formatMetricValue(locale, metric.value)}</strong>
-                    <span>{metric.label}</span>
+                    <span><CmsText value={metric.label} /></span>
                   </div>
                 ))}
               </div>
@@ -356,9 +366,9 @@ export function SimfHomepageOption({
             <div className="simf-shell">
               <div className="simf-option-section-head">
                 {indicators.eyebrow ? (
-                  <p className="simf-eyebrow">{indicators.eyebrow}</p>
+                  <p className="simf-eyebrow"><CmsText value={indicators.eyebrow} /></p>
                 ) : null}
-                <h2>{indicators.heading}</h2>
+                <h2><CmsText value={indicators.heading} /></h2>
               </div>
               <SimfMetricSwiper
                 autoPlay={aboutPage}
@@ -378,8 +388,13 @@ export function SimfHomepageOption({
                   locale={locale}
                   poster={experience.poster}
                   mobilePoster={experience.mobilePoster}
-                  video={experience.video}
-                  youtubeURL={experience.youtubeURL}
+                  video={experience.videoSource === "youtube" ? undefined : experience.video}
+                  youtubeURL={
+                    experience.videoSource === "youtube" ||
+                    (!experience.videoSource && !experience.video)
+                      ? experience.youtubeURL
+                      : null
+                  }
                 />
               ) : (
                 <SimfVideoPlayer
@@ -387,8 +402,13 @@ export function SimfHomepageOption({
                   locale={locale}
                   poster={experience.poster}
                   mobilePoster={experience.mobilePoster}
-                  video={experience.video}
-                  youtubeURL={experience.youtubeURL}
+                  video={experience.videoSource === "youtube" ? undefined : experience.video}
+                  youtubeURL={
+                    experience.videoSource === "youtube" ||
+                    (!experience.videoSource && !experience.video)
+                      ? experience.youtubeURL
+                      : null
+                  }
                 />
               )}
             </div>
@@ -400,10 +420,10 @@ export function SimfHomepageOption({
             <div className="simf-shell">
               <div className="simf-option-section-head">
                 {audience.eyebrow ? (
-                  <p className="simf-eyebrow">{audience.eyebrow}</p>
+                  <p className="simf-eyebrow"><CmsText value={audience.eyebrow} /></p>
                 ) : null}
-                <h2>{audience.heading}</h2>
-                {audience.body ? <p>{audience.body}</p> : null}
+                <h2><CmsText value={audience.heading} /></h2>
+                {audience.body ? <p><CmsText value={audience.body} /></p> : null}
               </div>
               <div className="simf-option-audience__list">
                 {audience.cards
@@ -429,8 +449,8 @@ export function SimfHomepageOption({
                         ) : null}
                         <span>{String(index + 1).padStart(2, "0")}</span>
                         <div>
-                          <h3>{heading}</h3>
-                          {card.body ? <p>{card.body}</p> : null}
+                          <h3><CmsText value={heading} /></h3>
+                          {card.body ? <p><CmsText value={card.body} /></p> : null}
                         </div>
                       </article>
                     );
@@ -457,10 +477,10 @@ export function SimfHomepageOption({
           <section className="simf-option-speakers" id="speakers">
             <div className="simf-shell simf-option-section-head simf-option-section-head--split">
               <div>
-                {speakers.eyebrow ? <p className="simf-eyebrow">{speakers.eyebrow}</p> : null}
-                <h2>{speakers.heading}</h2>
+                {speakers.eyebrow ? <p className="simf-eyebrow"><CmsText value={speakers.eyebrow} /></p> : null}
+                <h2><CmsText value={speakers.heading} /></h2>
               </div>
-              {speakers.body ? <p>{speakers.body}</p> : null}
+              {speakers.body ? <p><CmsText value={speakers.body} /></p> : null}
             </div>
             <SimfSpeakerRail
               action={
@@ -489,8 +509,8 @@ export function SimfHomepageOption({
           <section className="simf-option-partners" id="partners">
             <div className="simf-shell simf-option-partners__grid">
               <div className="simf-option-partners__intro">
-                {partners.eyebrow ? <p className="simf-eyebrow">{partners.eyebrow}</p> : null}
-                <h2>{partners.heading}</h2>
+                {partners.eyebrow ? <p className="simf-eyebrow"><CmsText value={partners.eyebrow} /></p> : null}
+                <h2><CmsText value={partners.heading} /></h2>
               </div>
               {aboutPage ? (
                 <SimfPartnerRail
@@ -517,7 +537,7 @@ export function SimfHomepageOption({
                         </div>
                         {card.meta ? (
                           <span className="simf-option-partners__type">
-                            {card.meta}
+                            <CmsText value={card.meta} />
                           </span>
                         ) : null}
                       </article>
@@ -542,10 +562,10 @@ export function SimfHomepageOption({
             <div className="simf-shell simf-option-sponsor__content">
               <div>
                 {sponsorship.eyebrow ? (
-                  <p className="simf-eyebrow">{sponsorship.eyebrow}</p>
+                  <p className="simf-eyebrow"><CmsText value={sponsorship.eyebrow} /></p>
                 ) : null}
-                <h2>{sponsorship.heading}</h2>
-                {sponsorship.body ? <p>{sponsorship.body}</p> : null}
+                <h2><CmsText value={sponsorship.heading} /></h2>
+                {sponsorship.body ? <p><CmsText value={sponsorship.body} /></p> : null}
               </div>
               <div className="simf-option-sponsor__actions">
                 {sponsorship.buttons?.map((button) => (

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { CountdownSection } from "@/content/types";
+import { CmsText } from "./CmsText";
 
 function remaining(targetDate: string) {
   const total = Math.max(0, new Date(targetDate).getTime() - Date.now());
@@ -39,7 +40,7 @@ export function SimfCountdown({
   return (
     <section className="simf-countdown" id={section.anchorID || undefined}>
       <div className="simf-shell simf-countdown__inner">
-        <p>{section.heading}</p>
+        <p><CmsText value={section.heading} /></p>
         <div className="simf-countdown__values" aria-live="off">
           {(
             [
@@ -52,7 +53,7 @@ export function SimfCountdown({
           ).map(([key, value]) => (
             <div key={key}>
               <strong>{String(value).padStart(2, "0")}</strong>
-              <span>{section.labels[key]}</span>
+              <span><CmsText value={section.labels[key]} /></span>
             </div>
           ))}
         </div>

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { CardGridSection, Locale } from "@/content/types";
 import { CmsImage } from "../CmsImage";
+import { CmsText } from "./CmsText";
 import { SimfCountryFlag } from "./SimfCountryFlag";
 import { SimfSpeakerRole } from "./SimfSpeakerRole";
 
@@ -83,8 +84,8 @@ export function SimfSpeakerRail({
               />
             </div>
             <div className="simf-speakers__copy">
-              {card.eyebrow ? <span>{card.eyebrow}</span> : null}
-              <h3>{card.title}</h3>
+              {card.eyebrow ? <span><CmsText value={card.eyebrow} /></span> : null}
+              <h3><CmsText value={card.title} /></h3>
               {card.body ? (
                 <SimfSpeakerRole
                   value={card.body}

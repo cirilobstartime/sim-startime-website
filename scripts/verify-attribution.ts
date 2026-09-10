@@ -5,13 +5,14 @@ const { verifyAttributionTouch } = await import(
   "../src/lib/attributionSecurity"
 );
 const appURL = process.env.QA_APP_URL || "http://localhost:3004";
+const publicURL = process.env.QA_PUBLIC_URL || process.env.NEXT_PUBLIC_APP_URL || appURL;
 
 const response = await fetch(`${appURL}/api/attribution`, {
   method: "POST",
   headers: {
     "content-type": "application/json",
     origin: appURL,
-    referer: `${appURL}/?utm_source=verified-url&utm_campaign=qa-audit`,
+    referer: `${publicURL}/?utm_source=verified-url&utm_campaign=qa-audit`,
   },
   body: JSON.stringify({
     campaign: { utm_source: "forged-body", unexpected: "blocked" },

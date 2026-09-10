@@ -10,6 +10,7 @@ import {
 } from "@/lib/clientAttribution";
 import { getOrCreateSessionID } from "@/lib/clientSession";
 import { pushDataLayerEvent } from "@/lib/dataLayer";
+import { CmsText } from "./simf/CmsText";
 
 type Props = {
   ctaID?: string | null;
@@ -218,8 +219,8 @@ export function LeadForm({
     return (
       <div className="lead-form__success" role="status">
         <CheckCircle aria-hidden weight="fill" />
-        <h3>{successHeading}</h3>
-        <p>{successMessage}</p>
+        <h3><CmsText value={successHeading} /></h3>
+        <p><CmsText value={successMessage} /></p>
       </div>
     );
   }
@@ -272,18 +273,18 @@ export function LeadForm({
             >
               {groupHeading ? (
                 <h3 className="lead-form__group-heading">
-                  {groupHeading}
+                  <CmsText value={groupHeading} />
                 </h3>
               ) : null}
               {field.type === "checkbox" ? (
                 <label className="lead-form__checkbox">
                   <input {...common} type="checkbox" value="yes" />
-                  <span>{fieldLabel}</span>
+                  <span><CmsText value={fieldLabel} /></span>
                 </label>
               ) : (
                 <>
                   <label htmlFor={field.name}>
-                    {fieldLabel}
+                    <CmsText value={fieldLabel} />
                     {field.required ? <span aria-hidden> *</span> : null}
                   </label>
                   {field.type === "textarea" ? (
@@ -313,14 +314,14 @@ export function LeadForm({
                 </>
               )}
               {field.helpText ? (
-                <small id={`${field.name}-help`}>{field.helpText}</small>
+                <small id={`${field.name}-help`}><CmsText value={field.helpText} /></small>
               ) : null}
             </div>
           );
         })}
       </div>
       {privacyNote && !privacyRepeatsCheckbox ? (
-        <p className="lead-form__privacy">{privacyNote}</p>
+        <p className="lead-form__privacy"><CmsText value={privacyNote} /></p>
       ) : null}
       {error ? (
         <p className="lead-form__error" role="alert">

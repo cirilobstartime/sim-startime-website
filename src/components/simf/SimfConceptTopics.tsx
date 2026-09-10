@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { CardGridSection, Locale } from "@/content/types";
 import { CmsImage } from "../CmsImage";
+import { CmsText } from "./CmsText";
 
 export function SimfConceptTopics({
   locale,
@@ -31,7 +32,7 @@ export function SimfConceptTopics({
             type="button"
           >
             <span>{String(index + 1).padStart(2, "0")}</span>
-            <strong>{topic.title}</strong>
+            <strong><CmsText value={topic.title} /></strong>
           </button>
         ))}
       </div>
@@ -48,7 +49,7 @@ export function SimfConceptTopics({
             sizes="(max-width: 800px) 100vw, 54vw"
           />
         </div>
-        {selected.body ? <p>{selected.body}</p> : null}
+        {selected.body ? <p><CmsText value={selected.body} /></p> : null}
         <span>
           {locale === "ar"
             ? `${String(active + 1).padStart(2, "0")} من ${String(topics.length).padStart(2, "0")}`

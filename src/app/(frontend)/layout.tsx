@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { AttributionCapture } from "@/components/AttributionCapture";
-import { CookieConsent } from "@/components/CookieConsent";
 import { EventTracking } from "@/components/EventTracking";
 import { MarketingTags } from "@/components/MarketingTags";
 import { getMarketingSettings } from "@/content/payload";
@@ -37,9 +36,6 @@ export default async function FrontendLayout({
 }>) {
   const requestHeaders = await headers();
   const locale = requestHeaders.get("x-startime-locale") === "ar" ? "ar" : "en";
-  const pathname = requestHeaders.get("x-startime-pathname") || "";
-  const isComingSoonPage =
-    pathname === "/coming-soon" || pathname === "/ar/coming-soon";
   const nonce = requestHeaders.get("x-nonce") || undefined;
   const marketing = await getMarketingSettings(locale);
   return (
@@ -52,7 +48,6 @@ export default async function FrontendLayout({
         <AttributionCapture settings={marketing} />
         <EventTracking />
         <MarketingTags nonce={nonce} settings={marketing} />
-        {isComingSoonPage ? null : <CookieConsent settings={marketing} />}
         {children}
       </body>
     </html>

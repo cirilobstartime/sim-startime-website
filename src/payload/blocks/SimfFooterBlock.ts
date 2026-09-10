@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { publicHrefValidation } from "@/lib/publicHref";
 import { sectionControls } from "./shared";
 
 export const SimfFooterBlock: Block = {
@@ -37,7 +38,7 @@ export const SimfFooterBlock: Block = {
       type: "array",
       fields: [
         { name: "platform", type: "select", options: ["x", "linkedin", "youtube"], required: true },
-        { name: "href", type: "text", required: true },
+        { name: "href", type: "text", required: true, validate: publicHrefValidation },
       ],
     },
     {
@@ -45,12 +46,12 @@ export const SimfFooterBlock: Block = {
       type: "array",
       fields: [
         { name: "label", type: "text", required: true },
-        { name: "href", type: "text", required: true },
+        { name: "href", type: "text", required: true, validate: publicHrefValidation },
       ],
     },
     { name: "linksHeading", type: "text", required: true },
     { name: "privacyLabel", type: "text", required: true },
-    { name: "privacyHref", type: "text", required: true },
+    { name: "privacyHref", type: "text", required: true, validate: publicHrefValidation },
     { name: "homeLabel", type: "text", required: true },
     { name: "copyright", type: "text", required: true },
   ],

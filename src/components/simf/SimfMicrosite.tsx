@@ -31,6 +31,8 @@ import {
 } from "@/lib/structuredData";
 import { CmsImage, getMediaURL } from "../CmsImage";
 import { LeadForm } from "../LeadForm";
+import { CmsHeroBackground } from "./CmsHeroBackground";
+import { CmsText } from "./CmsText";
 import { SimfHeader } from "./SimfHeader";
 import { SimfMetricSwiper } from "./SimfMetricSwiper";
 import { SimfCountdown } from "./SimfCountdown";
@@ -89,7 +91,7 @@ function SimfButton({
       href={resolveHref(button.href, locale, isSubdomain)}
       target={button.openInNewTab ? "_blank" : undefined}
     >
-      {button.label}
+      <CmsText value={button.label} />
       <ArrowUpRight aria-hidden />
     </Link>
   );
@@ -106,9 +108,9 @@ function SectionHead({
 }) {
   return (
     <div className="simf-section-head">
-      {eyebrow ? <p className="simf-eyebrow">{eyebrow}</p> : null}
-      <h2>{heading}</h2>
-      {body ? <p>{body}</p> : null}
+      {eyebrow ? <p className="simf-eyebrow"><CmsText value={eyebrow} /></p> : null}
+      <h2><CmsText value={heading} /></h2>
+      {body ? <p><CmsText value={body} /></p> : null}
     </div>
   );
 }
@@ -143,14 +145,26 @@ function Landing({
       {hero ? (
         <section className="simf-hero" id="top">
           <div className="simf-hero__media">
-            <CmsImage alt="" media={hero.media} mobileMedia={hero.mobileMedia} priority sizes="100vw" />
+            <CmsHeroBackground
+              desktopBackgroundType={hero.desktopBackgroundType}
+              desktopBackgroundVideo={hero.desktopBackgroundVideo}
+              desktopBackgroundYouTubeURL={hero.desktopBackgroundYouTubeURL}
+              locale={locale}
+              media={hero.media}
+              mobileBackgroundType={hero.mobileBackgroundType}
+              mobileBackgroundVideo={hero.mobileBackgroundVideo}
+              mobileBackgroundYouTubeURL={hero.mobileBackgroundYouTubeURL}
+              mobileMedia={hero.mobileMedia}
+              priority
+              sizes="100vw"
+            />
           </div>
           <div className="simf-hero__veil" />
           <div className="simf-shell simf-hero__content">
             <div className="simf-hero__copy">
-              {hero.eyebrow ? <p className="simf-hero__patronage">{hero.eyebrow}</p> : null}
-              <h1>{hero.heading}</h1>
-              {hero.body ? <p className="simf-hero__lead">{hero.body}</p> : null}
+              {hero.eyebrow ? <p className="simf-hero__patronage"><CmsText value={hero.eyebrow} /></p> : null}
+              <h1><CmsText value={hero.heading} /></h1>
+              {hero.body ? <p className="simf-hero__lead"><CmsText value={hero.body} /></p> : null}
               <div className="simf-hero__actions">
                 {hero.buttons?.map((button) => (
                   <SimfButton
@@ -167,8 +181,8 @@ function Landing({
                 <div key={detail.label}>
                   {index === 0 ? <CalendarBlank aria-hidden /> : <MapPin aria-hidden />}
                   <span>
-                    <small>{detail.label}</small>
-                    <strong>{detail.value}</strong>
+                    <small><CmsText value={detail.label} /></small>
+                    <strong><CmsText value={detail.value} /></strong>
                   </span>
                 </div>
               ))}
@@ -189,7 +203,7 @@ function Landing({
       {authority ? (
         <section className="simf-authority">
           <div className="simf-shell">
-            <p className="simf-authority__title">{authority.heading}</p>
+            <p className="simf-authority__title"><CmsText value={authority.heading} /></p>
             <div className="simf-authority__grid">
               {authority.cards.filter((card) => card.visible !== false).map((card) => (
                 <article key={card.title}>
@@ -197,8 +211,8 @@ function Landing({
                     <CmsImage alt={card.title} media={card.media} mobileMedia={card.mobileMedia} sizes="220px" />
                   </div>
                   <div>
-                    {card.meta ? <span>{card.meta}</span> : null}
-                    <h3>{card.title}</h3>
+                    {card.meta ? <span><CmsText value={card.meta} /></span> : null}
+                    <h3><CmsText value={card.title} /></h3>
                   </div>
                 </article>
               ))}
@@ -233,7 +247,7 @@ function Landing({
             <SectionHead body={legacy.body} eyebrow={legacy.eyebrow} heading={legacy.heading} />
             <div className="simf-legacy__metrics">
               {legacy.metrics.map((metric) => (
-                <div key={metric.label}><strong dir="ltr">{formatMetricValue(locale, metric.value)}</strong><span>{metric.label}</span></div>
+                <div key={metric.label}><strong dir="ltr">{formatMetricValue(locale, metric.value)}</strong><span><CmsText value={metric.label} /></span></div>
               ))}
             </div>
             {legacy.editions.some((edition) => edition.visible !== false) ? (
@@ -242,10 +256,10 @@ function Landing({
                   <article key={edition.year}>
                     <div className="simf-legacy__milestone" aria-hidden="true">
                       <span>{String(index + 1).padStart(2, "0")} / {String(editions.length).padStart(2, "0")}</span>
-                      <strong>{edition.year}</strong>
+                      <strong><CmsText value={edition.year} /></strong>
                     </div>
                     <div className="simf-legacy__copy">
-                      <h3>{edition.title}</h3>
+                      <h3><CmsText value={edition.title} /></h3>
                     </div>
                     {edition.media ? (
                       <div className="simf-legacy__image">
@@ -279,9 +293,9 @@ function Landing({
               {programme.cards.filter((card) => card.visible !== false).map((card, index) => (
                 <article className="simf-programme__card" key={card.title}>
                   <div className="simf-programme__content">
-                    <span>{card.eyebrow || `0${index + 1}`}</span>
-                    <h3>{card.title}</h3>
-                    {card.body ? <p>{card.body}</p> : null}
+                    <span><CmsText value={card.eyebrow || `0${index + 1}`} /></span>
+                    <h3><CmsText value={card.title} /></h3>
+                    {card.body ? <p><CmsText value={card.body} /></p> : null}
                   </div>
                   <div className="simf-programme__image">
                     <CmsImage alt="" media={card.media} mobileMedia={card.mobileMedia} sizes="(max-width: 800px) 100vw, 46vw" />
@@ -320,7 +334,7 @@ function Landing({
             <SectionHead body={sessions.body} eyebrow={sessions.eyebrow} heading={sessions.heading} />
             <div className="simf-sessions__grid">
               {sessions.cards.filter((card) => card.visible !== false).map((card, index) => (
-                <article key={card.title}><span>0{index + 1}</span><h3>{card.title}</h3></article>
+                <article key={card.title}><span>0{index + 1}</span><h3><CmsText value={card.title} /></h3></article>
               ))}
             </div>
           </div>
@@ -389,9 +403,9 @@ function Landing({
                 <article key={step.title}>
                   <span>0{index + 1}</span>
                   <div>
-                    {step.label ? <small>{step.label}</small> : null}
-                    <h3>{step.title}</h3>
-                    {step.body ? <p>{step.body}</p> : null}
+                    {step.label ? <small><CmsText value={step.label} /></small> : null}
+                    <h3><CmsText value={step.title} /></h3>
+                    {step.body ? <p><CmsText value={step.body} /></p> : null}
                   </div>
                 </article>
               ))}
@@ -432,11 +446,11 @@ function Landing({
               {partners.cards.filter((card) => card.visible !== false).map((card) => {
                 return (
                   <article key={card.title}>
-                    <span>{card.meta}</span>
+                    <span>{card.meta ? <CmsText value={card.meta} /> : null}</span>
                     <div className="simf-partners__logo">
                       <CmsImage alt={card.title} media={card.media} mobileMedia={card.mobileMedia} sizes="230px" />
                     </div>
-                    <h3>{card.title}</h3>
+                    <h3><CmsText value={card.title} /></h3>
                   </article>
                 );
               })}
@@ -466,9 +480,9 @@ function Landing({
                     <CmsImage alt="" media={article.media} mobileMedia={article.mobileMedia} sizes={index === 0 ? "60vw" : "40vw"} />
                   </div>
                   <div className="simf-news__copy">
-                    {article.kicker ? <span>{article.kicker}</span> : null}
-                    <h3>{article.title}</h3>
-                    {article.summary ? <p>{article.summary}</p> : null}
+                    {article.kicker ? <span><CmsText value={article.kicker} /></span> : null}
+                    <h3><CmsText value={article.title} /></h3>
+                    {article.summary ? <p><CmsText value={article.summary} /></p> : null}
                     <span className="simf-news__read">
                       {ar ? "اقرأ التحديث" : "Read update"}
                       <ArrowUpRight aria-hidden />
@@ -529,21 +543,33 @@ function SponsorPage({
       {hero ? (
         <section className="simf-inner-hero simf-sponsor-hero">
           <div className="simf-inner-hero__media">
-            <CmsImage alt="" media={hero.media} mobileMedia={hero.mobileMedia} priority sizes="100vw" />
+            <CmsHeroBackground
+              desktopBackgroundType={hero.desktopBackgroundType}
+              desktopBackgroundVideo={hero.desktopBackgroundVideo}
+              desktopBackgroundYouTubeURL={hero.desktopBackgroundYouTubeURL}
+              locale={locale}
+              media={hero.media}
+              mobileBackgroundType={hero.mobileBackgroundType}
+              mobileBackgroundVideo={hero.mobileBackgroundVideo}
+              mobileBackgroundYouTubeURL={hero.mobileBackgroundYouTubeURL}
+              mobileMedia={hero.mobileMedia}
+              priority
+              sizes="100vw"
+            />
           </div>
           <div className="simf-inner-hero__shade" />
           <div className="simf-shell simf-inner-hero__content">
-            {hero.eyebrow ? <p className="simf-eyebrow">{hero.eyebrow}</p> : null}
-            <h1>{hero.heading}</h1>
-            {hero.body ? <p>{hero.body}</p> : null}
+            {hero.eyebrow ? <p className="simf-eyebrow"><CmsText value={hero.eyebrow} /></p> : null}
+            <h1><CmsText value={hero.heading} /></h1>
+            {hero.body ? <p><CmsText value={hero.body} /></p> : null}
             {hero.eventDetails?.length ? (
               <div className="simf-inner-hero__details">
                 {hero.eventDetails.map((detail, index) => (
                   <div key={detail.label}>
                     {index === 0 ? <CalendarBlank aria-hidden /> : <MapPin aria-hidden />}
                     <span>
-                      <small>{detail.label}</small>
-                      <strong>{detail.value}</strong>
+                      <small><CmsText value={detail.label} /></small>
+                      <strong><CmsText value={detail.value} /></strong>
                     </span>
                   </div>
                 ))}
@@ -563,8 +589,8 @@ function SponsorPage({
               {reassurance.cards.filter((card) => card.visible !== false).map((card, index) => (
                 <article key={card.title}>
                   <span>0{index + 1}</span>
-                  <h3>{card.title}</h3>
-                  {card.body ? <p>{card.body}</p> : null}
+                  <h3><CmsText value={card.title} /></h3>
+                  {card.body ? <p><CmsText value={card.body} /></p> : null}
                 </article>
               ))}
             </div>
@@ -665,6 +691,7 @@ export function SimfMicrosite({
             __html: JSON.stringify(structuredData).replaceAll("<", "\\u003c"),
           }}
           nonce={nonce}
+          suppressHydrationWarning
           type="application/ld+json"
         />
         {page.seo?.structuredData ? (
@@ -673,6 +700,7 @@ export function SimfMicrosite({
               __html: JSON.stringify(page.seo.structuredData).replaceAll("<", "\\u003c"),
             }}
             nonce={nonce}
+            suppressHydrationWarning
             type="application/ld+json"
           />
         ) : null}

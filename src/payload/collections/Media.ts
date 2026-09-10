@@ -1,5 +1,10 @@
 import type { CollectionConfig } from "payload";
 import { authenticatedStaff } from "../access";
+import {
+  PUBLIC_CACHE_TAGS,
+  revalidateCollectionAfterChange,
+  revalidateCollectionAfterDelete,
+} from "../hooks/revalidatePublicContent";
 
 const mediaUploadDir = process.env.MEDIA_UPLOAD_DIR || "uploads/media";
 
@@ -16,6 +21,22 @@ export const Media: CollectionConfig = {
     delete: authenticatedStaff,
     read: () => true,
     update: authenticatedStaff,
+  },
+  hooks: {
+    afterChange: [
+      revalidateCollectionAfterChange([
+        PUBLIC_CACHE_TAGS.pages,
+        PUBLIC_CACHE_TAGS.siteSettings,
+        PUBLIC_CACHE_TAGS.updates,
+      ]),
+    ],
+    afterDelete: [
+      revalidateCollectionAfterDelete([
+        PUBLIC_CACHE_TAGS.pages,
+        PUBLIC_CACHE_TAGS.siteSettings,
+        PUBLIC_CACHE_TAGS.updates,
+      ]),
+    ],
   },
   upload: {
     adminThumbnail: "thumbnail",

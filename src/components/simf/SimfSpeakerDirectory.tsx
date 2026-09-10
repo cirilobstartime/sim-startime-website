@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useRef } from "react";
 import type { Locale, SpeakerDirectorySection } from "@/content/types";
 import { CmsImage } from "../CmsImage";
+import { CmsText } from "./CmsText";
 import { SimfCountryFlag } from "./SimfCountryFlag";
 import { SimfSpeakerRole } from "./SimfSpeakerRole";
 
@@ -45,8 +46,8 @@ export function SimfSpeakerDirectory({
                 />
               </div>
               <div className="simf-directory-speakers__copy">
-                {speaker.eyebrow ? <span>{speaker.eyebrow}</span> : null}
-                <h3>{speaker.name}</h3>
+                {speaker.eyebrow ? <span><CmsText value={speaker.eyebrow} /></span> : null}
+                <h3><CmsText value={speaker.name} /></h3>
                 {speaker.role ? (
                   <SimfSpeakerRole
                     value={speaker.role}

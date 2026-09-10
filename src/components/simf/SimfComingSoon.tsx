@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { SiteSettings } from "@/content/types";
 import { CmsImage } from "@/components/CmsImage";
+import { CmsText } from "./CmsText";
 
 type Props = {
   settings: SiteSettings;
@@ -85,21 +86,21 @@ export function SimfComingSoon({ settings }: Props) {
 
         <section className="simf-coming-soon__content">
           <p className="simf-coming-soon__label">
-            {content?.label || copy.label}
+            <CmsText value={content?.label || copy.label} />
           </p>
-          <h1>{content?.title || copy.title}</h1>
+          <h1><CmsText value={content?.title || copy.title} /></h1>
           <p className="simf-coming-soon__message">
-            {content?.message || copy.message}
+            <CmsText value={content?.message || copy.message} />
           </p>
 
           <div className="simf-coming-soon__event" aria-label={copy.label}>
             <div>
               <CalendarBlank aria-hidden weight="light" />
-              <span>{content?.eventDate || copy.eventDate}</span>
+              <span><CmsText value={content?.eventDate || copy.eventDate} /></span>
             </div>
             <div>
               <MapPin aria-hidden weight="light" />
-              <span>{content?.venue || copy.venue}</span>
+              <span><CmsText value={content?.venue || copy.venue} /></span>
             </div>
           </div>
 
@@ -108,7 +109,7 @@ export function SimfComingSoon({ settings }: Props) {
             href={`mailto:${contactEmail}`}
           >
             <EnvelopeSimple aria-hidden weight="light" />
-            <span>{content?.contactLabel || copy.contactLabel}</span>
+            <span><CmsText value={content?.contactLabel || copy.contactLabel} /></span>
             <ArrowUpRight aria-hidden />
           </a>
         </section>
@@ -116,7 +117,7 @@ export function SimfComingSoon({ settings }: Props) {
         <footer className="simf-coming-soon__footer">
           <span>SIM 2026</span>
           <span aria-hidden="true" />
-          <span>{content?.eventDate || copy.eventDate}</span>
+          <span><CmsText value={content?.eventDate || copy.eventDate} /></span>
         </footer>
       </div>
     </main>

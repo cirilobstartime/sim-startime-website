@@ -17,6 +17,8 @@ import {
   updateArticleSchema,
 } from "@/lib/structuredData";
 import { CmsImage } from "../CmsImage";
+import { CmsHeroBackground } from "./CmsHeroBackground";
+import { CmsText } from "./CmsText";
 import { SimfFooter } from "./SimfFooter";
 import { SimfHeader } from "./SimfHeader";
 import { SimfStickySponsor } from "./SimfStickySponsor";
@@ -70,13 +72,14 @@ function JsonLd({
         __html: JSON.stringify(value).replaceAll("<", "\\u003c"),
       }}
       nonce={nonce}
+      suppressHydrationWarning
       type="application/ld+json"
     />
   );
 }
 
 function ArticleRichText({ value }: { value: string | RichTextValue }) {
-  if (typeof value === "string") return <p>{value}</p>;
+  if (typeof value === "string") return <p><CmsText value={value} /></p>;
   return <RichText className="simf-update-richtext" data={value} />;
 }
 
@@ -94,9 +97,9 @@ function SponsorCTA({
       <div className="simf-update-cta__veil" />
       <div className="simf-shell simf-update-cta__content">
         <div>
-          {cta.eyebrow ? <p className="simf-eyebrow">{cta.eyebrow}</p> : null}
-          <h2>{cta.heading}</h2>
-          {cta.body ? <p>{cta.body}</p> : null}
+          {cta.eyebrow ? <p className="simf-eyebrow"><CmsText value={cta.eyebrow} /></p> : null}
+          <h2><CmsText value={cta.heading} /></h2>
+          {cta.body ? <p><CmsText value={cta.body} /></p> : null}
         </div>
         {cta.buttons?.map((button) => (
           <Link
@@ -105,7 +108,7 @@ function SponsorCTA({
             href={button.href}
             key={`${button.label}-${button.href}`}
           >
-            {button.label}
+            <CmsText value={button.label} />
             <ArrowUpRight aria-hidden />
           </Link>
         ))}
@@ -131,13 +134,13 @@ function UpdateCard({
       </div>
       <div className="simf-update-card__copy">
         <p className="simf-update-card__meta">
-          {update.publicationLabel}
-          {update.category ? <span>{update.category}</span> : null}
+          <CmsText value={update.publicationLabel} />
+          {update.category ? <span><CmsText value={update.category} /></span> : null}
         </p>
-        <h2>{update.title}</h2>
-        <p>{update.summary}</p>
+        <h2><CmsText value={update.title} /></h2>
+        <p><CmsText value={update.summary} /></p>
         <span className="simf-update-card__link">
-          {readLabel}
+          <CmsText value={readLabel} />
           <ArrowUpRight aria-hidden />
         </span>
       </div>
@@ -190,9 +193,15 @@ export function SimfUpdatesArchive({
         {hero ? (
           <section className="simf-updates-hero">
             <div className="simf-updates-hero__media">
-              <CmsImage
-                alt=""
+              <CmsHeroBackground
+                desktopBackgroundType={hero.desktopBackgroundType}
+                desktopBackgroundVideo={hero.desktopBackgroundVideo}
+                desktopBackgroundYouTubeURL={hero.desktopBackgroundYouTubeURL}
+                locale={locale}
                 media={hero.media}
+                mobileBackgroundType={hero.mobileBackgroundType}
+                mobileBackgroundVideo={hero.mobileBackgroundVideo}
+                mobileBackgroundYouTubeURL={hero.mobileBackgroundYouTubeURL}
                 mobileMedia={hero.mobileMedia}
                 priority
                 sizes="(max-width: 760px) 100vw, 55vw"
@@ -200,9 +209,9 @@ export function SimfUpdatesArchive({
             </div>
             <div className="simf-updates-hero__veil" />
             <div className="simf-shell simf-updates-hero__copy">
-              {hero.eyebrow ? <p className="simf-eyebrow">{hero.eyebrow}</p> : null}
-              <h1>{hero.heading}</h1>
-              {hero.body ? <p>{hero.body}</p> : null}
+              {hero.eyebrow ? <p className="simf-eyebrow"><CmsText value={hero.eyebrow} /></p> : null}
+              <h1><CmsText value={hero.heading} /></h1>
+              {hero.body ? <p><CmsText value={hero.body} /></p> : null}
             </div>
           </section>
         ) : null}
@@ -215,13 +224,13 @@ export function SimfUpdatesArchive({
                 </div>
                 <div className="simf-update-feature__copy">
                   <p className="simf-update-card__meta">
-                    {lead.publicationLabel}
-                    {lead.category ? <span>{lead.category}</span> : null}
+                    <CmsText value={lead.publicationLabel} />
+                    {lead.category ? <span><CmsText value={lead.category} /></span> : null}
                   </p>
-                  <h2>{lead.title}</h2>
-                  <p>{lead.summary}</p>
+                  <h2><CmsText value={lead.title} /></h2>
+                  <p><CmsText value={lead.summary} /></p>
                   <span className="simf-button simf-update-feature__button">
-                    {labels?.readLabel || (ar ? "اقرأ التحديث" : "Read update")}
+                    <CmsText value={labels?.readLabel || (ar ? "اقرأ التحديث" : "Read update")} />
                     <ArrowUpRight aria-hidden />
                   </span>
                 </div>
@@ -297,14 +306,14 @@ export function SimfUpdateArticle({
             <div className="simf-shell">
               <Link className="simf-update-article__back" href={route.archive}>
                 <BackIcon aria-hidden />
-                {labels?.backLabel || (ar ? "العودة إلى التحديثات" : "Back to Updates")}
+                <CmsText value={labels?.backLabel || (ar ? "العودة إلى التحديثات" : "Back to Updates")} />
               </Link>
               <p className="simf-update-card__meta">
-                {update.publicationLabel}
-                {update.category ? <span>{update.category}</span> : null}
+                <CmsText value={update.publicationLabel} />
+                {update.category ? <span><CmsText value={update.category} /></span> : null}
               </p>
-              <h1>{update.title}</h1>
-              {update.intro ? <p className="simf-update-article__dek">{update.intro}</p> : null}
+              <h1><CmsText value={update.title} /></h1>
+              {update.intro ? <p className="simf-update-article__dek"><CmsText value={update.intro} /></p> : null}
             </div>
           </header>
           <figure className="simf-shell simf-update-article__hero">
@@ -312,21 +321,21 @@ export function SimfUpdateArticle({
               <CmsImage alt="" media={update.featuredImage} mobileMedia={update.mobileFeaturedImage} priority sizes="100vw" />
             </div>
             {update.featuredImageCaption ? (
-              <figcaption>{update.featuredImageCaption}</figcaption>
+              <figcaption><CmsText value={update.featuredImageCaption} /></figcaption>
             ) : null}
           </figure>
           <div className="simf-shell simf-update-article__body">
             {update.content.map((item, index) =>
               item.highlight ? (
                 <aside className="simf-update-article__highlight" key={`${item.heading}-${index}`}>
-                  {item.heading ? <h2>{item.heading}</h2> : null}
+                  {item.heading ? <h2><CmsText value={item.heading} /></h2> : null}
                   {item.richBody || item.body ? (
                     <ArticleRichText value={item.richBody || item.body || ""} />
                   ) : null}
                 </aside>
               ) : (
                 <section className="simf-update-article__section" key={`${item.heading}-${index}`}>
-                  {item.heading ? <h2>{item.heading}</h2> : null}
+                  {item.heading ? <h2><CmsText value={item.heading} /></h2> : null}
                   {item.richBody || item.body ? (
                     <ArticleRichText value={item.richBody || item.body || ""} />
                   ) : null}
@@ -340,7 +349,7 @@ export function SimfUpdateArticle({
                           sizes="(max-width: 760px) 100vw, 760px"
                         />
                       </div>
-                      {item.mediaCaption ? <figcaption>{item.mediaCaption}</figcaption> : null}
+                      {item.mediaCaption ? <figcaption><CmsText value={item.mediaCaption} /></figcaption> : null}
                     </figure>
                   ) : null}
                 </section>
@@ -352,9 +361,9 @@ export function SimfUpdateArticle({
           <section className="simf-related-updates">
             <div className="simf-shell">
               <div className="simf-related-updates__head">
-                <h2>{labels?.relatedHeading || (ar ? "تحديثات ذات صلة" : "Related Updates")}</h2>
+                <h2><CmsText value={labels?.relatedHeading || (ar ? "تحديثات ذات صلة" : "Related Updates")} /></h2>
                 <Link href={route.archive}>
-                  {labels?.viewAllLabel || (ar ? "عرض جميع التحديثات" : "View all updates")}
+                  <CmsText value={labels?.viewAllLabel || (ar ? "عرض جميع التحديثات" : "View all updates")} />
                   <ArrowUpRight aria-hidden />
                 </Link>
               </div>

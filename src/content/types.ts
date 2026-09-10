@@ -12,6 +12,7 @@ export type MediaValue =
       height?: number | null;
       id?: number | string;
       title?: string | null;
+      updatedAt?: string | null;
       url?: string | null;
       width?: number | null;
     }
@@ -198,10 +199,16 @@ export type HeroSection = BaseSection & {
   blockType: "hero";
   body?: string | null;
   buttons?: Button[] | null;
+  desktopBackgroundType?: "image" | "upload" | "youtube" | null;
+  desktopBackgroundVideo?: MediaValue;
+  desktopBackgroundYouTubeURL?: string | null;
   eyebrow?: string | null;
   eventDetails?: Array<{ label: string; value: string }> | null;
   heading: string;
   media?: MediaValue;
+  mobileBackgroundType?: "inherit" | "image" | "upload" | "youtube" | null;
+  mobileBackgroundVideo?: MediaValue;
+  mobileBackgroundYouTubeURL?: string | null;
   mobileMedia?: MediaValue;
   note?: string | null;
 };

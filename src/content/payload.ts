@@ -20,6 +20,9 @@ import type {
   PublicUpdate,
   SiteSettings,
 } from "./types";
+import { PUBLIC_CACHE_TAGS } from "@/payload/hooks/revalidatePublicContent";
+
+const PUBLIC_CONTENT_REVALIDATE_SECONDS = 60 * 60;
 
 function normalizeSections(value: unknown): PageSection[] {
   if (!Array.isArray(value)) return [];
@@ -435,25 +438,35 @@ export async function getCMSRedirect(
   }
 }
 
-export const getPage = unstable_cache(fetchPage, ["simf-pages-v49"], {
-  revalidate: 60,
-  tags: ["simf-pages"],
+export const getPage = unstable_cache(fetchPage, ["simf-pages-v50"], {
+  revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,
+  tags: [PUBLIC_CACHE_TAGS.pages],
 });
 
 export const getUpdates = unstable_cache(fetchUpdates, ["simf-updates-v1"], {
-  revalidate: 60,
-  tags: ["simf-updates"],
+  revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,
+  tags: [PUBLIC_CACHE_TAGS.updates],
 });
 
 export const getUpdate = unstable_cache(fetchUpdate, ["simf-update-v1"], {
-  revalidate: 60,
-  tags: ["simf-updates"],
+  revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,
+  tags: [PUBLIC_CACHE_TAGS.updates],
 });
 
 export const getMarketingSettings = unstable_cache(
   fetchMarketing,
   ["simf-marketing-v1"],
-  { revalidate: 60, tags: ["simf-marketing"] },
+  {
+    revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,
+    tags: [PUBLIC_CACHE_TAGS.marketing],
+  },
 );
 
-export const getSiteSettings = cache(fetchSiteSettings);
+export const getSiteSettings = unstable_cache(
+  cache(fetchSiteSettings),
+  ["simf-site-settings-v1"],
+  {
+    revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,
+    tags: [PUBLIC_CACHE_TAGS.siteSettings],
+  },
+);
