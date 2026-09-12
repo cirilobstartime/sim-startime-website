@@ -12,6 +12,7 @@ import {
 import {
   getCMSRedirect,
   getMarketingSettings,
+  getNavigationManifest,
   getPage,
   getSiteSettings,
   getUpdate,
@@ -21,6 +22,7 @@ import type {
   Locale,
   MediaValue,
   PublicPage,
+  PublicNavigationManifest,
   SiteSettings,
 } from "@/content/types";
 import type { SimfContentPageKey } from "@/content/simfContentPagesDefaults";
@@ -131,6 +133,8 @@ function resolveRoute(path?: string[]) {
     "partners",
     "government-b2g",
   ];
+  const partnersBeta =
+    segments.length === 1 && segments[0] === "partners-beta";
   const publicContentKey =
     segments.length === 1 && segments[0] === "b2g"
       ? "government-b2g"
@@ -145,13 +149,22 @@ function resolveRoute(path?: string[]) {
       ? segments[1]
       : undefined;
   const contentKey =
-    segments.length === 1 &&
+    !partnersBeta && segments.length === 1 &&
     contentPages.includes(publicContentKey as SimfContentPageKey)
       ? (publicContentKey as SimfContentPageKey)
       : undefined;
   const sponsor = segments.length === 1 && segments[0] === "sponsor";
   const comingSoon =
     segments.length === 1 && segments[0] === "coming-soon";
+  const genericPage =
+    segments.length === 1 &&
+    !about &&
+    !homepageReview &&
+    !updatesArchive &&
+    !sponsor &&
+    !comingSoon &&
+    !partnersBeta &&
+    !contentKey;
   const valid =
     segments.length === 0 ||
     about ||
@@ -160,6 +173,8 @@ function resolveRoute(path?: string[]) {
     Boolean(updateSlug) ||
     sponsor ||
     comingSoon ||
+    partnersBeta ||
+    genericPage ||
     Boolean(contentKey);
   const pageType = about
     ? ("simf-microsite-about" as const)
@@ -169,6 +184,10 @@ function resolveRoute(path?: string[]) {
       ? ("simf-microsite-updates" as const)
       : sponsor
     ? ("simf-microsite-sponsor" as const)
+    : partnersBeta
+        ? ("simf-microsite-partners" as const)
+    : genericPage
+        ? ("simf-microsite-generic" as const)
     : contentKey
         ? (`simf-microsite-${contentKey}` as const)
       : ("simf-microsite-home" as const);
@@ -182,6 +201,10 @@ function resolveRoute(path?: string[]) {
         ? `/updates/${updateSlug}`
         : sponsor
     ? "/sponsor"
+    : partnersBeta
+        ? "/partners-beta"
+    : genericPage
+        ? `/${segments[0]}`
     : contentKey
           ? contentKey === "government-b2g"
             ? "/b2g"
@@ -200,10 +223,16 @@ function resolveRoute(path?: string[]) {
           ? "simf-microsite/about"
         : pageType === "simf-microsite-updates"
           ? "simf-microsite/updates"
+        : partnersBeta
+          ? "simf-microsite/partners-beta"
+        : genericPage
+          ? `simf-microsite/${segments[0]}`
         : contentKey
             ? `simf-microsite/${contentKey}`
           : "simf-microsite",
     contentKey,
+    partnersBeta,
+    genericPage,
     about,
     homepageReview,
     comingSoon,
@@ -263,6 +292,56 @@ function applySharedBranding(
           ...section,
           logo: settings.footerLogo || section.logo,
           mobileLogo: settings.mobileFooterLogo || section.mobileLogo,
+        };
+      }
+      return section;
+    }),
+  };
+}
+
+function normalizeNavigationPath(href: string): string {
+  if (!href.startsWith("/")) return href;
+  return href.replace(/\/+$/, "") || "/";
+}
+
+function applyCMSNavigation(
+  page: PublicPage,
+  navigation: PublicNavigationManifest,
+  locale: Locale,
+): PublicPage {
+  const known = new Set(navigation.knownPaths.map(normalizeNavigationPath));
+  const active = new Set(navigation.activePaths.map(normalizeNavigationPath));
+  const sponsorPath = locale === "ar" ? "/ar/sponsor" : "/sponsor";
+  const mergeLinks = (existing: Array<{ href: string; label: string }> = []) => {
+    const filtered = existing.filter((link) => {
+      const path = normalizeNavigationPath(link.href);
+      return !known.has(path) || active.has(path);
+    });
+    const present = new Set(filtered.map((link) => normalizeNavigationPath(link.href)));
+    return [
+      ...filtered,
+      ...navigation.links.filter((link) => {
+        const path = normalizeNavigationPath(link.href);
+        if (present.has(path)) return false;
+        present.add(path);
+        return true;
+      }),
+    ];
+  };
+  return {
+    ...page,
+    sections: page.sections.map((section) => {
+      if (section.blockType === "simfHeader") {
+        return {
+          ...section,
+          links: mergeLinks(section.links),
+          sponsorVisible: !known.has(sponsorPath) || active.has(sponsorPath),
+        };
+      }
+      if (section.blockType === "simfFooter") {
+        return {
+          ...section,
+          importantLinks: mergeLinks(section.importantLinks || []),
         };
       }
       return section;
@@ -389,6 +468,10 @@ export async function generateMetadata({
         ? "/sponsor"
         : page.pageType === "simf-microsite-updates"
           ? "/updates"
+        : route.partnersBeta
+          ? "/partners-beta"
+        : route.genericPage
+          ? route.publicPath.replace(/^\/ar/, "")
         : route.contentKey
             ? route.contentKey === "government-b2g"
               ? "/b2g"
@@ -535,7 +618,7 @@ export default async function PublicPage({ params }: PageProps) {
 
   if (route.locale === "ar" && !siteSettings.enableArabic) notFound();
   const counterpartLocale: Locale = route.locale === "ar" ? "en" : "ar";
-  const [page, updates, counterpart] = await Promise.all([
+  const [page, updates, counterpart, navigation] = await Promise.all([
     getPage(route.locale, route.slug),
     route.updatesArchive || route.updateSlug
       ? getUpdates(route.locale)
@@ -543,11 +626,15 @@ export default async function PublicPage({ params }: PageProps) {
     route.updateSlug
       ? getUpdate(counterpartLocale, route.updateSlug)
       : getPage(counterpartLocale, route.slug),
+    getNavigationManifest(route.locale),
   ]);
   const showLanguageSwitcher =
     siteSettings.enableArabic && Boolean(counterpart);
   if (!page || !page.pageType.startsWith("simf-microsite")) notFound();
-  const brandedPage = applySharedBranding(page, siteSettings);
+  const brandedPage = applySharedBranding(
+    applyCMSNavigation(page, navigation, route.locale),
+    siteSettings,
+  );
   if (route.updateSlug) {
     const update = await getUpdate(route.locale, route.updateSlug);
     if (!update) notFound();
@@ -573,7 +660,7 @@ export default async function PublicPage({ params }: PageProps) {
       />
     );
   }
-  if (route.contentKey) {
+  if (route.contentKey || route.partnersBeta || route.genericPage) {
     return (
       <SimfContentPage
         locale={route.locale}

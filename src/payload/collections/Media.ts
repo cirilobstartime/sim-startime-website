@@ -12,7 +12,7 @@ export const Media: CollectionConfig = {
   slug: "media",
   admin: {
     description:
-      "Upload images and videos used across SIMF. JPEG and PNG images are automatically stored as optimized WebP; videos keep their original format. Exact role and recommended dimensions are shown beside every image field where this media is selected.",
+      "Upload images and videos used across SIMF. JPEG and PNG images are automatically stored as optimized WebP; videos keep their original format and may be up to 64 MB. For faster pages, keep web videos near or below 20 MB whenever practical. Exact role and recommended dimensions are shown beside every image field where this media is selected.",
     group: "Content",
     useAsTitle: "title",
   },

@@ -45,6 +45,13 @@ if (
 }
 
 export default buildConfig({
+  bodyParser: {
+    limits: {
+      // Match the reverse-proxy ceiling while rejecting unexpectedly large
+      // uploads before they consume unbounded server resources.
+      fileSize: 64 * 1024 * 1024,
+    },
+  },
   email: nodemailerAdapter({
     defaultFromAddress:
       process.env.EMAIL_FROM_ADDRESS?.trim() ||
@@ -153,6 +160,15 @@ export default buildConfig({
   routes: {
     admin: "/content-admin",
     api: "/api",
+  },
+  upload: {
+    abortOnLimit: true,
+    createParentPath: true,
+    responseOnLimit:
+      "The selected file is larger than the 64 MB upload limit.",
+    tempFileDir: process.env.PAYLOAD_UPLOAD_TEMP_DIR || "/tmp/simf-uploads",
+    uploadTimeout: 300_000,
+    useTempFiles: true,
   },
   cors: [serverURL],
   csrf: [serverURL],

@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
   experimental: {
     cpus: 1,
     optimizePackageImports: ["@phosphor-icons/react"],
+    proxyClientMaxBodySize: "64mb",
   },
   async headers() {
     const publicAssetHeaders = [
@@ -76,7 +77,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920, 2048],
+    deviceSizes: [412, 480, 640, 750, 828, 1080, 1200, 1600, 1920, 2048],
     localPatterns: [
       { pathname: "/api/media/file/**" },
       { pathname: "/assets/**" },
@@ -105,4 +106,28 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPayload(nextConfig);
+const payloadNextConfig = withPayload(nextConfig);
+const payloadHeaders = payloadNextConfig.headers;
+
+// Payload adds color-scheme client hints to every route. Restrict those hints
+// to the CMS where they are used; on public pages Critical-CH forces Chromium
+// to restart the initial navigation and delays LCP.
+payloadNextConfig.headers = async () => {
+  const rules = (await payloadHeaders?.()) || [];
+
+  return rules.map((rule) => {
+    const isPayloadColorSchemeRule =
+      rule.source === "/:path*" &&
+      rule.headers?.some(
+        (header) =>
+          header.key === "Critical-CH" &&
+          header.value === "Sec-CH-Prefers-Color-Scheme",
+      );
+
+    return isPayloadColorSchemeRule
+      ? { ...rule, source: "/content-admin/:path*" }
+      : rule;
+  });
+};
+
+export default payloadNextConfig;

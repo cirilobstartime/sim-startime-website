@@ -48,6 +48,7 @@ export function SimfNotFound({
         navigationLabel={header?.navigationLabel}
         sponsorHref={sponsorHref}
         sponsorLabel={header?.sponsorLabel}
+        sponsorVisible={header?.sponsorVisible !== false}
         showLanguageSwitcher={false}
         switchHref="/"
         switchLabel={header?.languageSwitchLabel}

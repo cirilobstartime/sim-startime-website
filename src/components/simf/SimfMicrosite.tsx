@@ -681,6 +681,7 @@ export function SimfMicrosite({
         navigationLabel={header?.navigationLabel}
         sponsorHref={sponsorHref}
         sponsorLabel={header?.sponsorLabel}
+        sponsorVisible={header?.sponsorVisible !== false}
         showLanguageSwitcher={showLanguageSwitcher}
         switchHref={switchHref}
         switchLabel={header?.languageSwitchLabel}
@@ -720,7 +721,7 @@ export function SimfMicrosite({
           />
         )}
       </main>
-      {!isSponsor ? (
+      {!isSponsor && header?.sponsorVisible !== false ? (
         <SimfStickySponsor
           href={sponsorHref}
           label={header?.sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")}

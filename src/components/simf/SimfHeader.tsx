@@ -20,6 +20,7 @@ type Props = {
   navigationLabel?: string;
   sponsorHref: string;
   sponsorLabel?: string;
+  sponsorVisible?: boolean;
   showLanguageSwitcher?: boolean;
   switchHref: string;
   switchLabel?: string;
@@ -37,6 +38,7 @@ export function SimfHeader({
   navigationLabel,
   sponsorHref,
   sponsorLabel,
+  sponsorVisible = true,
   showLanguageSwitcher = true,
   switchHref,
   switchLabel,
@@ -96,10 +98,12 @@ export function SimfHeader({
               <CmsText value={item.label} />
             </Link>
           ))}
-          <Link className="simf-header__mobile-cta" href={sponsorHref} prefetch={false}>
-            <CmsText value={sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")} />
-            <ArrowUpRight aria-hidden />
-          </Link>
+          {sponsorVisible ? (
+            <Link className="simf-header__mobile-cta" href={sponsorHref} prefetch={false}>
+              <CmsText value={sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")} />
+              <ArrowUpRight aria-hidden />
+            </Link>
+          ) : null}
         </nav>
         <div className="simf-header__actions">
           {showLanguageSwitcher ? (
@@ -111,15 +115,17 @@ export function SimfHeader({
               {ar ? "EN" : "AR"}
             </a>
           ) : null}
-          <Link
-            className="simf-button simf-button--small"
-            data-track="simf-header-sponsor"
-            href={sponsorHref}
-            prefetch={false}
-          >
-            <CmsText value={sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")} />
-            <ArrowUpRight aria-hidden />
-          </Link>
+          {sponsorVisible ? (
+            <Link
+              className="simf-button simf-button--small"
+              data-track="simf-header-sponsor"
+              href={sponsorHref}
+              prefetch={false}
+            >
+              <CmsText value={sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")} />
+              <ArrowUpRight aria-hidden />
+            </Link>
+          ) : null}
           <button
             aria-expanded={open}
             aria-label={

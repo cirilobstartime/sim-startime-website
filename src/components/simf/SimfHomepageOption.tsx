@@ -147,6 +147,7 @@ export function SimfHomepageOption({
         navigationLabel={header?.navigationLabel}
         sponsorHref={sponsorHref}
         sponsorLabel={header?.sponsorLabel}
+        sponsorVisible={header?.sponsorVisible !== false}
         showLanguageSwitcher={showLanguageSwitcher}
         switchHref={switchHref}
         switchLabel={header?.languageSwitchLabel}
@@ -582,10 +583,12 @@ export function SimfHomepageOption({
           </section>
         ) : null}
       </main>
-      <SimfStickySponsor
-        href={sponsorHref}
-        label={header?.sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")}
-      />
+      {header?.sponsorVisible !== false ? (
+        <SimfStickySponsor
+          href={sponsorHref}
+          label={header?.sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")}
+        />
+      ) : null}
       <SimfFooter footer={footer} homeHref={homeHref} locale={locale} />
     </div>
   );

@@ -9,7 +9,7 @@ import {
 } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Locale, MediaValue } from "@/content/types";
-import { getMediaURL } from "../CmsImage";
+import { CmsImage, getMediaURL } from "../CmsImage";
 
 export function SimfVideoPlayer({
   autoplay = true,
@@ -32,11 +32,11 @@ export function SimfVideoPlayer({
   const autoplayIntent = useRef(false);
   const autoStarted = useRef(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [mediaReady, setMediaReady] = useState(false);
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(false);
   const ar = locale === "ar";
   const desktopPosterURL = getMediaURL(poster);
-  const mobilePosterURL = getMediaURL(mobilePoster);
   const youtubeID = useMemo(() => {
     if (!youtubeURL) return null;
     return youtubeURL.match(
@@ -45,18 +45,6 @@ export function SimfVideoPlayer({
   }, [youtubeURL]);
 
   const youtubeTime = useRef(0);
-
-  useEffect(() => {
-    const element = media.current;
-    if (!element || !mobilePosterURL) return;
-    const query = window.matchMedia("(max-width: 767px)");
-    const updatePoster = () => {
-      element.poster = query.matches ? mobilePosterURL : desktopPosterURL;
-    };
-    updatePoster();
-    query.addEventListener("change", updatePoster);
-    return () => query.removeEventListener("change", updatePoster);
-  }, [desktopPosterURL, mobilePosterURL]);
 
   const youtubeCommand = useCallback((command: string, args: Array<boolean | number | string> = []) => {
     youtube.current?.contentWindow?.postMessage(
@@ -83,7 +71,6 @@ export function SimfVideoPlayer({
         if (youtubeID) {
           youtubeCommand("mute");
           youtubeCommand("playVideo");
-          setPlaying(true);
         } else if (media.current) {
           media.current.muted = true;
           void media.current.play().catch(() => setPlaying(false));
@@ -109,7 +96,11 @@ export function SimfVideoPlayer({
         }
         if (typeof payload?.info?.playerState === "number") {
           setPlaying(payload.info.playerState === 1);
-          if (payload.info.playerState === 0) setHasStarted(false);
+          if (payload.info.playerState === 1) setMediaReady(true);
+          if (payload.info.playerState === 0) {
+            setHasStarted(false);
+            setMediaReady(false);
+          }
         }
       } catch {
         // Ignore unrelated window messages.
@@ -124,7 +115,6 @@ export function SimfVideoPlayer({
     autoplayIntent.current = true;
     if (youtubeID) {
       setHasStarted(true);
-      setPlaying(true);
       youtubeCommand("playVideo");
       return;
     }
@@ -178,6 +168,16 @@ export function SimfVideoPlayer({
       className={`simf-option-film__player${hasStarted ? " is-started" : ""}`}
       ref={player}
     >
+      {!mediaReady && desktopPosterURL ? (
+        <CmsImage
+          alt=""
+          className="simf-option-film__poster"
+          media={poster}
+          mobileMedia={mobilePoster}
+          sizes="(max-width: 767px) 100vw, 1200px"
+        />
+      ) : null}
+
       {youtubeID ? (
         <iframe
           allow="autoplay; encrypted-media; picture-in-picture"
@@ -186,7 +186,6 @@ export function SimfVideoPlayer({
             if (autoplayIntent.current) {
               youtubeCommand("mute");
               youtubeCommand("playVideo");
-              setPlaying(true);
             }
           }}
           ref={youtube}
@@ -200,6 +199,7 @@ export function SimfVideoPlayer({
         onClick={hasStarted ? toggle : undefined}
         onEnded={() => {
           setHasStarted(false);
+          setMediaReady(false);
           setPlaying(false);
         }}
         onKeyDown={(event) => {
@@ -209,9 +209,9 @@ export function SimfVideoPlayer({
         }}
         onPause={() => setPlaying(false)}
         onPlay={() => setPlaying(true)}
+        onPlaying={() => setMediaReady(true)}
         playsInline
         muted={muted}
-        poster={desktopPosterURL}
         preload="none"
         ref={media}
         tabIndex={hasStarted ? 0 : -1}

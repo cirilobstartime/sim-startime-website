@@ -26,6 +26,9 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static(?:/|$)|_next/image(?:/|$)|favicon[.]ico$).*)",
+    // Payload API uploads do not render HTML and do not need the page CSP
+    // nonce. Keeping them outside this proxy also avoids cloning large video
+    // request bodies in Next.js middleware.
+    "/((?!api(?:/|$)|_next/static(?:/|$)|_next/image(?:/|$)|favicon[.]ico$).*)",
   ],
 };

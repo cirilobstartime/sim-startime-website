@@ -16,6 +16,7 @@ import type {
   MarketingSettings,
   MediaValue,
   PageSection,
+  PublicNavigationManifest,
   PublicPage,
   PublicUpdate,
   SiteSettings,
@@ -53,6 +54,7 @@ async function fetchPage(
     "partners",
     "government-b2g",
   ];
+  const isPartnersBeta = route === "simf-microsite/partners-beta";
   const isContentPage = Boolean(
     contentKey && contentKeys.includes(contentKey),
   );
@@ -65,6 +67,8 @@ async function fetchPage(
         ? "simf-microsite-about"
       : route === "simf-microsite/updates"
         ? "simf-microsite-updates"
+        : isPartnersBeta
+          ? "simf-microsite-partners"
         : isContentPage
           ? `simf-microsite-${contentKey}`
           : "simf-microsite-home";
@@ -125,6 +129,63 @@ async function fetchPage(
               ? "simf-microsite-sponsor"
               : "simf-microsite-home",
           );
+  }
+}
+
+function navigationPath(
+  locale: Locale,
+  pageType: string,
+  slugValue: unknown,
+): string | null {
+  const prefix = locale === "ar" ? "/ar" : "";
+  if (pageType === "simf-microsite-home") return prefix || "/";
+  if (pageType === "simf-microsite-sponsor") return `${prefix}/sponsor`;
+  if (pageType === "simf-microsite-government-b2g") return `${prefix}/b2g`;
+  if (pageType === "simf-microsite-updates") return `${prefix}/updates`;
+  const slug = typeof slugValue === "string" ? slugValue.trim() : "";
+  const segment = slug.replace(/^simf-microsite\//, "").replace(/^\/+|\/+$/g, "");
+  return segment && !segment.includes("/") ? `${prefix}/${segment}` : null;
+}
+
+async function fetchNavigationManifest(
+  locale: Locale,
+): Promise<PublicNavigationManifest> {
+  try {
+    const payload = await getPayload({ config: configPromise });
+    const result = await payload.find({
+      collection: "pages",
+      depth: 0,
+      draft: false,
+      fallbackLocale: false,
+      limit: 100,
+      locale,
+      overrideAccess: true,
+    });
+    const now = Date.now();
+    const knownPaths: string[] = [];
+    const activePaths: string[] = [];
+    const links: Array<{ href: string; label: string }> = [];
+    for (const page of result.docs) {
+      const href = navigationPath(locale, String(page.pageType || ""), page.slug);
+      if (!href) continue;
+      knownPaths.push(href);
+      const active =
+        page.visible !== false &&
+        page._status === "published" &&
+        (!page.publishFrom || new Date(page.publishFrom).getTime() <= now) &&
+        (!page.publishUntil || new Date(page.publishUntil).getTime() > now);
+      if (!active) continue;
+      activePaths.push(href);
+      if (page.showInNavigation) {
+        links.push({
+          href,
+          label: page.navigationLabel?.trim() || page.title,
+        });
+      }
+    }
+    return { activePaths, knownPaths, links };
+  } catch {
+    return { activePaths: [], knownPaths: [], links: [] };
   }
 }
 
@@ -438,10 +499,19 @@ export async function getCMSRedirect(
   }
 }
 
-export const getPage = unstable_cache(fetchPage, ["simf-pages-v50"], {
+export const getPage = unstable_cache(fetchPage, ["simf-pages-v51"], {
   revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,
   tags: [PUBLIC_CACHE_TAGS.pages],
 });
+
+export const getNavigationManifest = unstable_cache(
+  fetchNavigationManifest,
+  ["simf-navigation-v1"],
+  {
+    revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,
+    tags: [PUBLIC_CACHE_TAGS.pages],
+  },
+);
 
 export const getUpdates = unstable_cache(fetchUpdates, ["simf-updates-v1"], {
   revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,

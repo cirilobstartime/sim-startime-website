@@ -181,6 +181,7 @@ export function SimfUpdatesArchive({
         navigationLabel={header?.navigationLabel}
         sponsorHref={header?.sponsorHref || route.sponsor}
         sponsorLabel={header?.sponsorLabel}
+        sponsorVisible={header?.sponsorVisible !== false}
         showLanguageSwitcher={showLanguageSwitcher}
         switchHref={switchHref}
         switchLabel={header?.languageSwitchLabel}
@@ -250,10 +251,12 @@ export function SimfUpdatesArchive({
         </section>
         <SponsorCTA cta={cta} />
       </main>
-      <SimfStickySponsor
-        href={header?.sponsorHref || route.sponsor}
-        label={header?.sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")}
-      />
+      {header?.sponsorVisible !== false ? (
+        <SimfStickySponsor
+          href={header?.sponsorHref || route.sponsor}
+          label={header?.sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")}
+        />
+      ) : null}
       <SimfFooter footer={footer} homeHref={homeHref} locale={locale} />
     </div>
   );
@@ -295,6 +298,7 @@ export function SimfUpdateArticle({
         navigationLabel={header?.navigationLabel}
         sponsorHref={header?.sponsorHref || route.sponsor}
         sponsorLabel={header?.sponsorLabel}
+        sponsorVisible={header?.sponsorVisible !== false}
         showLanguageSwitcher={showLanguageSwitcher}
         switchHref={switchHref}
         switchLabel={header?.languageSwitchLabel}
@@ -382,10 +386,12 @@ export function SimfUpdateArticle({
         ) : null}
         <SponsorCTA cta={cta} />
       </main>
-      <SimfStickySponsor
-        href={header?.sponsorHref || route.sponsor}
-        label={header?.sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")}
-      />
+      {header?.sponsorVisible !== false ? (
+        <SimfStickySponsor
+          href={header?.sponsorHref || route.sponsor}
+          label={header?.sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")}
+        />
+      ) : null}
       <SimfFooter footer={footer} homeHref={homeHref} locale={locale} />
     </div>
   );

@@ -84,13 +84,18 @@ export type PartnerCategorySection = BaseSection & {
   eyebrow?: string | null;
   heading: string;
   logoLayout?: "grid" | "swiper" | null;
+  presentationStyle?: "logo-cards" | "partner-profiles" | null;
+  showSectionHeading?: boolean | null;
+  showProfileCategoryLabels?: boolean | null;
   logos: Array<{
+    description?: string | null;
     href?: string | null;
     id?: string | null;
     logo: MediaValue;
     mobileLogo?: MediaValue;
     name: string;
     openInNewTab?: boolean | null;
+    showCategoryLabel?: boolean | null;
     tier?:
       | "none"
       | "supervision"
@@ -259,7 +264,11 @@ export type ImageStorySection = BaseSection & {
   ctaLabel?: string | null;
   eyebrow?: string | null;
   heading: string;
-  images: Array<{ caption?: string | null; media: MediaValue; mobileMedia?: MediaValue }>;
+  images: Array<{
+    caption?: string | null;
+    media: MediaValue;
+    mobileMedia?: MediaValue;
+  }>;
 };
 
 export type NewsMosaicSection = BaseSection & {
@@ -370,6 +379,13 @@ export type SimfHeaderSection = BaseSection & {
   navigationLabel: string;
   sponsorHref: string;
   sponsorLabel: string;
+  sponsorVisible?: boolean | null;
+};
+
+export type PublicNavigationManifest = {
+  activePaths: string[];
+  knownPaths: string[];
+  links: Array<{ href: string; label: string }>;
 };
 
 export type UpdateIndexSection = BaseSection & {

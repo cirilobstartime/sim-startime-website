@@ -715,10 +715,13 @@ sudo systemctl restart simf
 ### Upload returns 413 Request Entity Too Large
 
 Check the Nginx `client_max_body_size` value and the application's configured
-form/media limit. The maintained production configuration allows 12 MB at the
-edge. Prefer resizing unusually large images instead of raising the global
-limit. If a business requirement changes the limit, update both layers, test
-memory use on the `t3.small`, run `nginx -t`, and reload Nginx.
+form/media limit. The maintained configuration allows 64 MB CMS video files,
+with a 70 MB reverse-proxy request envelope for multipart overhead, and streams
+uploads through temporary disk storage instead of holding the complete file in
+RAM. Prefer resizing unusually large images
+and compressing web videos to approximately 20 MB or less. If the business
+requirement changes the limit, update both layers, test disk and memory use on
+the `t3.small`, run `nginx -t`, and reload Nginx.
 
 ### Domain redirects repeatedly or shows the wrong website
 

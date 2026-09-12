@@ -80,19 +80,23 @@ function findSection<T extends PublicPage["sections"][number]>(
   anchorID: string,
 ) {
   return page.sections.find((section) => section.anchorID === anchorID) as
-    | T
-    | undefined;
+    T | undefined;
 }
 
 function Action({ button }: { button: Button }) {
   const external = /^https?:\/\//.test(button.href);
   const icon =
-    button.icon === "none" ? null
-    : button.icon === "arrow-right" ? <ArrowRight aria-hidden />
-    : button.icon === "download" ? <DownloadSimple aria-hidden />
-    : button.icon === "calendar" ? <CalendarBlank aria-hidden />
-    : button.icon === "envelope" ? <EnvelopeSimple aria-hidden />
-    : <ArrowUpRight aria-hidden />;
+    button.icon === "none" ? null : button.icon === "arrow-right" ? (
+      <ArrowRight aria-hidden />
+    ) : button.icon === "download" ? (
+      <DownloadSimple aria-hidden />
+    ) : button.icon === "calendar" ? (
+      <CalendarBlank aria-hidden />
+    ) : button.icon === "envelope" ? (
+      <EnvelopeSimple aria-hidden />
+    ) : (
+      <ArrowUpRight aria-hidden />
+    );
   return (
     <Link
       className={`simf-button simf-button--${button.style || "primary"}`}
@@ -120,14 +124,18 @@ function appearance(section: BaseSection) {
   const mobileBackgroundImage = getMediaURL(settings?.mobileBackgroundImage);
   const className = [
     settings?.theme ? `simf-content-section--theme-${settings.theme}` : "",
-    settings?.spacing ? `simf-content-section--spacing-${settings.spacing}` : "",
+    settings?.spacing
+      ? `simf-content-section--spacing-${settings.spacing}`
+      : "",
     backgroundImage ? "simf-content-section--has-background" : "",
   ]
     .filter(Boolean)
     .join(" ");
   const style: SectionStyle = {};
-  if (settings?.backgroundColor) style["--simf-section-bg"] = settings.backgroundColor;
-  if (backgroundImage) style["--simf-section-image"] = `url("${backgroundImage}")`;
+  if (settings?.backgroundColor)
+    style["--simf-section-bg"] = settings.backgroundColor;
+  if (backgroundImage)
+    style["--simf-section-image"] = `url("${backgroundImage}")`;
   if (mobileBackgroundImage) {
     style["--simf-section-mobile-image"] = `url("${mobileBackgroundImage}")`;
   }
@@ -148,9 +156,19 @@ function SectionHeading({
 }) {
   return (
     <div className="simf-section-head">
-      {eyebrow ? <p className="simf-eyebrow"><CmsText value={eyebrow} /></p> : null}
-      <h2><CmsText value={heading} /></h2>
-      {body ? <p><CmsText value={body} /></p> : null}
+      {eyebrow ? (
+        <p className="simf-eyebrow">
+          <CmsText value={eyebrow} />
+        </p>
+      ) : null}
+      <h2>
+        <CmsText value={heading} />
+      </h2>
+      {body ? (
+        <p>
+          <CmsText value={body} />
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -199,7 +217,8 @@ function CardSection({
   const cards = section.cards.filter((card) => card.visible !== false);
   const visual = appearance(section);
   const lifecycleSection =
-    section.anchorID === "forum-lifecycle" || section.anchorID === "sponsorship-value";
+    section.anchorID === "forum-lifecycle" ||
+    section.anchorID === "sponsorship-value";
   if (section.anchorID === "all-speakers") {
     const speakers = section.cards.map((speaker) => ({
       country: speaker.country || speaker.meta,
@@ -219,7 +238,11 @@ function CardSection({
         style={visual.style}
       >
         <div className="simf-shell">
-          <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
+          <SectionHeading
+            body={section.body}
+            eyebrow={section.eyebrow}
+            heading={section.heading}
+          />
           <SimfSpeakerDirectory
             locale={locale}
             speakers={speakers.filter((speaker) => speaker.visible !== false)}
@@ -267,9 +290,15 @@ function CardSection({
               <details key={card.id || card.title} open={index === 0}>
                 <summary>
                   <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong><CmsText value={card.title} /></strong>
+                  <strong>
+                    <CmsText value={card.title} />
+                  </strong>
                 </summary>
-                {card.body ? <p><CmsText value={card.body} /></p> : null}
+                {card.body ? (
+                  <p>
+                    <CmsText value={card.body} />
+                  </p>
+                ) : null}
               </details>
             ))}
           </div>
@@ -284,19 +313,27 @@ function CardSection({
       style={visual.style}
     >
       <div className="simf-shell">
-        <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
-        <div className={`simf-content-cards__grid simf-content-cards__grid--${section.layout || "editorial"}`}>
+        <SectionHeading
+          body={section.body}
+          eyebrow={section.eyebrow}
+          heading={section.heading}
+        />
+        <div
+          className={`simf-content-cards__grid simf-content-cards__grid--${section.layout || "editorial"}`}
+        >
           {cards.map((card, index) => {
-            const lifecycleIcon =
-              lifecycleSection
-                ? [
-                    "/assets/simf-microsite/sponsor/lifecycle-before.svg?v=brand-blue-20260910",
-                    "/assets/simf-microsite/sponsor/lifecycle-during.svg?v=brand-blue-20260910",
-                    "/assets/simf-microsite/sponsor/lifecycle-after.svg?v=brand-blue-20260910",
-                  ][index]
-                : null;
+            const lifecycleIcon = lifecycleSection
+              ? [
+                  "/assets/simf-microsite/sponsor/lifecycle-before.svg?v=brand-blue-20260910",
+                  "/assets/simf-microsite/sponsor/lifecycle-during.svg?v=brand-blue-20260910",
+                  "/assets/simf-microsite/sponsor/lifecycle-after.svg?v=brand-blue-20260910",
+                ][index]
+              : null;
             const imageOverlay = Boolean(
-              card.media && !lifecycleIcon && !partnerCategory && !imageAboveCopy,
+              card.media &&
+              !lifecycleIcon &&
+              !partnerCategory &&
+              !imageAboveCopy,
             );
             const programmeTitle =
               section.anchorID === "programme-days"
@@ -310,33 +347,65 @@ function CardSection({
                       alt={partnerCategory ? card.title : ""}
                       media={card.media}
                       mobileMedia={card.mobileMedia}
-                      sizes={partnerCategory ? "230px" : "(max-width: 720px) 100vw, 34vw"}
+                      sizes={
+                        partnerCategory
+                          ? "230px"
+                          : "(max-width: 720px) 100vw, 34vw"
+                      }
                     />
                   </div>
                 ) : null}
                 <div className="simf-content-card__copy">
                   {lifecycleIcon ? (
-                    <div className="simf-content-card__lifecycle-icon" aria-hidden="true">
+                    <div
+                      className="simf-content-card__lifecycle-icon"
+                      aria-hidden="true"
+                    >
                       {/* The supplied SVG is decorative; the card heading carries its meaning. */}
-                      <Image alt="" height={579} src={lifecycleIcon} width={654} />
+                      <Image
+                        alt=""
+                        height={579}
+                        src={lifecycleIcon}
+                        width={654}
+                      />
                     </div>
                   ) : null}
-                  {card.icon && card.icon !== "none" && section.anchorID !== "executive-track" ? (
+                  {card.icon &&
+                  card.icon !== "none" &&
+                  section.anchorID !== "executive-track" ? (
                     <div className="simf-content-card__icon">
                       <CardIcon name={card.icon} />
                     </div>
                   ) : null}
-                  {card.eyebrow ? <span><CmsText value={card.eyebrow} /></span> : null}
-                  {card.meta && partnerCategory ? <small><CmsText value={card.meta} /></small> : null}
+                  {card.eyebrow ? (
+                    <span>
+                      <CmsText value={card.eyebrow} />
+                    </span>
+                  ) : null}
+                  {card.meta && partnerCategory ? (
+                    <small>
+                      <CmsText value={card.meta} />
+                    </small>
+                  ) : null}
                   {programmeTitle ? (
                     <h3 className="simf-programme-day-title">
-                      <span><CmsText value={programmeTitle.day} /></span>
-                      <small><CmsText value={programmeTitle.topic} /></small>
+                      <span>
+                        <CmsText value={programmeTitle.day} />
+                      </span>
+                      <small>
+                        <CmsText value={programmeTitle.topic} />
+                      </small>
                     </h3>
                   ) : (
-                    <h3><CmsText value={card.title} /></h3>
+                    <h3>
+                      <CmsText value={card.title} />
+                    </h3>
                   )}
-                  {card.body ? <p><CmsText value={card.body} /></p> : null}
+                  {card.body ? (
+                    <p>
+                      <CmsText value={card.body} />
+                    </p>
+                  ) : null}
                   {card.button?.label ? (
                     <span className="simf-content-card__link">
                       <CmsText value={card.button.label} />
@@ -352,7 +421,9 @@ function CardSection({
                 className={className}
                 href={card.button.href}
                 key={card.id || card.title}
-                rel={card.button.openInNewTab ? "noopener noreferrer" : undefined}
+                rel={
+                  card.button.openInNewTab ? "noopener noreferrer" : undefined
+                }
                 target={card.button.openInNewTab ? "_blank" : undefined}
               >
                 {content}
@@ -384,7 +455,9 @@ function SpeakerDirectory({
   section: SpeakerDirectorySection;
 }) {
   const visual = appearance(section);
-  const speakers = section.speakers.filter((speaker) => speaker.visible !== false);
+  const speakers = section.speakers.filter(
+    (speaker) => speaker.visible !== false,
+  );
   return (
     <section
       className={`simf-directory-speakers simf-content-section ${visual.className}`}
@@ -413,11 +486,14 @@ function PartnerCategory({
   const visual = appearance(section);
   const logos = section.logos.filter((logo) => logo.visible !== false);
   const ar = locale === "ar";
-  const inferredTier = section.heading.toLowerCase().includes("strategic") || section.heading.includes("الاستراتيجي")
-    ? "strategic"
-    : section.heading.toLowerCase().includes("media") || section.heading.includes("الإعلامي")
-      ? "media-partner"
-      : null;
+  const inferredTier =
+    section.heading.toLowerCase().includes("strategic") ||
+    section.heading.includes("الاستراتيجي")
+      ? "strategic"
+      : section.heading.toLowerCase().includes("media") ||
+          section.heading.includes("الإعلامي")
+        ? "media-partner"
+        : null;
   const tierLabels = {
     supervision: ar ? "الإشراف" : "Supervision",
     organizer: ar ? "المنظم" : "Organizer",
@@ -437,6 +513,125 @@ function PartnerCategory({
     "advisory-arm": ar ? "الذراع الاستشاري" : "Advisory Arm",
     partner: ar ? "الشريك الداعم" : "Partner",
   } as const;
+  const resolvedLogos = logos.map((logo, index) => {
+    const featured =
+      index < 2 && section.anchorID === "partner-category-supervision";
+    const officialTier = featured
+      ? index === 0
+        ? "supervision"
+        : "organizer"
+      : null;
+    const selectedTier =
+      officialTier || (logo.tier === "none" ? null : logo.tier || inferredTier);
+    return { featured, logo, selectedTier };
+  });
+
+  if (section.presentationStyle === "partner-profiles") {
+    return (
+      <section
+        className={`simf-partner-profiles simf-content-section ${visual.className}`}
+        id={section.anchorID || undefined}
+        style={visual.style}
+      >
+        <div className="simf-shell">
+          {section.showSectionHeading !== false ? (
+            <SectionHeading
+              body={section.body}
+              eyebrow={section.eyebrow}
+              heading={section.heading}
+            />
+          ) : null}
+          <div className="simf-partner-profiles__list">
+            {resolvedLogos.map(({ logo, selectedTier }) => {
+              const href = logo.href?.trim();
+              const logoArtwork = (
+                <CmsImage
+                  alt={logo.name}
+                  media={logo.logo}
+                  mobileMedia={logo.mobileLogo}
+                  sizes="(max-width: 800px) 70vw, 360px"
+                />
+              );
+              return (
+                <article
+                  className="simf-partner-profile simf-reveal"
+                  key={logo.id || logo.name}
+                >
+                  <div className="simf-partner-profile__copy">
+                    <h3>
+                      <CmsText value={logo.name} />
+                    </h3>
+                    {logo.description ? (
+                      <details className="simf-partner-profile__description">
+                        <p>
+                          <CmsText value={logo.description} />
+                        </p>
+                        <summary>
+                          <span className="simf-partner-profile__more">
+                            <CmsText value={ar ? "اقرأ المزيد" : "Read more"} />
+                          </span>
+                          <span className="simf-partner-profile__less">
+                            <CmsText value={ar ? "عرض أقل" : "Show less"} />
+                          </span>
+                        </summary>
+                      </details>
+                    ) : null}
+                    {href ? (
+                      <a
+                        className="simf-partner-profile__website"
+                        href={href}
+                        rel="noopener noreferrer"
+                        target={
+                          logo.openInNewTab === false ? undefined : "_blank"
+                        }
+                      >
+                        <CmsText
+                          value={
+                            ar ? "زيارة الموقع الإلكتروني" : "Visit website"
+                          }
+                        />
+                      </a>
+                    ) : null}
+                  </div>
+                  <div className="simf-partner-profile__identity">
+                    <div className="simf-partner-profile__logo">
+                      {href ? (
+                        <a
+                          aria-label={
+                            ar
+                              ? `زيارة موقع ${logo.name}`
+                              : `Visit ${logo.name} website`
+                          }
+                          href={href}
+                          rel="noopener noreferrer"
+                          target={
+                            logo.openInNewTab === false ? undefined : "_blank"
+                          }
+                        >
+                          {logoArtwork}
+                        </a>
+                      ) : (
+                        logoArtwork
+                      )}
+                    </div>
+                    {selectedTier &&
+                    section.showProfileCategoryLabels !== false &&
+                    logo.showCategoryLabel !== false ? (
+                      <span
+                        className={`simf-partner-profile__tier simf-partner-category__footer-label--${selectedTier}`}
+                      >
+                        <CmsText value={tierLabels[selectedTier]} />
+                      </span>
+                    ) : null}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section
       className={`simf-content-cards simf-content-cards--logos simf-partner-category simf-content-section ${visual.className}`}
@@ -444,25 +639,18 @@ function PartnerCategory({
       style={visual.style}
     >
       <div className="simf-shell">
-        <SectionHeading
-          body={section.body}
-          eyebrow={section.eyebrow}
-          heading={section.heading}
-        />
+        {section.showSectionHeading !== false ? (
+          <SectionHeading
+            body={section.body}
+            eyebrow={section.eyebrow}
+            heading={section.heading}
+          />
+        ) : null}
         <SimfPartnerCategoryLayout
           layout={section.logoLayout === "swiper" ? "swiper" : "grid"}
           locale={locale}
         >
-          {logos.map((logo, index) => {
-            const featured =
-              index < 2 && section.anchorID === "partner-category-supervision";
-            const officialTier = featured
-              ? index === 0
-                ? "supervision"
-                : "organizer"
-              : null;
-            const selectedTier = officialTier ||
-              (logo.tier === "none" ? null : logo.tier || inferredTier);
+          {resolvedLogos.map(({ featured, logo, selectedTier }) => {
             const media = (
               <>
                 <div className="simf-content-card__media">
@@ -475,7 +663,7 @@ function PartnerCategory({
                     />
                   </div>
                 </div>
-                {selectedTier ? (
+                {selectedTier && logo.showCategoryLabel !== false ? (
                   <span
                     className={`simf-partner-category__footer-label simf-partner-category__footer-label--${selectedTier}`}
                   >
@@ -488,7 +676,9 @@ function PartnerCategory({
             const href = logo.href?.trim();
             const linkedMedia = href ? (
               <a
-                aria-label={ar ? `زيارة موقع ${logo.name}` : `Visit ${logo.name} website`}
+                aria-label={
+                  ar ? `زيارة موقع ${logo.name}` : `Visit ${logo.name} website`
+                }
                 className="simf-partner-category__card-link"
                 href={href}
                 rel="noopener noreferrer"
@@ -539,7 +729,11 @@ function MediaSection({
           />
         </div>
         <div className="simf-content-media__copy">
-          <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
+          <SectionHeading
+            body={section.body}
+            eyebrow={section.eyebrow}
+            heading={section.heading}
+          />
           {section.ctaLabel && section.ctaHref ? (
             <Action
               button={{
@@ -555,7 +749,13 @@ function MediaSection({
   );
 }
 
-function Metrics({ locale, section }: { locale: Locale; section: MetricRailSection }) {
+function Metrics({
+  locale,
+  section,
+}: {
+  locale: Locale;
+  section: MetricRailSection;
+}) {
   const visual = appearance(section);
   return (
     <section
@@ -564,12 +764,20 @@ function Metrics({ locale, section }: { locale: Locale; section: MetricRailSecti
       style={visual.style}
     >
       <div className="simf-shell simf-content-metrics__layout">
-        <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
+        <SectionHeading
+          body={section.body}
+          eyebrow={section.eyebrow}
+          heading={section.heading}
+        />
         <div className="simf-content-metrics__rail">
           {section.metrics.map((metric) => (
             <div key={`${metric.value}-${metric.label}`}>
-              <strong dir="ltr">{formatMetricValue(locale, metric.value)}</strong>
-              <span><CmsText value={metric.label} /></span>
+              <strong dir="ltr">
+                {formatMetricValue(locale, metric.value)}
+              </strong>
+              <span>
+                <CmsText value={metric.label} />
+              </span>
             </div>
           ))}
         </div>
@@ -592,39 +800,62 @@ function ValueTimeline({ section }: { section: TimelineSection }) {
       style={visual.style}
     >
       <div className="simf-shell simf-content-value__layout">
-        <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
+        <SectionHeading
+          body={section.body}
+          eyebrow={section.eyebrow}
+          heading={section.heading}
+        />
         <div className="simf-content-value__steps">
-          {section.steps.filter((step) => step.visible !== false).map((step, index) => (
-            <article key={step.title}>
-              {step.media ? (
-                <div className="simf-content-value__media">
-                  <CmsImage
-                    alt=""
-                    media={step.media}
-                    mobileMedia={step.mobileMedia}
-                    sizes="(max-width: 800px) 82vw, 25vw"
-                  />
+          {section.steps
+            .filter((step) => step.visible !== false)
+            .map((step, index) => (
+              <article key={step.title}>
+                {step.media ? (
+                  <div className="simf-content-value__media">
+                    <CmsImage
+                      alt=""
+                      media={step.media}
+                      mobileMedia={step.mobileMedia}
+                      sizes="(max-width: 800px) 82vw, 25vw"
+                    />
+                  </div>
+                ) : null}
+                <span>
+                  {editionTimeline
+                    ? step.label?.match(/\b20\d{2}\b/)?.[0] ||
+                      String(index + 1).padStart(2, "0")
+                    : String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  {step.label ? (
+                    <small>
+                      <CmsText value={step.label} />
+                    </small>
+                  ) : null}
+                  <h3>
+                    <CmsText value={step.title} />
+                  </h3>
+                  {step.body ? (
+                    <p>
+                      <CmsText value={step.body} />
+                    </p>
+                  ) : null}
                 </div>
-              ) : null}
-              <span>
-                {editionTimeline
-                  ? step.label?.match(/\b20\d{2}\b/)?.[0] || String(index + 1).padStart(2, "0")
-                  : String(index + 1).padStart(2, "0")}
-              </span>
-              <div>
-                {step.label ? <small><CmsText value={step.label} /></small> : null}
-                <h3><CmsText value={step.title} /></h3>
-                {step.body ? <p><CmsText value={step.body} /></p> : null}
-              </div>
-            </article>
-          ))}
+              </article>
+            ))}
         </div>
       </div>
     </section>
   );
 }
 
-function Film({ locale, section }: { locale: Locale; section: VideoFeatureSection }) {
+function Film({
+  locale,
+  section,
+}: {
+  locale: Locale;
+  section: VideoFeatureSection;
+}) {
   const visual = appearance(section);
   return (
     <section
@@ -633,14 +864,20 @@ function Film({ locale, section }: { locale: Locale; section: VideoFeatureSectio
       style={visual.style}
     >
       <div className="simf-shell">
-        <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
+        <SectionHeading
+          body={section.body}
+          eyebrow={section.eyebrow}
+          heading={section.heading}
+        />
         {section.video || section.youtubeURL ? (
           <SimfVideoPlayer
             autoplay={section.autoplay !== false}
             locale={locale}
             mobilePoster={section.mobilePoster}
             poster={section.poster}
-            video={section.videoSource === "youtube" ? undefined : section.video}
+            video={
+              section.videoSource === "youtube" ? undefined : section.video
+            }
             youtubeURL={
               section.videoSource === "youtube" ||
               (!section.videoSource && !section.video)
@@ -672,7 +909,11 @@ function CTA({ section }: { section: CallToActionSection }) {
       </div>
       <div className="simf-content-cta__shade" />
       <div className="simf-shell simf-content-cta__content">
-        <SectionHeading body={section.body} eyebrow={section.eyebrow} heading={section.heading} />
+        <SectionHeading
+          body={section.body}
+          eyebrow={section.eyebrow}
+          heading={section.heading}
+        />
         {section.buttons?.length ? (
           <div className="simf-content-section__actions">
             {section.buttons.map((item) => (
@@ -740,10 +981,13 @@ export function SimfContentPage({
   const header = findSection<SimfHeaderSection>(page, "header");
   const footer = findSection<SimfFooterSection>(page, "footer");
   const hero = page.sections.find(
-    (section) => section.anchorID === "page-hero" && section.blockType === "hero",
+    (section) =>
+      section.anchorID === "page-hero" && section.blockType === "hero",
   );
   const homeHref = ar ? "/ar" : "/";
-  const switchHref = ar ? pagePath.replace(/^\/ar/, "") || "/" : `/ar${pagePath === "/" ? "" : pagePath}`;
+  const switchHref = ar
+    ? pagePath.replace(/^\/ar/, "") || "/"
+    : `/ar${pagePath === "/" ? "" : pagePath}`;
   const sponsorHref = header?.sponsorHref || (ar ? "/ar/sponsor" : "/sponsor");
   const navigation = (header?.links || []).filter(
     (item) => !item.href.endsWith("/about") && item.href !== "/about",
@@ -778,6 +1022,7 @@ export function SimfContentPage({
         navigationLabel={header?.navigationLabel}
         sponsorHref={sponsorHref}
         sponsorLabel={header?.sponsorLabel}
+        sponsorVisible={header?.sponsorVisible !== false}
         showLanguageSwitcher={showLanguageSwitcher}
         switchHref={switchHref}
         switchLabel={header?.languageSwitchLabel}
@@ -811,11 +1056,23 @@ export function SimfContentPage({
             </div>
             <div className="simf-inner-hero__shade" />
             <div className="simf-shell simf-inner-hero__content">
-              {hero.eyebrow ? <p className="simf-eyebrow"><CmsText value={hero.eyebrow} /></p> : null}
-              <h1><CmsText value={hero.heading} /></h1>
-              {hero.body ? <p><CmsText value={hero.body} /></p> : null}
+              {hero.eyebrow ? (
+                <p className="simf-eyebrow">
+                  <CmsText value={hero.eyebrow} />
+                </p>
+              ) : null}
+              <h1>
+                <CmsText value={hero.heading} />
+              </h1>
+              {hero.body ? (
+                <p>
+                  <CmsText value={hero.body} />
+                </p>
+              ) : null}
               {hero.note ? (
-                <p className="simf-inner-hero__note"><CmsText value={hero.note} /></p>
+                <p className="simf-inner-hero__note">
+                  <CmsText value={hero.note} />
+                </p>
               ) : null}
               {hero.eventDetails?.length ? (
                 <div className="simf-inner-hero__details">
@@ -827,8 +1084,12 @@ export function SimfContentPage({
                         <MapPin aria-hidden />
                       )}
                       <span>
-                        <small><CmsText value={detail.label} /></small>
-                        <strong><CmsText value={detail.value} /></strong>
+                        <small>
+                          <CmsText value={detail.label} />
+                        </small>
+                        <strong>
+                          <CmsText value={detail.value} />
+                        </strong>
                       </span>
                     </div>
                   ))}
@@ -882,16 +1143,35 @@ export function SimfContentPage({
             );
           }
           if (section.blockType === "metricRail") {
-            return <Metrics key={section.id || section.anchorID} locale={locale} section={section} />;
+            return (
+              <Metrics
+                key={section.id || section.anchorID}
+                locale={locale}
+                section={section}
+              />
+            );
           }
           if (section.blockType === "timeline") {
-            return <ValueTimeline key={section.id || section.anchorID} section={section} />;
+            return (
+              <ValueTimeline
+                key={section.id || section.anchorID}
+                section={section}
+              />
+            );
           }
           if (section.blockType === "videoFeature") {
-            return <Film key={section.id || section.anchorID} locale={locale} section={section} />;
+            return (
+              <Film
+                key={section.id || section.anchorID}
+                locale={locale}
+                section={section}
+              />
+            );
           }
           if (section.blockType === "callToAction") {
-            return <CTA key={section.id || section.anchorID} section={section} />;
+            return (
+              <CTA key={section.id || section.anchorID} section={section} />
+            );
           }
           if (section.blockType === "form") {
             return (
@@ -906,16 +1186,18 @@ export function SimfContentPage({
           return null;
         })}
       </main>
-      <SimfStickySponsor
-        href={sponsorPage ? "#sponsor-form" : sponsorHref}
-        label={
-          sponsorPage
-            ? ar
-              ? "قدّم الآن"
-              : "Apply Now"
-            : header?.sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")
-        }
-      />
+      {header?.sponsorVisible !== false ? (
+        <SimfStickySponsor
+          href={sponsorPage ? "#sponsor-form" : sponsorHref}
+          label={
+            sponsorPage
+              ? ar
+                ? "قدّم الآن"
+                : "Apply Now"
+              : header?.sponsorLabel || (ar ? "كن راعيًا" : "Become a Sponsor")
+          }
+        />
+      ) : null}
       <SimfFooter footer={footer} homeHref={homeHref} locale={locale} />
     </div>
   );

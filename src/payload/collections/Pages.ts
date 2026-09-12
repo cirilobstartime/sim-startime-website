@@ -62,6 +62,7 @@ const pageBlockOptions: Record<string, string[]> = {
     "hero",
     "mediaFeature",
     "partnerCategory",
+    "form",
     "callToAction",
     "simfFooter",
   ],
@@ -86,6 +87,21 @@ const pageBlockOptions: Record<string, string[]> = {
     "simfHeader",
     "hero",
     "cardGrid",
+    "form",
+    "simfFooter",
+  ],
+  "simf-microsite-generic": [
+    "simfHeader",
+    "hero",
+    "mediaFeature",
+    "cardGrid",
+    "timeline",
+    "partnerCategory",
+    "speakerDirectory",
+    "metricRail",
+    "videoFeature",
+    "imageStory",
+    "callToAction",
     "form",
     "simfFooter",
   ],
@@ -228,7 +244,8 @@ export const Pages: CollectionConfig = {
                 },
                 {
                   name: "openGraphImage",
-                  label: "Social sharing image — 1200 × 630 px (2×: 2400 × 1260; 3×: 3600 × 1890)",
+                  label:
+                    "Social sharing image — 1200 × 630 px (2×: 2400 × 1260; 3×: 3600 × 1890)",
                   type: "upload",
                   relationTo: "media",
                   admin: {
@@ -366,6 +383,10 @@ export const Pages: CollectionConfig = {
                   label: "SIMF event microsite — contact",
                   value: "simf-microsite-contact",
                 },
+                {
+                  label: "SIMF event microsite — custom content page",
+                  value: "simf-microsite-generic",
+                },
               ],
             },
             {
@@ -386,9 +407,14 @@ export const Pages: CollectionConfig = {
             },
             {
               name: "showInNavigation",
+              label: "Show in header and footer navigation",
               type: "checkbox",
               localized: true,
               defaultValue: false,
+              admin: {
+                description:
+                  "Enable this to add the published page to both navigation areas. A hidden, draft, expired, or scheduled page is removed automatically even when this is enabled.",
+              },
             },
             {
               name: "navigationLabel",
@@ -397,6 +423,8 @@ export const Pages: CollectionConfig = {
               admin: {
                 condition: (_, siblingData) =>
                   Boolean(siblingData?.showInNavigation),
+                description:
+                  "The public label used in both the header and footer. Leave empty to use the page title.",
               },
             },
             {
