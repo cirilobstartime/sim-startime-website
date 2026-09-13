@@ -21956,3 +21956,40 @@ body .simf-homepage-about .simf-option-hero__review-lead {
   > p:last-child:not(.simf-eyebrow) {
   color: #536173 !important;
 }
+
+/* The approved speakers introduction photograph should retain its original
+   colour and exposure instead of inheriting the shared editorial image grade. */
+.simf-content-page--speakers
+  .simf-content-section--page-introduction
+  .simf-content-media__visual
+  img,
+.simf-content-page--speakers
+  .simf-content-section--page-introduction:hover
+  .simf-content-media__visual
+  img {
+  filter: none !important;
+}
+
+.simf-content-page--speakers
+  .simf-content-section--page-introduction
+  .simf-content-media__visual::after {
+  display: none;
+}
+
+/* The B2G value-proposition heading is unusually long in both locales. Give
+   this section a slightly quieter scale without changing its CMS copy. */
+.simf-content-page--government-b2g
+  .simf-content-section--benefits
+  .simf-section-head
+  h2 {
+  font-size: clamp(19px, 1.65vw, 26px) !important;
+}
+
+@media (max-width: 800px) {
+  .simf-content-page--government-b2g
+    .simf-content-section--benefits
+    .simf-section-head
+    h2 {
+    font-size: clamp(16px, 4.3vw, 20px) !important;
+  }
+}

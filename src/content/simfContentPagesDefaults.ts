@@ -842,7 +842,7 @@ function programmeSections(locale: Locale): PageSection[] {
           style: "primary",
         },
       ],
-      "forum-hero-live.png",
+      "forum-hero-live.webp",
     ),
     footer(locale),
   ];
@@ -1180,7 +1180,7 @@ function sponsorsSections(locale: Locale): PageSection[] {
       "ضع جهتك في قلب مستقبل الأمن البحري",
       "Build institutional presence, engage with influential entities, showcase your capabilities, and strengthen your connection to an international ecosystem focused on seabed security and maritime supply chains.",
       "ابنِ حضوراً مؤسسياً، وتواصل مع الجهات المؤثرة، واعرض قدراتك، وعزز ارتباطك بمنظومة دولية تركز على أمن قاع البحار وسلاسل الإمداد البحرية.",
-      "forum-hero-live.png",
+      "forum-hero-live.webp",
       [
         button(locale, "/sponsor", "Apply for Sponsorship", "قدّم طلب الرعاية"),
         {
@@ -1722,7 +1722,7 @@ export function getSimfContentPage(
       description: summary,
       followLinks: true,
       indexable: true,
-      openGraphImage: `${assets}/photos/forum-hero-live.png`,
+      openGraphImage: `${assets}/photos/forum-hero-live.webp`,
     },
     slug: `simf-microsite/${key}`,
     summary,

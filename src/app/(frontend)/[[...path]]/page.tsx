@@ -252,9 +252,9 @@ const retiredUpdateRedirects: Record<string, string> = {
   "/ar/updates/startime-signs-contract-organize-fourth-simf":
     "/ar/updates/startime-organizing-contract-simf-2026",
   "/updates/future-seabed-security-maritime-supply-chains":
-    "/updates/seabed-security-supply-chains-simf-2026",
+    "/updates/maritime-supply-chains-global-environment",
   "/ar/updates/future-seabed-security-maritime-supply-chains":
-    "/ar/updates/seabed-security-supply-chains-simf-2026",
+    "/ar/updates/maritime-supply-chains-global-environment",
   "/updates/saudi-arabia-a-pivotal-forc-in-safeguarding-global-maritime-security":
     "/updates/saudi-arabia-global-maritime-security",
   "/ar/updates/saudi-arabia-a-pivota-force-in-securing-strategic-maritime-corridors-and-safeguarding-seabed-security":
@@ -312,13 +312,16 @@ function applyCMSNavigation(
   const known = new Set(navigation.knownPaths.map(normalizeNavigationPath));
   const active = new Set(navigation.activePaths.map(normalizeNavigationPath));
   const sponsorPath = locale === "ar" ? "/ar/sponsor" : "/sponsor";
-  const mergeLinks = (existing: Array<{ href: string; label: string }> = []) => {
+  const mergeLinks = (
+    existing: Array<{ href: string; label: string }> = [],
+    placePartnersBeforeB2G = false,
+  ) => {
     const filtered = existing.filter((link) => {
       const path = normalizeNavigationPath(link.href);
       return !known.has(path) || active.has(path);
     });
     const present = new Set(filtered.map((link) => normalizeNavigationPath(link.href)));
-    return [
+    const merged = [
       ...filtered,
       ...navigation.links.filter((link) => {
         const path = normalizeNavigationPath(link.href);
@@ -327,6 +330,27 @@ function applyCMSNavigation(
         return true;
       }),
     ];
+    if (!placePartnersBeforeB2G) return merged;
+
+    const partnerIndex = merged.findIndex((link) =>
+      /\/(?:partners|partners-beta|sponsorspartners)$/.test(
+        normalizeNavigationPath(link.href),
+      ),
+    );
+    const b2gIndex = merged.findIndex((link) =>
+      /\/b2g$/.test(normalizeNavigationPath(link.href)),
+    );
+    if (partnerIndex < 0 || b2gIndex < 0 || partnerIndex < b2gIndex) {
+      return merged;
+    }
+
+    const reordered = [...merged];
+    const [partnerLink] = reordered.splice(partnerIndex, 1);
+    const updatedB2GIndex = reordered.findIndex((link) =>
+      /\/b2g$/.test(normalizeNavigationPath(link.href)),
+    );
+    reordered.splice(updatedB2GIndex, 0, partnerLink);
+    return reordered;
   };
   return {
     ...page,
@@ -334,7 +358,7 @@ function applyCMSNavigation(
       if (section.blockType === "simfHeader") {
         return {
           ...section,
-          links: mergeLinks(section.links),
+          links: mergeLinks(section.links, true),
           sponsorVisible: !known.has(sponsorPath) || active.has(sponsorPath),
         };
       }
@@ -583,6 +607,12 @@ export default async function PublicPage({ params }: PageProps) {
     permanentRedirect(path[0] === "ar" ? "/ar/sponsor" : "/sponsor");
   }
   if (
+    (path?.length === 1 && path[0] === "sponsorspartners") ||
+    (path?.length === 2 && path[0] === "ar" && path[1] === "sponsorspartners")
+  ) {
+    permanentRedirect(path[0] === "ar" ? "/ar/partners" : "/partners");
+  }
+  if (
     (path?.length === 1 && path[0] === "about") ||
     (path?.length === 2 && path[0] === "ar" && path[1] === "about")
   ) {
@@ -600,7 +630,8 @@ export default async function PublicPage({ params }: PageProps) {
   if (retiredUpdateTarget) permanentRedirect(retiredUpdateTarget);
   const redirectTargetLocale: Locale =
     route.locale === "ar" && siteSettings.enableArabic ? "ar" : "en";
-  const shouldCheckRedirect = !route.valid || Boolean(route.updateSlug);
+  const shouldCheckRedirect =
+    !route.valid || route.genericPage || Boolean(route.updateSlug);
   const destination = shouldCheckRedirect
     ? await getCMSRedirect(route.locale, oldPath, redirectTargetLocale)
     : null;

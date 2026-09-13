@@ -1234,7 +1234,7 @@ export function getClientContentPage(
       description: content.summary,
       followLinks: true,
       indexable: true,
-      openGraphImage: `${assets}/photos/forum-hero-live.png`,
+      openGraphImage: `${assets}/photos/forum-hero-live.webp`,
     },
     slug: `simf-microsite/${key}`,
     summary: content.summary,

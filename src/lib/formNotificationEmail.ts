@@ -58,14 +58,14 @@ export function buildFormNotificationEmail(input: NotificationInput) {
   const isArabic = input.locale === "ar";
   const subject = isArabic
     ? input.formKey === "simf-microsite-sponsorship"
-      ? `طلب جديد لفرص الأعمال الحكومية في SIM 2026 — ${input.reference}`
+      ? `طلب رعاية جديد للملتقى البحري السعودي الدولي 2026 — ${input.reference}`
       : input.formKey === "simf-b2g-application"
         ? `طلب جديد لفرص الأعمال الحكومية في SIM 2026 — ${input.reference}`
         : input.formKey === "simf-contact"
           ? `استفسار تواصل جديد عبر SIM 2026 — ${input.reference}`
           : `طلب جديد عبر موقع SIM 2026 — ${input.reference}`
     : input.formKey === "simf-microsite-sponsorship"
-      ? `New SIM 2026 B2G application — ${input.reference}`
+      ? `New SIM 2026 sponsorship application — ${input.reference}`
       : input.formKey === "simf-b2g-application"
         ? `New SIM 2026 B2G application — ${input.reference}`
         : input.formKey === "simf-contact"

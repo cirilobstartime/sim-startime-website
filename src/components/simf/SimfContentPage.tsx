@@ -322,12 +322,20 @@ function CardSection({
           className={`simf-content-cards__grid simf-content-cards__grid--${section.layout || "editorial"}`}
         >
           {cards.map((card, index) => {
+            const lifecycleIcons =
+              locale === "ar"
+                ? [
+                    "/assets/simf-microsite/sponsor/lifecycle-after.svg?v=brand-blue-20260910",
+                    "/assets/simf-microsite/sponsor/lifecycle-during.svg?v=brand-blue-20260910",
+                    "/assets/simf-microsite/sponsor/lifecycle-before.svg?v=brand-blue-20260910",
+                  ]
+                : [
+                    "/assets/simf-microsite/sponsor/lifecycle-before.svg?v=brand-blue-20260910",
+                    "/assets/simf-microsite/sponsor/lifecycle-during.svg?v=brand-blue-20260910",
+                    "/assets/simf-microsite/sponsor/lifecycle-after.svg?v=brand-blue-20260910",
+                  ];
             const lifecycleIcon = lifecycleSection
-              ? [
-                  "/assets/simf-microsite/sponsor/lifecycle-before.svg?v=brand-blue-20260910",
-                  "/assets/simf-microsite/sponsor/lifecycle-during.svg?v=brand-blue-20260910",
-                  "/assets/simf-microsite/sponsor/lifecycle-after.svg?v=brand-blue-20260910",
-                ][index]
+              ? lifecycleIcons[index]
               : null;
             const imageOverlay = Boolean(
               card.media &&

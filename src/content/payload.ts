@@ -55,6 +55,7 @@ async function fetchPage(
     "government-b2g",
   ];
   const isPartnersBeta = route === "simf-microsite/partners-beta";
+  const isPartnersPage = route === "simf-microsite/partners";
   const isContentPage = Boolean(
     contentKey && contentKeys.includes(contentKey),
   );
@@ -84,7 +85,14 @@ async function fetchPage(
       overrideAccess: true,
       where: {
         and: [
-          { slug: { equals: route } },
+          isPartnersPage
+            ? {
+                or: [
+                  { slug: { equals: route } },
+                  { slug: { equals: "simf-microsite/sponsorspartners" } },
+                ],
+              }
+            : { slug: { equals: route } },
           { visible: { equals: true } },
           { _status: { equals: "published" } },
         ],
@@ -144,6 +152,12 @@ function navigationPath(
   if (pageType === "simf-microsite-updates") return `${prefix}/updates`;
   const slug = typeof slugValue === "string" ? slugValue.trim() : "";
   const segment = slug.replace(/^simf-microsite\//, "").replace(/^\/+|\/+$/g, "");
+  if (
+    pageType === "simf-microsite-partners" &&
+    segment !== "partners-beta"
+  ) {
+    return `${prefix}/partners`;
+  }
   return segment && !segment.includes("/") ? `${prefix}/${segment}` : null;
 }
 
@@ -484,13 +498,14 @@ export async function getCMSRedirect(
         : null;
     if (!redirect) return null;
     if (!targetPage?.slug || targetPage.visible === false) return null;
-    const pageSlug =
-      targetPage.pageType === "simf-microsite-sponsor"
-        ? "sponsor"
-        : String(targetPage.pageType || "").replace("simf-microsite-", "");
-    const prefix = targetLocale === "ar" ? "/ar" : "";
+    const targetPath = navigationPath(
+      targetLocale,
+      String(targetPage.pageType || ""),
+      targetPage.slug,
+    );
+    if (!targetPath) return null;
     return {
-      path: `${prefix}/${pageSlug}`.replace(/\/+$/, "") || "/",
+      path: targetPath,
       permanent: redirect.permanent !== false,
     };
   } catch (error) {

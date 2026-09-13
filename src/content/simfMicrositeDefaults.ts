@@ -1244,7 +1244,7 @@ export function getSimfMicrositePage(
       indexable: true,
       openGraphImage: sponsor
         ? `${assetRoot}/photos/vip-audience.webp`
-        : `${assetRoot}/photos/forum-hero-live.png`,
+        : `${assetRoot}/photos/forum-hero-live.webp`,
     },
     slug: sponsor
       ? "simf-microsite/sponsor"

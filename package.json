@@ -23,6 +23,7 @@
     "verify:press-releases": "tsx scripts/verify-simf-press-releases.ts",
     "verify:tracking": "tsx scripts/verify-attribution.ts && tsx scripts/verify-conversion-tracking.ts && tsx scripts/verify-form-export.ts",
     "verify:media": "tsx scripts/verify-media-webp.ts",
+    "verify:hidden-updates": "tsx scripts/verify-hidden-update-access.ts",
     "verify:secrets": "bash scripts/check-secrets.sh",
     "seed": "tsx scripts/seed-simf-microsite.ts",
     "create-admin": "tsx scripts/create-admin.ts"

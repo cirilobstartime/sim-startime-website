@@ -1,4 +1,4 @@
-import type { CollectionConfig } from "payload";
+import type { CollectionConfig, Where } from "payload";
 import { absoluteHttpURLValidation } from "@/lib/publicHref";
 import { authenticatedStaff } from "../access";
 import {
@@ -93,11 +93,20 @@ export const Updates: CollectionConfig = {
     read: ({ req }) =>
       req.user
         ? true
-        : {
-            _status: {
-              equals: "published",
-            },
-          },
+        : ({
+            and: [
+              {
+                _status: {
+                  equals: "published",
+                },
+              },
+              {
+                visible: {
+                  equals: true,
+                },
+              },
+            ],
+          } as Where),
     update: authenticatedStaff,
   },
   hooks: {
