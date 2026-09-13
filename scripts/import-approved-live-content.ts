@@ -101,13 +101,17 @@ try {
 
   for (const english of bundle.en.pages) {
     const pageType = String(english.pageType || "");
+    const slug = String(english.slug || "");
     if (!pageType) throw new Error("Approved page is missing pageType.");
+    if (!slug) throw new Error("Approved page is missing slug.");
     const existing = await payload.find({
       collection: "pages",
       depth: 0,
+      fallbackLocale: false,
       limit: 1,
+      locale: "en",
       overrideAccess: true,
-      where: { pageType: { equals: pageType } },
+      where: { slug: { equals: slug } },
     });
     const englishData = restoreRelationships(
       english,
@@ -130,7 +134,9 @@ try {
           locale: "en",
           overrideAccess: true,
         });
-    const arabic = bundle.ar.pages.find((item) => item.pageType === pageType);
+    const arabic =
+      bundle.ar.pages.find((item) => item.slug === slug) ||
+      bundle.ar.pages.find((item) => item.pageType === pageType);
     if (arabic) {
       await payload.update({
         collection: "pages",
@@ -149,6 +155,49 @@ try {
         overrideAccess: true,
       });
     }
+  }
+
+  const legacyPartners = await payload.find({
+    collection: "pages",
+    depth: 0,
+    fallbackLocale: false,
+    limit: 10,
+    locale: "en",
+    overrideAccess: true,
+    where: {
+      slug: {
+        equals: "simf-microsite/partners",
+      },
+    },
+  });
+  for (const page of legacyPartners.docs) {
+    for (const locale of ["en", "ar"] as const) {
+      await payload.update({
+        collection: "pages",
+        data: { showInNavigation: false, visible: false },
+        draft: false,
+        id: page.id,
+        locale,
+        overrideAccess: true,
+      });
+    }
+  }
+
+  const obsoletePartnersBeta = await payload.find({
+    collection: "pages",
+    depth: 0,
+    fallbackLocale: false,
+    limit: 10,
+    locale: "en",
+    overrideAccess: true,
+    where: { slug: { equals: "simf-microsite/partners-beta" } },
+  });
+  for (const page of obsoletePartnersBeta.docs) {
+    await payload.delete({
+      collection: "pages",
+      id: page.id,
+      overrideAccess: true,
+    });
   }
 
   await payload.updateGlobal({

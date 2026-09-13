@@ -613,6 +613,12 @@ export default async function PublicPage({ params }: PageProps) {
     permanentRedirect(path[0] === "ar" ? "/ar/partners" : "/partners");
   }
   if (
+    (path?.length === 1 && path[0] === "partners-beta") ||
+    (path?.length === 2 && path[0] === "ar" && path[1] === "partners-beta")
+  ) {
+    permanentRedirect(path[0] === "ar" ? "/ar/partners" : "/partners");
+  }
+  if (
     (path?.length === 1 && path[0] === "about") ||
     (path?.length === 2 && path[0] === "ar" && path[1] === "about")
   ) {
