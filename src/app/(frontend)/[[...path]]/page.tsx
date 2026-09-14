@@ -313,12 +313,28 @@ function applyCMSNavigation(
   const known = new Set(navigation.knownPaths.map(normalizeNavigationPath));
   const active = new Set(navigation.activePaths.map(normalizeNavigationPath));
   const sponsorPath = locale === "ar" ? "/ar/sponsor" : "/sponsor";
+  const legacyPartnersBetaPath =
+    locale === "ar" ? "/ar/partners-beta" : "/partners-beta";
+  const canonicalPartnersPath = locale === "ar" ? "/ar/partners" : "/partners";
   const mergeLinks = (
     existing: Array<{ href: string; label: string }> = [],
     placePartnersBeforeB2G = false,
   ) => {
     const filtered = existing.filter((link) => {
       const path = normalizeNavigationPath(link.href);
+      // The approved Partners Beta page now owns the canonical /partners route.
+      // Remove its old preview alias from stored header/footer blocks so both
+      // links are not rendered at the same time.
+      if (
+        path === legacyPartnersBetaPath &&
+        navigation.links.some(
+          (navigationLink) =>
+            normalizeNavigationPath(navigationLink.href) ===
+            canonicalPartnersPath,
+        )
+      ) {
+        return false;
+      }
       return !known.has(path) || active.has(path);
     });
     const present = new Set(
