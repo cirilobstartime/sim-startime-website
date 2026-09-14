@@ -563,7 +563,20 @@ function PartnerCategory({
     usedSponsorAnchors.set(baseAnchorID, occurrence);
     const sponsorAnchorID =
       occurrence === 1 ? baseAnchorID : `${baseAnchorID}-${occurrence}`;
-    return { featured, logo, selectedTier, sponsorAnchorID };
+    const requestedAnchorID = normalizeAnchor(logo.anchorID || "");
+    const sponsorAnchorAlias = requestedAnchorID
+      ? occurrence === 1
+        ? requestedAnchorID
+        : `${requestedAnchorID}-${occurrence}`
+      : null;
+    return {
+      featured,
+      logo,
+      selectedTier,
+      sponsorAnchorAlias:
+        sponsorAnchorAlias === sponsorAnchorID ? null : sponsorAnchorAlias,
+      sponsorAnchorID,
+    };
   });
 
   if (section.presentationStyle === "partner-profiles") {
@@ -582,7 +595,13 @@ function PartnerCategory({
             />
           ) : null}
           <div className="simf-partner-profiles__list">
-            {resolvedLogos.map(({ logo, selectedTier, sponsorAnchorID }) => {
+            {resolvedLogos.map(
+              ({
+                logo,
+                selectedTier,
+                sponsorAnchorAlias,
+                sponsorAnchorID,
+              }) => {
               const href = logo.href?.trim();
               const logoArtwork = (
                 <CmsImage
@@ -598,6 +617,13 @@ function PartnerCategory({
                   id={sponsorAnchorID}
                   key={logo.id || logo.name}
                 >
+                  {sponsorAnchorAlias ? (
+                    <span
+                      aria-hidden="true"
+                      className="simf-partner-anchor-alias"
+                      id={sponsorAnchorAlias}
+                    />
+                  ) : null}
                   <div className="simf-partner-profile__copy">
                     <h3>
                       <CmsText value={logo.name} />
@@ -659,7 +685,8 @@ function PartnerCategory({
                   </div>
                 </article>
               );
-            })}
+            },
+            )}
           </div>
         </div>
       </section>
@@ -684,7 +711,13 @@ function PartnerCategory({
           locale={locale}
         >
           {resolvedLogos.map(
-            ({ featured, logo, selectedTier, sponsorAnchorID }) => {
+            ({
+              featured,
+              logo,
+              selectedTier,
+              sponsorAnchorAlias,
+              sponsorAnchorID,
+            }) => {
               const media = (
                 <>
                   <div className="simf-content-card__media">
@@ -732,6 +765,13 @@ function PartnerCategory({
                   id={sponsorAnchorID}
                   key={logo.id || logo.name}
                 >
+                  {sponsorAnchorAlias ? (
+                    <span
+                      aria-hidden="true"
+                      className="simf-partner-anchor-alias"
+                      id={sponsorAnchorAlias}
+                    />
+                  ) : null}
                   {linkedMedia}
                 </article>
               );

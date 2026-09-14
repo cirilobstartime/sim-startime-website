@@ -115,7 +115,7 @@ export const PartnerCategoryBlock: Block = {
           type: "text",
           admin: {
             description:
-              "Optional. Enter a short unique name such as ust or navantia to create a shareable link ending in #partner-ust. Leave empty to generate it automatically from the organization name.",
+              "Optional. Enter a short unique name such as ust or navantia. The exact value works as the shareable link (for example, #ust), while the existing #partner-ust format remains supported. Leave empty to generate it automatically from the organization name.",
           },
         },
         {
