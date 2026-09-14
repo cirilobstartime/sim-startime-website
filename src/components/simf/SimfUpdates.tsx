@@ -21,6 +21,7 @@ import { CmsHeroBackground } from "./CmsHeroBackground";
 import { CmsText } from "./CmsText";
 import { SimfFooter } from "./SimfFooter";
 import { SimfHeader } from "./SimfHeader";
+import { SimfArticleActions } from "./SimfArticleActions";
 import { SimfStickySponsor } from "./SimfStickySponsor";
 
 type BaseProps = {
@@ -318,6 +319,7 @@ export function SimfUpdateArticle({
               </p>
               <h1><CmsText value={update.title} /></h1>
               {update.intro ? <p className="simf-update-article__dek"><CmsText value={update.intro} /></p> : null}
+              <SimfArticleActions locale={locale} title={update.title} />
             </div>
           </header>
           <figure className="simf-shell simf-update-article__hero">

@@ -36,6 +36,8 @@
     "@phosphor-icons/react": "^2.1.10",
     "country-flag-icons": "^1.6.20",
     "graphql": "^16.11.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
     "motion": "12.23.12",
     "next": "16.3.4",
     "payload": "3.89.0",

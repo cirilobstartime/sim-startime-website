@@ -10577,6 +10577,104 @@ body
   line-height: 1.7;
 }
 
+.simf-update-actions {
+  position: fixed;
+  inset-inline-end: clamp(14px, 2vw, 28px);
+  bottom: clamp(86px, 10vh, 118px);
+  z-index: 48;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 46px;
+}
+
+.simf-update-actions button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid rgba(40, 56, 112, 0.24);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 24px rgba(15, 25, 54, 0.14);
+  color: #283870;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 680;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.simf-update-actions button:hover,
+.simf-update-actions button:focus-visible {
+  border-color: #283870;
+  background: #283870;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.simf-update-actions button:disabled {
+  cursor: progress;
+  opacity: 0.65;
+}
+
+.simf-update-actions button svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.simf-update-actions button > span {
+  position: absolute;
+  inset-inline-end: calc(100% + 10px);
+  top: 50%;
+  width: max-content;
+  max-width: 210px;
+  padding: 7px 10px;
+  border-radius: 3px;
+  background: #142048;
+  box-shadow: 0 7px 20px rgba(15, 25, 54, 0.2);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.3;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%) translateX(5px);
+  transition: opacity 160ms ease, transform 160ms ease;
+  white-space: nowrap;
+}
+
+[dir="rtl"] .simf-update-actions button > span {
+  transform: translateY(-50%) translateX(-5px);
+}
+
+.simf-update-actions button:hover > span,
+.simf-update-actions button:focus-visible > span {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.simf-update-actions__status {
+  position: absolute;
+  inset-inline-end: 0;
+  bottom: calc(100% + 10px);
+  width: max-content;
+  max-width: min(240px, calc(100vw - 40px));
+  color: #283870;
+  font-size: 12px;
+  font-weight: 650;
+  text-align: end;
+}
+
+.simf-update-article[data-pdf-export="true"] .simf-update-actions {
+  visibility: hidden;
+}
+
 .simf-update-article__hero {
   max-width: 1260px;
   margin-bottom: 0;
@@ -10865,6 +10963,18 @@ body
     font-size: clamp(36px, 11vw, 50px);
   }
 
+  .simf-update-actions {
+    inset-inline-end: 12px;
+    bottom: 82px;
+    gap: 7px;
+    width: 42px;
+  }
+
+  .simf-update-actions button {
+    width: 42px;
+    height: 42px;
+  }
+
   .simf-update-article__hero {
     padding-inline: 0;
   }
@@ -10904,6 +11014,42 @@ body
 
   .simf-update-cta__content .simf-button {
     justify-self: start;
+  }
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+
+  .simf-update-article {
+    padding-top: 0 !important;
+    background: #fff !important;
+  }
+
+  .simf-update-article__header {
+    padding-block: 32px 24px !important;
+    background: none !important;
+  }
+
+  .simf-update-actions,
+  .simf-update-article__back,
+  .simf-updates-site > header,
+  .simf-related-updates,
+  .simf-update-cta,
+  .simf-sticky-sponsor,
+  .simf-updates-site > footer {
+    display: none !important;
+  }
+
+  .simf-update-article__body {
+    padding-block: 32px !important;
+  }
+
+  .simf-update-article__section,
+  .simf-update-article__highlight,
+  .simf-update-article figure {
+    break-inside: avoid;
   }
 }
 
