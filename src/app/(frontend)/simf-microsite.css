@@ -22118,3 +22118,20 @@ body .simf-homepage-about .simf-option-hero__review-lead {
     font-size: clamp(16px, 4.3vw, 20px) !important;
   }
 }
+
+/* Arabic script should retain its natural connected rhythm. The expanded
+   tracking used for Latin uppercase eyebrows makes Arabic words look broken
+   apart, so normalize it across every shared eyebrow treatment. */
+.simf-site[lang="ar"] .simf-eyebrow {
+  letter-spacing: normal !important;
+}
+
+/* External featured updates intentionally omit the summary. Preserve the
+   same visual breathing room before their CTA when the button follows the
+   title directly. */
+.simf-site[lang="ar"]
+  .simf-update-feature__copy
+  h2
+  + .simf-update-feature__button {
+  margin-top: clamp(20px, 2.2vw, 28px);
+}
