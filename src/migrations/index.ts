@@ -3,6 +3,7 @@ import * as mediaTitles from "./20260831_120000_media_titles";
 import * as responsiveMedia from "./20260910_012000_responsive_media";
 import * as comingSoonMode from "./20260910_023000_coming_soon_mode";
 import * as defaultOpenGraphImage from "./20260914_141500_default_open_graph_image";
+import * as externalUpdates from "./20260914_184000_external_updates";
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: defaultOpenGraphImage.up,
     down: defaultOpenGraphImage.down,
     name: "20260914_141500_default_open_graph_image",
+  },
+  {
+    up: externalUpdates.up,
+    down: externalUpdates.down,
+    name: "20260914_184000_external_updates",
   },
 ];

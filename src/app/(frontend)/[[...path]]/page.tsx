@@ -698,6 +698,9 @@ export default async function PublicPage({ params }: PageProps) {
   if (route.updateSlug) {
     const update = await getUpdate(route.locale, route.updateSlug);
     if (!update) notFound();
+    if (update.destinationType === "external" && update.externalURL) {
+      redirect(update.externalURL);
+    }
     return (
       <SimfUpdateArticle
         locale={route.locale}

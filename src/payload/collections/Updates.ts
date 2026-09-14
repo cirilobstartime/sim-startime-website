@@ -1,4 +1,9 @@
-import type { CollectionConfig, Where } from "payload";
+import type {
+  ArrayFieldValidation,
+  CollectionConfig,
+  TextFieldSingleValidation,
+  Where,
+} from "payload";
 import { absoluteHttpURLValidation } from "@/lib/publicHref";
 import { authenticatedStaff } from "../access";
 import {
@@ -72,6 +77,82 @@ function addAutomaticPublicationDate(
   return doc;
 }
 
+function updateSlug(value: string) {
+  return value
+    .normalize("NFKC")
+    .toLocaleLowerCase("en")
+    .replace(/[^\p{Letter}\p{Number}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 90);
+}
+
+function addAutomaticUpdateIdentifiers(
+  doc: Record<string, unknown>,
+  originalDoc?: Record<string, unknown>,
+) {
+  const title =
+    typeof doc.title === "string"
+      ? doc.title.trim()
+      : typeof originalDoc?.title === "string"
+        ? originalDoc.title.trim()
+        : "";
+  const generatedSlug = title ? updateSlug(title) : "";
+
+  return {
+    ...doc,
+    internalTitle:
+      (typeof doc.internalTitle === "string" && doc.internalTitle.trim()) ||
+      (typeof originalDoc?.internalTitle === "string" &&
+        originalDoc.internalTitle.trim()) ||
+      title ||
+      "External update",
+    slug:
+      (typeof doc.slug === "string" && doc.slug.trim()) ||
+      (typeof originalDoc?.slug === "string" && originalDoc.slug.trim()) ||
+      generatedSlug ||
+      `external-update-${Date.now().toString(36)}`,
+  };
+}
+
+const externalUpdateURLValidation: TextFieldSingleValidation = (
+  value,
+  { siblingData },
+) => {
+  const update = siblingData as { destinationType?: unknown };
+  if (
+    update.destinationType === "external" &&
+    (typeof value !== "string" || !value.trim())
+  ) {
+    return "Add the external post URL.";
+  }
+  return absoluteHttpURLValidation(value);
+};
+
+const internalUpdateCategoryValidation: TextFieldSingleValidation = (
+  value,
+  { siblingData },
+) => {
+  const update = siblingData as { destinationType?: unknown };
+  if (
+    update.destinationType !== "external" &&
+    (typeof value !== "string" || !value.trim())
+  ) {
+    return "Add a category for an internal article.";
+  }
+  return true;
+};
+
+const internalUpdateContentValidation: ArrayFieldValidation = (
+  value,
+  { siblingData },
+) => {
+  const update = siblingData as { destinationType?: unknown };
+  if (update.destinationType !== "external" && !value?.length) {
+    return "Add at least one content section for an internal article.";
+  }
+  return true;
+};
+
 export const Updates: CollectionConfig = {
   slug: "updates",
   admin: {
@@ -79,6 +160,7 @@ export const Updates: CollectionConfig = {
     useAsTitle: "internalTitle",
     defaultColumns: [
       "internalTitle",
+      "destinationType",
       "category",
       "publishedAt",
       "visible",
@@ -117,7 +199,13 @@ export const Updates: CollectionConfig = {
       ({ data, originalDoc }) => addAutomaticPublicationDate(data, originalDoc),
     ],
     beforeValidate: [
-      ({ data }) => (data ? normalizeLegacyArticleContent(data) : data),
+      ({ data, originalDoc }) =>
+        data
+          ? addAutomaticUpdateIdentifiers(
+              normalizeLegacyArticleContent(data),
+              originalDoc,
+            )
+          : data,
     ],
   },
   fields: [
@@ -128,6 +216,39 @@ export const Updates: CollectionConfig = {
           label: "Update content",
           fields: [
             {
+              name: "destinationType",
+              label: "What should happen when this update is clicked?",
+              type: "radio",
+              defaultValue: "internal",
+              options: [
+                {
+                  label: "Open a full article on this website",
+                  value: "internal",
+                },
+                {
+                  label: "Open an external post or website",
+                  value: "external",
+                },
+              ],
+              admin: {
+                description:
+                  "Choose External post when you only want to add the bilingual title, featured image and destination link.",
+                layout: "vertical",
+              },
+            },
+            {
+              name: "externalURL",
+              label: "External post URL",
+              type: "text",
+              admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.destinationType === "external",
+                description:
+                  "The update card will open this address instead of an article on the SIM website.",
+              },
+              validate: externalUpdateURLValidation,
+            },
+            {
               name: "title",
               type: "textarea",
               localized: true,
@@ -137,13 +258,19 @@ export const Updates: CollectionConfig = {
               name: "category",
               type: "text",
               localized: true,
-              required: true,
+              validate: internalUpdateCategoryValidation,
+              admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.destinationType !== "external",
+              },
             },
             {
               name: "summary",
               type: "textarea",
               localized: true,
               admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.destinationType !== "external",
                 description:
                   "Optional card and SEO summary. When empty, the website automatically uses the opening text from the article content.",
               },
@@ -153,6 +280,8 @@ export const Updates: CollectionConfig = {
               type: "textarea",
               localized: true,
               admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.destinationType !== "external",
                 description:
                   "Optional introduction beneath the article title. When empty, the website automatically uses the opening text from the article content.",
               },
@@ -160,7 +289,7 @@ export const Updates: CollectionConfig = {
             {
               name: "featuredImage",
               label:
-                "Featured article image — 1600 × 900 px (2×: 3200 × 1800; 3×: 4800 × 2700)",
+                "Featured update image — 1600 × 900 px (2×: 3200 × 1800; 3×: 4800 × 2700)",
               type: "upload",
               relationTo: "media",
               required: true,
@@ -184,13 +313,19 @@ export const Updates: CollectionConfig = {
               name: "featuredImageCaption",
               type: "text",
               localized: true,
+              admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.destinationType !== "external",
+              },
             },
             {
               name: "content",
               type: "array",
               localized: true,
-              minRows: 1,
+              validate: internalUpdateContentValidation,
               admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.destinationType !== "external",
                 description:
                   "Add, reorder or remove article sections independently for this language.",
                 initCollapsed: true,
@@ -329,15 +464,25 @@ export const Updates: CollectionConfig = {
             {
               name: "internalTitle",
               type: "text",
-              required: true,
+              admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.destinationType !== "external",
+                description:
+                  "Optional CMS-only name. When empty, it is generated from the update title.",
+              },
             },
             {
               name: "slug",
               type: "text",
               localized: true,
-              required: true,
               unique: true,
               index: true,
+              admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.destinationType !== "external",
+                description:
+                  "Optional internal article URL. When empty, it is generated from the update title.",
+              },
             },
             {
               name: "publicationLabel",

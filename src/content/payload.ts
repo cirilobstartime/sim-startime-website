@@ -280,9 +280,26 @@ function normalizeUpdate(value: unknown, locale: Locale): PublicUpdate | null {
     truncateAtWord(opening, 360) ||
     update.summary?.trim() ||
     null;
+  const externalURL = (() => {
+    if (
+      update.destinationType !== "external" ||
+      typeof update.externalURL !== "string"
+    ) {
+      return null;
+    }
+    try {
+      const url = new URL(update.externalURL.trim());
+      return ["http:", "https:"].includes(url.protocol) ? url.href : null;
+    } catch {
+      return null;
+    }
+  })();
+  if (update.destinationType === "external" && !externalURL) return null;
   return {
     ...update,
     content,
+    destinationType: externalURL ? "external" : "internal",
+    externalURL,
     intro,
     publicationLabel:
       update.publicationLabel?.trim() ||
@@ -523,12 +540,12 @@ export const getNavigationManifest = unstable_cache(
   },
 );
 
-export const getUpdates = unstable_cache(fetchUpdates, ["simf-updates-v1"], {
+export const getUpdates = unstable_cache(fetchUpdates, ["simf-updates-v3"], {
   revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,
   tags: [PUBLIC_CACHE_TAGS.updates],
 });
 
-export const getUpdate = unstable_cache(fetchUpdate, ["simf-update-v1"], {
+export const getUpdate = unstable_cache(fetchUpdate, ["simf-update-v3"], {
   revalidate: PUBLIC_CONTENT_REVALIDATE_SECONDS,
   tags: [PUBLIC_CACHE_TAGS.updates],
 });

@@ -83,6 +83,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         and: [
           { visible: { equals: true } },
           { _status: { equals: "published" } },
+          { destinationType: { not_equals: "external" } },
           { "seo.includeInSitemap": { not_equals: false } },
           { "seo.indexable": { not_equals: false } },
         ],

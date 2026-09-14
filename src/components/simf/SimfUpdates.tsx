@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import type {
   CallToActionSection,
   HeroSection,
@@ -118,6 +119,37 @@ function SponsorCTA({
   );
 }
 
+function UpdateDestination({
+  children,
+  className,
+  internalHref,
+  update,
+}: {
+  children: ReactNode;
+  className: string;
+  internalHref: string;
+  update: PublicUpdate;
+}) {
+  if (update.destinationType === "external" && update.externalURL) {
+    return (
+      <a
+        className={className}
+        data-track="update_external_click"
+        href={update.externalURL}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link className={className} href={internalHref}>
+      {children}
+    </Link>
+  );
+}
+
 function UpdateCard({
   locale,
   readLabel,
@@ -128,24 +160,31 @@ function UpdateCard({
   update: PublicUpdate;
 }) {
   const href = `${routes(locale).archive}/${update.slug}`;
+  const external = update.destinationType === "external";
   return (
-    <Link className="simf-update-card" href={href}>
+    <UpdateDestination
+      className="simf-update-card"
+      internalHref={href}
+      update={update}
+    >
       <div className="simf-update-card__image">
         <CmsImage alt="" media={update.featuredImage} mobileMedia={update.mobileFeaturedImage} sizes="(max-width: 760px) 100vw, 33vw" />
       </div>
       <div className="simf-update-card__copy">
-        <p className="simf-update-card__meta">
-          <CmsText value={update.publicationLabel} />
-          {update.category ? <span><CmsText value={update.category} /></span> : null}
-        </p>
+        {!external ? (
+          <p className="simf-update-card__meta">
+            <CmsText value={update.publicationLabel} />
+            {update.category ? <span><CmsText value={update.category} /></span> : null}
+          </p>
+        ) : null}
         <h2><CmsText value={update.title} /></h2>
-        <p><CmsText value={update.summary} /></p>
+        {!external ? <p><CmsText value={update.summary} /></p> : null}
         <span className="simf-update-card__link">
-          <CmsText value={readLabel} />
+          <CmsText value={external ? (locale === "ar" ? "فتح المنشور" : "View post") : readLabel} />
           <ArrowUpRight aria-hidden />
         </span>
       </div>
-    </Link>
+    </UpdateDestination>
   );
 }
 
@@ -167,6 +206,7 @@ export function SimfUpdatesArchive({
   const remaining = updates.filter((item) => item.slug !== lead?.slug);
   const switchHref = ar ? "/updates" : "/ar/updates";
   const homeHref = header?.links?.[0]?.href || route.home;
+  const leadExternal = lead?.destinationType === "external";
 
   return (
     <div className="simf-site simf-updates-site" dir={ar ? "rtl" : "ltr"} lang={locale}>
@@ -220,23 +260,29 @@ export function SimfUpdatesArchive({
         <section className="simf-updates-index">
           <div className="simf-shell">
             {lead ? (
-              <Link className="simf-update-feature" href={`${route.archive}/${lead.slug}`}>
+              <UpdateDestination
+                className="simf-update-feature"
+                internalHref={`${route.archive}/${lead.slug}`}
+                update={lead}
+              >
                 <div className="simf-update-feature__image">
                   <CmsImage alt="" media={lead.featuredImage} mobileMedia={lead.mobileFeaturedImage} sizes="(max-width: 760px) 100vw, 50vw" />
                 </div>
                 <div className="simf-update-feature__copy">
-                  <p className="simf-update-card__meta">
-                    <CmsText value={lead.publicationLabel} />
-                    {lead.category ? <span><CmsText value={lead.category} /></span> : null}
-                  </p>
+                  {!leadExternal ? (
+                    <p className="simf-update-card__meta">
+                      <CmsText value={lead.publicationLabel} />
+                      {lead.category ? <span><CmsText value={lead.category} /></span> : null}
+                    </p>
+                  ) : null}
                   <h2><CmsText value={lead.title} /></h2>
-                  <p><CmsText value={lead.summary} /></p>
+                  {!leadExternal ? <p><CmsText value={lead.summary} /></p> : null}
                   <span className="simf-button simf-update-feature__button">
-                    <CmsText value={labels?.readLabel || (ar ? "اقرأ التحديث" : "Read update")} />
+                    <CmsText value={leadExternal ? (ar ? "فتح المنشور" : "View post") : labels?.readLabel || (ar ? "اقرأ التحديث" : "Read update")} />
                     <ArrowUpRight aria-hidden />
                   </span>
                 </div>
-              </Link>
+              </UpdateDestination>
             ) : null}
             <div className="simf-updates-grid">
               {remaining.map((update) => (

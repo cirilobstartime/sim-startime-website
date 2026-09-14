@@ -472,6 +472,8 @@ export type PublicUpdate = {
     visible?: boolean | null;
   }>;
   featured?: boolean | null;
+  destinationType?: "external" | "internal" | null;
+  externalURL?: string | null;
   featuredImage: MediaValue;
   mobileFeaturedImage?: MediaValue;
   featuredImageCaption?: string | null;
