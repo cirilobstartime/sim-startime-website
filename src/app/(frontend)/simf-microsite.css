@@ -22119,17 +22119,18 @@ body .simf-homepage-about .simf-option-hero__review-lead {
   }
 }
 
-/* Arabic script should retain its natural connected rhythm. The expanded
-   tracking used for Latin uppercase eyebrows makes Arabic words look broken
-   apart, so normalize it across every shared eyebrow treatment. */
-.simf-site[lang="ar"] .simf-eyebrow {
+/* Arabic script should retain its natural connected rhythm. Several compact
+   labels beyond the shared eyebrow class also inherit Latin-style tracking,
+   so normalize tracking across the complete Arabic surface. */
+.simf-site[lang="ar"],
+.simf-site[lang="ar"] * {
   letter-spacing: normal !important;
 }
 
 /* External featured updates intentionally omit the summary. Preserve the
    same visual breathing room before their CTA when the button follows the
    title directly. */
-.simf-site[lang="ar"]
+.simf-site
   .simf-update-feature__copy
   h2
   + .simf-update-feature__button {
