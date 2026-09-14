@@ -45,7 +45,8 @@ export const SiteSettings: GlobalConfig = {
         },
         {
           name: "mobileHeaderLogo",
-          label: "Optional mobile header logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900)",
+          label:
+            "Optional mobile header logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900)",
           type: "upload",
           relationTo: "media",
           admin: {
@@ -65,12 +66,33 @@ export const SiteSettings: GlobalConfig = {
         },
         {
           name: "mobileFooterLogo",
-          label: "Optional mobile footer logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900)",
+          label:
+            "Optional mobile footer logo — 800 × 300 px (2×: 1600 × 600; 3×: 2400 × 900)",
           type: "upload",
           relationTo: "media",
           admin: {
             description:
               "Optional phone-specific shared footer logo. Leave empty to use the desktop footer logo automatically. JPEG/PNG uploads become WebP automatically.",
+          },
+        },
+      ],
+    },
+    {
+      type: "collapsible",
+      label: "Default social sharing image",
+      admin: {
+        initCollapsed: false,
+      },
+      fields: [
+        {
+          name: "defaultOpenGraphImage",
+          label:
+            "Website Open Graph image — 1200 × 630 px (2×: 2400 × 1260; 3×: 3600 × 1890)",
+          type: "upload",
+          relationTo: "media",
+          admin: {
+            description:
+              "Used for social previews across the English and Arabic website whenever a page or news article does not have its own social sharing image. Keep the 1.91:1 ratio and important content away from the edges. JPEG/PNG uploads become WebP automatically.",
           },
         },
       ],

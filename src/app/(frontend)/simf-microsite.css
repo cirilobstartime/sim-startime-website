@@ -4685,6 +4685,11 @@
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 18px 50px rgba(14, 29, 61, 0.07);
+  scroll-margin-top: 104px;
+}
+
+.simf-partner-category .simf-content-card[id] {
+  scroll-margin-top: 104px;
 }
 
 [dir="rtl"] .simf-partner-profile {
@@ -4723,43 +4728,6 @@
 
 .simf-partner-profile__description p {
   margin-top: 0;
-}
-
-.simf-partner-profile__description:not([open]) p {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
-}
-
-.simf-partner-profile__description summary {
-  width: max-content;
-  margin-top: 12px;
-  border-bottom: 1px solid currentColor;
-  color: #284a91;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 740;
-  letter-spacing: 0.08em;
-  list-style: none;
-  text-transform: uppercase;
-}
-
-.simf-partner-profile__description summary::-webkit-details-marker {
-  display: none;
-}
-
-.simf-partner-profile__less,
-.simf-partner-profile__description[open] .simf-partner-profile__more {
-  display: none;
-}
-
-.simf-partner-profile__description[open] .simf-partner-profile__less {
-  display: inline;
-}
-
-[dir="rtl"] .simf-partner-profile__description summary {
-  letter-spacing: 0;
 }
 
 .simf-partner-profile__website {

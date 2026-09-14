@@ -245,12 +245,12 @@ export const Pages: CollectionConfig = {
                 {
                   name: "openGraphImage",
                   label:
-                    "Social sharing image — 1200 × 630 px (2×: 2400 × 1260; 3×: 3600 × 1890)",
+                    "Optional page-specific social image — 1200 × 630 px (2×: 2400 × 1260; 3×: 3600 × 1890)",
                   type: "upload",
                   relationTo: "media",
                   admin: {
                     description:
-                      "SEO/social preview image (1.91:1). Keep important content away from the edges; JPEG/PNG uploads become WebP automatically.",
+                      "Overrides the website-wide Open Graph image for this page. Leave empty to use the shared image from Website branding & languages. Keep the 1.91:1 ratio and important content away from the edges; JPEG/PNG uploads become WebP automatically.",
                   },
                 },
                 {

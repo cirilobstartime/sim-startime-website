@@ -113,8 +113,12 @@ export const Updates: CollectionConfig = {
     afterChange: [revalidateCollectionAfterChange([PUBLIC_CACHE_TAGS.updates])],
     afterDelete: [revalidateCollectionAfterDelete([PUBLIC_CACHE_TAGS.updates])],
     afterRead: [({ doc }) => normalizeLegacyArticleContent(doc)],
-    beforeChange: [({ data, originalDoc }) => addAutomaticPublicationDate(data, originalDoc)],
-    beforeValidate: [({ data }) => data ? normalizeLegacyArticleContent(data) : data],
+    beforeChange: [
+      ({ data, originalDoc }) => addAutomaticPublicationDate(data, originalDoc),
+    ],
+    beforeValidate: [
+      ({ data }) => (data ? normalizeLegacyArticleContent(data) : data),
+    ],
   },
   fields: [
     {
@@ -155,7 +159,8 @@ export const Updates: CollectionConfig = {
             },
             {
               name: "featuredImage",
-              label: "Featured article image — 1600 × 900 px (2×: 3200 × 1800; 3×: 4800 × 2700)",
+              label:
+                "Featured article image — 1600 × 900 px (2×: 3200 × 1800; 3×: 4800 × 2700)",
               type: "upload",
               relationTo: "media",
               required: true,
@@ -166,7 +171,8 @@ export const Updates: CollectionConfig = {
             },
             {
               name: "mobileFeaturedImage",
-              label: "Optional mobile featured image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
+              label:
+                "Optional mobile featured image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
               type: "upload",
               relationTo: "media",
               admin: {
@@ -213,7 +219,8 @@ export const Updates: CollectionConfig = {
                 },
                 {
                   name: "media",
-                  label: "Article section image — 1200 × 675 px (2×: 2400 × 1350; 3×: 3600 × 2025)",
+                  label:
+                    "Article section image — 1200 × 675 px (2×: 2400 × 1350; 3×: 3600 × 2025)",
                   type: "upload",
                   relationTo: "media",
                   admin: {
@@ -223,7 +230,8 @@ export const Updates: CollectionConfig = {
                 },
                 {
                   name: "mobileMedia",
-                  label: "Optional mobile article section image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
+                  label:
+                    "Optional mobile article section image — 1080 × 1350 px (2×: 2160 × 2700; 3×: 3240 × 4050)",
                   type: "upload",
                   relationTo: "media",
                   admin: {
@@ -278,12 +286,13 @@ export const Updates: CollectionConfig = {
                 },
                 {
                   name: "openGraphImage",
-                  label: "Social sharing image — 1200 × 630 px (2×: 2400 × 1260; 3×: 3600 × 1890)",
+                  label:
+                    "Optional article-specific social image — 1200 × 630 px (2×: 2400 × 1260; 3×: 3600 × 1890)",
                   type: "upload",
                   relationTo: "media",
                   admin: {
                     description:
-                      "SEO/social preview image. Keep the 1.91:1 ratio and important content away from the edges. JPEG/PNG uploads become WebP automatically.",
+                      "Overrides the website-wide Open Graph image for this article. Leave empty to use the shared image from Website branding & languages. Keep the 1.91:1 ratio and important content away from the edges. JPEG/PNG uploads become WebP automatically.",
                   },
                 },
                 {

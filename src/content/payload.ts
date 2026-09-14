@@ -7,10 +7,7 @@ import {
   getSimfContentPage,
   type SimfContentPageKey,
 } from "./simfContentPagesDefaults";
-import {
-  getSimfUpdates,
-  getSimfUpdatesPage,
-} from "./simfUpdatesDefaults";
+import { getSimfUpdates, getSimfUpdatesPage } from "./simfUpdatesDefaults";
 import type {
   Locale,
   MarketingSettings,
@@ -31,9 +28,9 @@ function normalizeSections(value: unknown): PageSection[] {
     .filter((item): item is PageSection =>
       Boolean(
         item &&
-          typeof item === "object" &&
-          "blockType" in item &&
-          (item as { visible?: boolean }).visible !== false,
+        typeof item === "object" &&
+        "blockType" in item &&
+        (item as { visible?: boolean }).visible !== false,
       ),
     )
     .sort((a, b) => Number(a.displayOrder || 0) - Number(b.displayOrder || 0));
@@ -56,23 +53,21 @@ async function fetchPage(
   ];
   const isPartnersBeta = route === "simf-microsite/partners-beta";
   const isPartnersPage = route === "simf-microsite/partners";
-  const isContentPage = Boolean(
-    contentKey && contentKeys.includes(contentKey),
-  );
+  const isContentPage = Boolean(contentKey && contentKeys.includes(contentKey));
   const pageType =
     route === "simf-microsite/sponsor"
       ? "simf-microsite-sponsor"
       : route === "simf-microsite/new-homepage"
         ? "simf-microsite-home-review"
-      : route === "simf-microsite/about"
-        ? "simf-microsite-about"
-      : route === "simf-microsite/updates"
-        ? "simf-microsite-updates"
-        : isPartnersBeta
-          ? "simf-microsite-partners"
-        : isContentPage
-          ? `simf-microsite-${contentKey}`
-          : "simf-microsite-home";
+        : route === "simf-microsite/about"
+          ? "simf-microsite-about"
+          : route === "simf-microsite/updates"
+            ? "simf-microsite-updates"
+            : isPartnersBeta
+              ? "simf-microsite-partners"
+              : isContentPage
+                ? `simf-microsite-${contentKey}`
+                : "simf-microsite-home";
   try {
     const payload = await getPayload({ config: configPromise });
     const result = await payload.find({
@@ -125,18 +120,18 @@ async function fetchPage(
             pageType: "simf-microsite-sponsor",
             slug: "simf-microsite/sponsor",
           }
-      : isContentPage && contentKey
-        ? getSimfContentPage(locale, contentKey)
-        : pageType === "simf-microsite-home-review"
-          ? getSimfMicrositePage(locale, "simf-microsite-home-review")
-        : pageType === "simf-microsite-about"
-          ? getSimfMicrositePage(locale, "simf-microsite-about")
-        : getSimfMicrositePage(
-            locale,
-            pageType === "simf-microsite-sponsor"
-              ? "simf-microsite-sponsor"
-              : "simf-microsite-home",
-          );
+        : isContentPage && contentKey
+          ? getSimfContentPage(locale, contentKey)
+          : pageType === "simf-microsite-home-review"
+            ? getSimfMicrositePage(locale, "simf-microsite-home-review")
+            : pageType === "simf-microsite-about"
+              ? getSimfMicrositePage(locale, "simf-microsite-about")
+              : getSimfMicrositePage(
+                  locale,
+                  pageType === "simf-microsite-sponsor"
+                    ? "simf-microsite-sponsor"
+                    : "simf-microsite-home",
+                );
   }
 }
 
@@ -151,11 +146,10 @@ function navigationPath(
   if (pageType === "simf-microsite-government-b2g") return `${prefix}/b2g`;
   if (pageType === "simf-microsite-updates") return `${prefix}/updates`;
   const slug = typeof slugValue === "string" ? slugValue.trim() : "";
-  const segment = slug.replace(/^simf-microsite\//, "").replace(/^\/+|\/+$/g, "");
-  if (
-    pageType === "simf-microsite-partners" &&
-    segment !== "partners-beta"
-  ) {
+  const segment = slug
+    .replace(/^simf-microsite\//, "")
+    .replace(/^\/+|\/+$/g, "");
+  if (pageType === "simf-microsite-partners" && segment !== "partners-beta") {
     return `${prefix}/partners`;
   }
   return segment && !segment.includes("/") ? `${prefix}/${segment}` : null;
@@ -180,7 +174,11 @@ async function fetchNavigationManifest(
     const activePaths: string[] = [];
     const links: Array<{ href: string; label: string }> = [];
     for (const page of result.docs) {
-      const href = navigationPath(locale, String(page.pageType || ""), page.slug);
+      const href = navigationPath(
+        locale,
+        String(page.pageType || ""),
+        page.slug,
+      );
       if (!href) continue;
       knownPaths.push(href);
       const active =
@@ -206,7 +204,8 @@ async function fetchNavigationManifest(
 function plainText(value: unknown): string {
   if (!value) return "";
   if (typeof value === "string") return value.trim();
-  if (Array.isArray(value)) return value.map(plainText).filter(Boolean).join(" ");
+  if (Array.isArray(value))
+    return value.map(plainText).filter(Boolean).join(" ");
   if (typeof value !== "object") return "";
 
   const node = value as Record<string, unknown>;
@@ -230,7 +229,10 @@ function articleOpening(update: PublicUpdate): string {
   return "";
 }
 
-function automaticPublicationLabel(locale: Locale, publishedAt: string): string {
+function automaticPublicationLabel(
+  locale: Locale,
+  publishedAt: string,
+): string {
   const date = new Intl.DateTimeFormat(
     locale === "ar" ? "ar-SA-u-nu-latn" : "en-GB",
     {
@@ -254,7 +256,8 @@ function normalizeUpdate(value: unknown, locale: Locale): PublicUpdate | null {
     updatedAt?: string | null;
     visible?: boolean | null;
   };
-  const publishedAt = update.publishedAt || update.createdAt || update.updatedAt;
+  const publishedAt =
+    update.publishedAt || update.createdAt || update.updatedAt;
   if (
     update.visible === false ||
     !update.title ||
@@ -344,9 +347,7 @@ async function fetchUpdate(
     });
     return normalizeUpdate(result.docs[0], locale);
   } catch {
-    return (
-      getSimfUpdates(locale).find((item) => item.slug === slug) || null
-    );
+    return getSimfUpdates(locale).find((item) => item.slug === slug) || null;
   }
 }
 
@@ -428,34 +429,30 @@ async function fetchSiteSettings(locale: Locale = "en"): Promise<SiteSettings> {
       comingSoon: settings.comingSoon
         ? {
             backgroundImage: settings.comingSoon.backgroundImage as
-              | MediaValue
-              | undefined,
+              MediaValue | undefined,
             contactEmail: settings.comingSoon.contactEmail,
             contactLabel: settings.comingSoon.contactLabel,
             eventDate: settings.comingSoon.eventDate,
             label: settings.comingSoon.label,
             message: settings.comingSoon.message,
             mobileBackgroundImage: settings.comingSoon.mobileBackgroundImage as
-              | MediaValue
-              | undefined,
+              MediaValue | undefined,
             title: settings.comingSoon.title,
             venue: settings.comingSoon.venue,
           }
         : undefined,
       comingSoonEnabled: settings.comingSoonEnabled === true,
+      defaultOpenGraphImage: settings.defaultOpenGraphImage as
+        SiteSettings["defaultOpenGraphImage"] | undefined,
       enableArabic: settings.enableArabic !== false,
       footerLogo: (settings.footerLogo || settings.headerLogo) as
-        | SiteSettings["footerLogo"]
-        | undefined,
-      headerLogo: settings.headerLogo as
-        | SiteSettings["headerLogo"]
-        | undefined,
-      mobileFooterLogo: (settings.mobileFooterLogo || settings.mobileHeaderLogo) as
-        | SiteSettings["mobileFooterLogo"]
-        | undefined,
+        SiteSettings["footerLogo"] | undefined,
+      headerLogo: settings.headerLogo as SiteSettings["headerLogo"] | undefined,
+      mobileFooterLogo: (settings.mobileFooterLogo ||
+        settings.mobileHeaderLogo) as
+        SiteSettings["mobileFooterLogo"] | undefined,
       mobileHeaderLogo: settings.mobileHeaderLogo as
-        | SiteSettings["mobileHeaderLogo"]
-        | undefined,
+        SiteSettings["mobileHeaderLogo"] | undefined,
     };
   } catch {
     return { comingSoonEnabled: false, enableArabic: false };
@@ -473,9 +470,7 @@ export async function getCMSRedirect(
       sourceLocale === "ar"
         ? fromPath.replace(/^\/ar(?=\/|$)/, "") || "/"
         : fromPath;
-    const candidatePaths = Array.from(
-      new Set([fromPath, localeRelativePath]),
-    );
+    const candidatePaths = Array.from(new Set([fromPath, localeRelativePath]));
     const result = await payload.find({
       collection: "redirects",
       depth: 1,

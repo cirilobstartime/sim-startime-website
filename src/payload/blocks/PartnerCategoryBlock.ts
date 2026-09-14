@@ -110,6 +110,15 @@ export const PartnerCategoryBlock: Block = {
           },
         },
         {
+          name: "anchorID",
+          label: "Direct-link anchor (#)",
+          type: "text",
+          admin: {
+            description:
+              "Optional. Enter a short unique name such as ust or navantia to create a shareable link ending in #partner-ust. Leave empty to generate it automatically from the organization name.",
+          },
+        },
+        {
           name: "description",
           label: "Organization description",
           type: "textarea",

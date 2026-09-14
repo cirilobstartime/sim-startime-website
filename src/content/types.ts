@@ -88,6 +88,7 @@ export type PartnerCategorySection = BaseSection & {
   showSectionHeading?: boolean | null;
   showProfileCategoryLabels?: boolean | null;
   logos: Array<{
+    anchorID?: string | null;
     description?: string | null;
     href?: string | null;
     id?: string | null;
@@ -430,6 +431,7 @@ export type SiteSettings = {
     venue?: string | null;
   } | null;
   comingSoonEnabled: boolean;
+  defaultOpenGraphImage?: MediaValue;
   enableArabic: boolean;
   footerLogo?: MediaValue;
   headerLogo?: MediaValue;

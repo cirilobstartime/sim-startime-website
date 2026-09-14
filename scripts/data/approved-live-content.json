@@ -709,6 +709,7 @@
             "logos": [
               {
                 "name": "General Authority for Military Industries (GAMI)",
+                "anchorID": "gami",
                 "logo": {
                   "__mediaFilename": "gami-1.webp"
                 },
@@ -753,6 +754,7 @@
             "logos": [
               {
                 "name": "Unmanned Systems Technology (UST)",
+                "anchorID": "ust",
                 "logo": {
                   "__mediaFilename": "unmanned-systems-technology.webp"
                 },
@@ -885,6 +887,7 @@
               },
               {
                 "name": "Navantia",
+                "anchorID": "navantia",
                 "logo": {
                   "__mediaFilename": "navantia.webp"
                 },
@@ -7047,6 +7050,7 @@
             "logos": [
               {
                 "name": "الهيئة العامة للصناعات العسكرية",
+                "anchorID": "gami",
                 "logo": {
                   "__mediaFilename": "gami-1.webp"
                 },
@@ -7091,6 +7095,7 @@
             "logos": [
               {
                 "name": "يو إس تي",
+                "anchorID": "ust",
                 "logo": {
                   "__mediaFilename": "unmanned-systems-technology.webp"
                 },
@@ -7223,6 +7228,7 @@
               },
               {
                 "name": "نافانتيا",
+                "anchorID": "navantia",
                 "logo": {
                   "__mediaFilename": "navantia.webp"
                 },

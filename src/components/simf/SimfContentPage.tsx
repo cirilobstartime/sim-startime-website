@@ -75,6 +75,23 @@ const imageAboveCopySections = new Set([
   "sponsor-reasons",
 ]);
 
+function normalizeAnchor(value: string) {
+  return value
+    .normalize("NFKC")
+    .trim()
+    .replace(/^#+/, "")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function partnerAnchor(value: string | null | undefined, fallback: string) {
+  const normalized = normalizeAnchor(value || "") || fallback;
+  return normalized.startsWith("partner-")
+    ? normalized
+    : `partner-${normalized}`;
+}
+
 function findSection<T extends PublicPage["sections"][number]>(
   page: PublicPage,
   anchorID: string,
@@ -494,6 +511,12 @@ function PartnerCategory({
   const visual = appearance(section);
   const logos = section.logos.filter((logo) => logo.visible !== false);
   const ar = locale === "ar";
+  const categoryAnchorID =
+    section.anchorID?.trim() ||
+    partnerAnchor(section.heading, "category").replace(
+      /^partner-/,
+      "partner-category-",
+    );
   const inferredTier =
     section.heading.toLowerCase().includes("strategic") ||
     section.heading.includes("الاستراتيجي")
@@ -521,6 +544,7 @@ function PartnerCategory({
     "advisory-arm": ar ? "الذراع الاستشاري" : "Advisory Arm",
     partner: ar ? "الشريك الداعم" : "Partner",
   } as const;
+  const usedSponsorAnchors = new Map<string, number>();
   const resolvedLogos = logos.map((logo, index) => {
     const featured =
       index < 2 && section.anchorID === "partner-category-supervision";
@@ -531,14 +555,22 @@ function PartnerCategory({
       : null;
     const selectedTier =
       officialTier || (logo.tier === "none" ? null : logo.tier || inferredTier);
-    return { featured, logo, selectedTier };
+    const baseAnchorID = partnerAnchor(
+      logo.anchorID || logo.name,
+      `sponsor-${index + 1}`,
+    );
+    const occurrence = (usedSponsorAnchors.get(baseAnchorID) || 0) + 1;
+    usedSponsorAnchors.set(baseAnchorID, occurrence);
+    const sponsorAnchorID =
+      occurrence === 1 ? baseAnchorID : `${baseAnchorID}-${occurrence}`;
+    return { featured, logo, selectedTier, sponsorAnchorID };
   });
 
   if (section.presentationStyle === "partner-profiles") {
     return (
       <section
         className={`simf-partner-profiles simf-content-section ${visual.className}`}
-        id={section.anchorID || undefined}
+        id={categoryAnchorID}
         style={visual.style}
       >
         <div className="simf-shell">
@@ -550,7 +582,7 @@ function PartnerCategory({
             />
           ) : null}
           <div className="simf-partner-profiles__list">
-            {resolvedLogos.map(({ logo, selectedTier }) => {
+            {resolvedLogos.map(({ logo, selectedTier, sponsorAnchorID }) => {
               const href = logo.href?.trim();
               const logoArtwork = (
                 <CmsImage
@@ -563,6 +595,7 @@ function PartnerCategory({
               return (
                 <article
                   className="simf-partner-profile simf-reveal"
+                  id={sponsorAnchorID}
                   key={logo.id || logo.name}
                 >
                   <div className="simf-partner-profile__copy">
@@ -570,19 +603,11 @@ function PartnerCategory({
                       <CmsText value={logo.name} />
                     </h3>
                     {logo.description ? (
-                      <details className="simf-partner-profile__description">
+                      <div className="simf-partner-profile__description">
                         <p>
                           <CmsText value={logo.description} />
                         </p>
-                        <summary>
-                          <span className="simf-partner-profile__more">
-                            <CmsText value={ar ? "اقرأ المزيد" : "Read more"} />
-                          </span>
-                          <span className="simf-partner-profile__less">
-                            <CmsText value={ar ? "عرض أقل" : "Show less"} />
-                          </span>
-                        </summary>
-                      </details>
+                      </div>
                     ) : null}
                     {href ? (
                       <a
@@ -643,7 +668,7 @@ function PartnerCategory({
   return (
     <section
       className={`simf-content-cards simf-content-cards--logos simf-partner-category simf-content-section ${visual.className}`}
-      id={section.anchorID || undefined}
+      id={categoryAnchorID}
       style={visual.style}
     >
       <div className="simf-shell">
@@ -658,55 +683,60 @@ function PartnerCategory({
           layout={section.logoLayout === "swiper" ? "swiper" : "grid"}
           locale={locale}
         >
-          {resolvedLogos.map(({ featured, logo, selectedTier }) => {
-            const media = (
-              <>
-                <div className="simf-content-card__media">
-                  <div className="simf-content-card__logo-stage">
-                    <CmsImage
-                      alt={logo.name}
-                      media={logo.logo}
-                      mobileMedia={logo.mobileLogo}
-                      sizes={featured ? "410px" : "340px"}
-                    />
+          {resolvedLogos.map(
+            ({ featured, logo, selectedTier, sponsorAnchorID }) => {
+              const media = (
+                <>
+                  <div className="simf-content-card__media">
+                    <div className="simf-content-card__logo-stage">
+                      <CmsImage
+                        alt={logo.name}
+                        media={logo.logo}
+                        mobileMedia={logo.mobileLogo}
+                        sizes={featured ? "410px" : "340px"}
+                      />
+                    </div>
                   </div>
-                </div>
-                {selectedTier && logo.showCategoryLabel !== false ? (
-                  <span
-                    className={`simf-partner-category__footer-label simf-partner-category__footer-label--${selectedTier}`}
-                  >
-                    <CmsText value={tierLabels[selectedTier]} />
-                  </span>
-                ) : null}
-              </>
-            );
-            const className = `simf-content-card simf-content-card--footer-label simf-reveal${featured ? " simf-content-card--featured-footer" : ""}`;
-            const href = logo.href?.trim();
-            const linkedMedia = href ? (
-              <a
-                aria-label={
-                  ar ? `زيارة موقع ${logo.name}` : `Visit ${logo.name} website`
-                }
-                className="simf-partner-category__card-link"
-                href={href}
-                rel="noopener noreferrer"
-                target={logo.openInNewTab === false ? undefined : "_blank"}
-              >
-                {media}
-              </a>
-            ) : (
-              media
-            );
-            return (
-              <article
-                aria-label={logo.name}
-                className={className}
-                key={logo.id || logo.name}
-              >
-                {linkedMedia}
-              </article>
-            );
-          })}
+                  {selectedTier && logo.showCategoryLabel !== false ? (
+                    <span
+                      className={`simf-partner-category__footer-label simf-partner-category__footer-label--${selectedTier}`}
+                    >
+                      <CmsText value={tierLabels[selectedTier]} />
+                    </span>
+                  ) : null}
+                </>
+              );
+              const className = `simf-content-card simf-content-card--footer-label simf-reveal${featured ? " simf-content-card--featured-footer" : ""}`;
+              const href = logo.href?.trim();
+              const linkedMedia = href ? (
+                <a
+                  aria-label={
+                    ar
+                      ? `زيارة موقع ${logo.name}`
+                      : `Visit ${logo.name} website`
+                  }
+                  className="simf-partner-category__card-link"
+                  href={href}
+                  rel="noopener noreferrer"
+                  target={logo.openInNewTab === false ? undefined : "_blank"}
+                >
+                  {media}
+                </a>
+              ) : (
+                media
+              );
+              return (
+                <article
+                  aria-label={logo.name}
+                  className={className}
+                  id={sponsorAnchorID}
+                  key={logo.id || logo.name}
+                >
+                  {linkedMedia}
+                </article>
+              );
+            },
+          )}
         </SimfPartnerCategoryLayout>
       </div>
     </section>

@@ -33,7 +33,9 @@ type PageProps = {
 
 const legacySEOTitles: Record<
   Locale,
-  Partial<Record<PublicPage["pageType"], { current: string; optimized: string }>>
+  Partial<
+    Record<PublicPage["pageType"], { current: string; optimized: string }>
+  >
 > = {
   en: {
     "simf-microsite-home": {
@@ -133,8 +135,7 @@ function resolveRoute(path?: string[]) {
     "partners",
     "government-b2g",
   ];
-  const partnersBeta =
-    segments.length === 1 && segments[0] === "partners-beta";
+  const partnersBeta = segments.length === 1 && segments[0] === "partners-beta";
   const publicContentKey =
     segments.length === 1 && segments[0] === "b2g"
       ? "government-b2g"
@@ -142,20 +143,19 @@ function resolveRoute(path?: string[]) {
   const about = segments.length === 1 && segments[0] === "about";
   const homepageReview =
     segments.length === 1 && segments[0] === "new-homepage";
-  const updatesArchive =
-    segments.length === 1 && segments[0] === "updates";
+  const updatesArchive = segments.length === 1 && segments[0] === "updates";
   const updateSlug =
     segments.length === 2 && segments[0] === "updates"
       ? segments[1]
       : undefined;
   const contentKey =
-    !partnersBeta && segments.length === 1 &&
+    !partnersBeta &&
+    segments.length === 1 &&
     contentPages.includes(publicContentKey as SimfContentPageKey)
       ? (publicContentKey as SimfContentPageKey)
       : undefined;
   const sponsor = segments.length === 1 && segments[0] === "sponsor";
-  const comingSoon =
-    segments.length === 1 && segments[0] === "coming-soon";
+  const comingSoon = segments.length === 1 && segments[0] === "coming-soon";
   const genericPage =
     segments.length === 1 &&
     !about &&
@@ -180,36 +180,36 @@ function resolveRoute(path?: string[]) {
     ? ("simf-microsite-about" as const)
     : homepageReview
       ? ("simf-microsite-home-review" as const)
-    : updatesArchive || updateSlug
-      ? ("simf-microsite-updates" as const)
-      : sponsor
-    ? ("simf-microsite-sponsor" as const)
-    : partnersBeta
-        ? ("simf-microsite-partners" as const)
-    : genericPage
-        ? ("simf-microsite-generic" as const)
-    : contentKey
-        ? (`simf-microsite-${contentKey}` as const)
-      : ("simf-microsite-home" as const);
+      : updatesArchive || updateSlug
+        ? ("simf-microsite-updates" as const)
+        : sponsor
+          ? ("simf-microsite-sponsor" as const)
+          : partnersBeta
+            ? ("simf-microsite-partners" as const)
+            : genericPage
+              ? ("simf-microsite-generic" as const)
+              : contentKey
+                ? (`simf-microsite-${contentKey}` as const)
+                : ("simf-microsite-home" as const);
   const suffix = about
     ? "/about"
     : homepageReview
       ? "/new-homepage"
-    : updatesArchive
-      ? "/updates"
-      : updateSlug
-        ? `/updates/${updateSlug}`
-        : sponsor
-    ? "/sponsor"
-    : partnersBeta
-        ? "/partners-beta"
-    : genericPage
-        ? `/${segments[0]}`
-    : contentKey
-          ? contentKey === "government-b2g"
-            ? "/b2g"
-            : `/${contentKey}`
-        : "";
+      : updatesArchive
+        ? "/updates"
+        : updateSlug
+          ? `/updates/${updateSlug}`
+          : sponsor
+            ? "/sponsor"
+            : partnersBeta
+              ? "/partners-beta"
+              : genericPage
+                ? `/${segments[0]}`
+                : contentKey
+                  ? contentKey === "government-b2g"
+                    ? "/b2g"
+                    : `/${contentKey}`
+                  : "";
   return {
     locale,
     pageType,
@@ -219,17 +219,17 @@ function resolveRoute(path?: string[]) {
         ? "simf-microsite/sponsor"
         : pageType === "simf-microsite-home-review"
           ? "simf-microsite/new-homepage"
-        : pageType === "simf-microsite-about"
-          ? "simf-microsite/about"
-        : pageType === "simf-microsite-updates"
-          ? "simf-microsite/updates"
-        : partnersBeta
-          ? "simf-microsite/partners-beta"
-        : genericPage
-          ? `simf-microsite/${segments[0]}`
-        : contentKey
-            ? `simf-microsite/${contentKey}`
-          : "simf-microsite",
+          : pageType === "simf-microsite-about"
+            ? "simf-microsite/about"
+            : pageType === "simf-microsite-updates"
+              ? "simf-microsite/updates"
+              : partnersBeta
+                ? "simf-microsite/partners-beta"
+                : genericPage
+                  ? `simf-microsite/${segments[0]}`
+                  : contentKey
+                    ? `simf-microsite/${contentKey}`
+                    : "simf-microsite",
     contentKey,
     partnersBeta,
     genericPage,
@@ -275,7 +275,8 @@ function applySharedBranding(
     !settings.mobileHeaderLogo &&
     !settings.footerLogo &&
     !settings.mobileFooterLogo
-  ) return page;
+  )
+    return page;
 
   return {
     ...page,
@@ -320,7 +321,9 @@ function applyCMSNavigation(
       const path = normalizeNavigationPath(link.href);
       return !known.has(path) || active.has(path);
     });
-    const present = new Set(filtered.map((link) => normalizeNavigationPath(link.href)));
+    const present = new Set(
+      filtered.map((link) => normalizeNavigationPath(link.href)),
+    );
     const merged = [
       ...filtered,
       ...navigation.links.filter((link) => {
@@ -387,6 +390,7 @@ export async function generateMetadata({
     };
   }
   const siteSettings = await getSiteSettings("en");
+  const defaultSocialImage = mediaURL(siteSettings.defaultOpenGraphImage);
   if (route.comingSoon) {
     const title =
       siteSettings.comingSoon?.title ||
@@ -397,7 +401,27 @@ export async function generateMetadata({
     return {
       title,
       description,
+      openGraph: {
+        description,
+        images: defaultSocialImage
+          ? [
+              {
+                alt: "Saudi International Maritime Forum 2026",
+                url: defaultSocialImage,
+              },
+            ]
+          : undefined,
+        siteName: "Saudi International Maritime Forum",
+        title,
+        type: "website",
+      },
       robots: { follow: true, index: false },
+      twitter: {
+        card: defaultSocialImage ? "summary_large_image" : "summary",
+        description,
+        images: defaultSocialImage ? [defaultSocialImage] : undefined,
+        title,
+      },
     };
   }
   if (route.locale === "ar" && !siteSettings.enableArabic) {
@@ -419,10 +443,10 @@ export async function generateMetadata({
       process.env.NEXT_PUBLIC_APP_URL || "https://simf.startime.sa";
     const englishPath = `/updates/${update.slug}`;
     const arabicPath = `/ar/updates/${update.slug}`;
-    const canonicalPath =
-      route.locale === "ar" ? arabicPath : englishPath;
+    const canonicalPath = route.locale === "ar" ? arabicPath : englishPath;
     const socialImage =
       mediaURL(update.seo?.openGraphImage) ||
+      defaultSocialImage ||
       mediaURL(update.featuredImage);
     const allowIndexing =
       process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true" &&
@@ -445,7 +469,9 @@ export async function generateMetadata({
       openGraph: {
         title,
         description,
-        images: socialImage ? [{ alt: update.title, url: socialImage }] : undefined,
+        images: socialImage
+          ? [{ alt: update.title, url: socialImage }]
+          : undefined,
         locale: route.locale === "ar" ? "ar_SA" : "en_US",
         siteName: "Saudi International Maritime Forum",
         type: "article",
@@ -476,35 +502,34 @@ export async function generateMetadata({
   );
   const socialImage =
     mediaURL(page.seo?.openGraphImage) ||
+    defaultSocialImage ||
     (firstVisual && "media" in firstVisual
       ? mediaURL(firstVisual.media)
       : undefined);
-  const siteURL =
-    process.env.NEXT_PUBLIC_APP_URL || "https://simf.startime.sa";
+  const siteURL = process.env.NEXT_PUBLIC_APP_URL || "https://simf.startime.sa";
   const localizedSuffix =
     page.pageType === "simf-microsite-home"
       ? ""
       : page.pageType === "simf-microsite-home-review"
         ? "/new-homepage"
-      : page.pageType === "simf-microsite-about"
-        ? "/about"
-      : page.pageType === "simf-microsite-sponsor"
-        ? "/sponsor"
-        : page.pageType === "simf-microsite-updates"
-          ? "/updates"
-        : route.partnersBeta
-          ? "/partners-beta"
-        : route.genericPage
-          ? route.publicPath.replace(/^\/ar/, "")
-        : route.contentKey
-            ? route.contentKey === "government-b2g"
-              ? "/b2g"
-              : `/${route.contentKey}`
-            : "";
+        : page.pageType === "simf-microsite-about"
+          ? "/about"
+          : page.pageType === "simf-microsite-sponsor"
+            ? "/sponsor"
+            : page.pageType === "simf-microsite-updates"
+              ? "/updates"
+              : route.partnersBeta
+                ? "/partners-beta"
+                : route.genericPage
+                  ? route.publicPath.replace(/^\/ar/, "")
+                  : route.contentKey
+                    ? route.contentKey === "government-b2g"
+                      ? "/b2g"
+                      : `/${route.contentKey}`
+                    : "";
   const englishPath = localizedSuffix || "/";
   const arabicPath = `/ar${localizedSuffix}`;
-  const canonicalPath =
-    route.locale === "ar" ? arabicPath : englishPath;
+  const canonicalPath = route.locale === "ar" ? arabicPath : englishPath;
   const allowIndexing =
     process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true" &&
     page.seo?.indexable !== false;
@@ -523,9 +548,7 @@ export async function generateMetadata({
       languages: {
         en: `${siteURL}${englishPath}`,
         "x-default": `${siteURL}${englishPath}`,
-        ...(siteSettings.enableArabic
-          ? { ar: `${siteURL}${arabicPath}` }
-          : {}),
+        ...(siteSettings.enableArabic ? { ar: `${siteURL}${arabicPath}` } : {}),
       },
     },
     openGraph: {
@@ -735,7 +758,7 @@ export default async function PublicPage({ params }: PageProps) {
             ? "client-review"
             : route.pageType === "simf-microsite-home-review"
               ? "client-review"
-            : "approved"
+              : "approved"
         }
       />
     );
