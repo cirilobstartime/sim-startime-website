@@ -10382,23 +10382,19 @@ body
   transition: transform 750ms cubic-bezier(0.2, 0.75, 0.25, 1);
 }
 
-/* External posts often arrive as finished campaign artwork rather than a
-   crop-safe editorial photograph. Keep the complete featured artwork visible
-   once the card widens on large desktop and iMac displays, while preserving
-   the approved laptop and mobile treatment. */
-@media (min-width: 1600px) {
-  .simf-update-feature[data-track="update_external_click"]
-    .simf-update-feature__image
-    img {
-    object-fit: contain;
-    object-position: center bottom;
-  }
+/* External featured posts may use finished artwork with important content
+   near every edge, so show the complete image at every viewport width. */
+.simf-update-feature[data-track="update_external_click"]
+  .simf-update-feature__image
+  img {
+  object-fit: contain;
+  object-position: center;
+}
 
-  .simf-update-feature[data-track="update_external_click"]:hover
-    .simf-update-feature__image
-    img {
-    transform: none;
-  }
+.simf-update-feature[data-track="update_external_click"]:hover
+  .simf-update-feature__image
+  img {
+  transform: none;
 }
 
 .simf-update-feature:hover img,
