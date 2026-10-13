@@ -3802,6 +3802,7 @@
   }
 
   .simf-content-page .simf-shell {
+    --simf-shell-width: calc(100% - 40px);
     width: calc(100% - 40px);
   }
 
@@ -8782,6 +8783,7 @@ body
 }
 
 .simf-shell {
+  --simf-shell-width: min(1380px, calc(100% - 80px));
   width: min(1380px, calc(100% - 80px));
 }
 
@@ -9569,6 +9571,7 @@ body
 
 @media (max-width: 980px) {
   .simf-shell {
+    --simf-shell-width: min(100% - 48px, 1380px);
     width: min(100% - 48px, 1380px);
   }
 
@@ -9609,6 +9612,7 @@ body
 
 @media (max-width: 720px) {
   .simf-shell {
+    --simf-shell-width: min(100% - 40px, 1380px);
     width: min(100% - 40px, 1380px);
   }
 
@@ -10412,6 +10416,7 @@ body
 }
 
 .simf-content-page:has(.simf-content-media[id^="privacy-"]) .simf-inner-hero__content {
+  width: var(--simf-shell-width);
   min-height: 0 !important;
   padding-block: 160px 64px !important;
 }
@@ -10423,7 +10428,7 @@ body
 
 .simf-content-page .simf-content-media[id^="privacy-"] .simf-content-media__layout {
   display: block;
-  width: min(900px, calc(100% - 40px));
+  width: var(--simf-shell-width);
   min-height: 0;
   margin-inline: auto;
 }
@@ -16500,6 +16505,10 @@ body
   min-width: 0;
 }
 
+.simf-footer__links-grid .simf-footer__privacy {
+  grid-column: 1 / -1;
+}
+
 @media (max-width: 800px) {
   .simf-content-page--legacy
     :is(
@@ -18110,6 +18119,10 @@ body
 @media (min-width: 1600px) {
   .simf-site {
     --simf-wide-canvas: min(2200px, calc(100% - clamp(96px, 6vw, 176px)));
+  }
+
+  .simf-site .simf-shell {
+    --simf-shell-width: var(--simf-wide-canvas);
   }
 
   .simf-site .simf-shell,

@@ -32,10 +32,13 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
     ? `${logoURL}${logoURL.includes("?") ? "&" : "?"}v=full-compass-20260731`
     : logoURL;
   const mobileLogoURL = getMediaURL(footer?.mobileLogo);
+  const privacyHref = footer?.privacyHref || (ar ? "/ar/privacy-policy" : "/privacy-policy");
+  const privacyLabel = footer?.privacyLabel || (ar ? "سياسة الخصوصية" : "Privacy Policy");
   const importantLinks = footer?.importantLinks?.filter(
     (link) =>
       !link.href.replace(/\/+$/, "").endsWith("/about") &&
-      !link.href.includes("#about"),
+      !link.href.includes("#about") &&
+      link.href !== privacyHref,
   );
   const copyrightParts = (footer?.copyright || "").split(/(Startime|ستارتايم)/gi);
   return (
@@ -114,6 +117,10 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
                 <ArrowUpRight aria-hidden />
               </Link>
             ))}
+            <Link className="simf-footer__privacy" href={privacyHref} prefetch={false}>
+              <CmsText value={privacyLabel} />
+              <ArrowUpRight aria-hidden />
+            </Link>
           </div>
         </div>
       </div>
@@ -136,9 +143,6 @@ export function SimfFooter({ footer, homeHref, locale }: Props) {
           )}
         </p>
         <div>
-          <Link href={footer?.privacyHref || "https://startime.sa/privacy-policy"} prefetch={false}>
-            <CmsText value={footer?.privacyLabel || (ar ? "سياسة الخصوصية" : "Privacy Policy")} />
-          </Link>
           <Link href={homeHref} prefetch={false}><CmsText value={footer?.homeLabel || (ar ? "الرئيسية" : "Home")} /></Link>
         </div>
       </div>
