@@ -469,6 +469,45 @@ curl -fsS https://sim.startime.sa/sitemap.xml >/dev/null
 - Browser console and network panel for blocked CSP, analytics or media calls
 - `systemctl status simf`, Nginx logs and available disk/memory
 
+### Privacy policy setup and editing
+
+The SIM privacy policy uses the existing localized Pages collection and the
+custom-content page type; no database schema migration or media import is
+required. The policy identifies STARTIME EVENTS COMPANY as its issuer. Its
+public routes are `/privacy-policy` and `/ar/privacy-policy`.
+
+For an approved initial setup, first complete the backup steps above, then
+load the existing server environment and inspect the dry-run plan:
+
+```bash
+cd /var/www/simf/app
+set -a
+. /etc/simf/simf.env
+set +a
+npx tsx scripts/add-sim-privacy-policy.ts
+```
+
+Apply only the approved policy setup:
+
+```bash
+APPLY_SIM_PRIVACY_POLICY=1 npx tsx scripts/add-sim-privacy-policy.ts
+```
+
+The script creates the bilingual policy only if it does not already exist,
+updates the privacy URL in existing footer blocks, preserves published and
+draft content separately, and verifies that other page fields, media records,
+website settings and marketing settings remain unchanged. It never runs the
+site seed or overwrites an existing policy's editorial copy. If an integrity
+check fails, stop and inspect the reported record before continuing. Restart
+the application after the operation to clear cached page data.
+
+Editors can use **Content → Pages → SIM Privacy Policy — STARTIME**, choose
+English or Arabic, and edit the hero introduction, update date, section
+headings, body text and SEO fields. Save a draft or publish using the normal
+page workflow. Footer privacy labels and links remain editable in each page's
+footer block. Production `robots.txt` allows `/api/media/` while continuing to
+block the CMS and other API routes; non-indexable environments remain blocked.
+
 ## 6. Roll back a failed code deployment
 
 Use the commit recorded before deployment:

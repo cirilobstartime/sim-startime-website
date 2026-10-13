@@ -10402,6 +10402,64 @@ body
   transform: scale(1.035);
 }
 
+/* CMS legal pages use the existing media-feature fields as readable text. */
+.simf-content-page:has(.simf-content-media[id^="privacy-"]) .simf-sticky-sponsor {
+  display: none;
+}
+
+.simf-content-page:has(.simf-content-media[id^="privacy-"]) .simf-inner-hero {
+  min-height: 0 !important;
+}
+
+.simf-content-page:has(.simf-content-media[id^="privacy-"]) .simf-inner-hero__content {
+  min-height: 0 !important;
+  padding-block: 160px 64px !important;
+}
+
+.simf-content-page .simf-content-media[id^="privacy-"] {
+  background: var(--simf-page-light);
+  padding-block: 0 !important;
+}
+
+.simf-content-page .simf-content-media[id^="privacy-"] .simf-content-media__layout {
+  display: block;
+  width: min(900px, calc(100% - 40px));
+  min-height: 0;
+  margin-inline: auto;
+}
+
+.simf-content-page .simf-content-media[id^="privacy-"] .simf-content-media__visual {
+  display: none;
+}
+
+.simf-content-page .simf-content-media[id^="privacy-"] .simf-content-media__copy {
+  padding: 24px 0;
+}
+
+.simf-content-page .simf-content-media[id^="privacy-"]:last-child .simf-content-media__copy {
+  padding-bottom: 64px;
+}
+
+.simf-content-page .simf-content-media[id^="privacy-"] .simf-section-head {
+  max-width: none;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.simf-content-page .simf-content-media[id^="privacy-"] .simf-section-head h2 {
+  color: #121d42;
+  font-size: clamp(21px, 2vw, 27px) !important;
+  line-height: 1.65;
+}
+
+.simf-content-page .simf-content-media[id^="privacy-"] .simf-section-head > p:not(.simf-eyebrow) {
+  max-width: none;
+  color: #34405a;
+  font-size: 16px !important;
+  line-height: 1.9;
+}
+
 .simf-update-feature__copy {
   display: flex;
   flex-direction: column;

@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: allowIndexing
       ? {
-          allow: "/",
+          allow: ["/", "/api/media/"],
           disallow: [
             "/content-admin",
             "/content-admin/",
