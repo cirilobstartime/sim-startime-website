@@ -42,6 +42,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           ? "/sponsor"
           : page.pageType === "simf-microsite-government-b2g"
             ? "/b2g"
+          : page.pageType === "simf-microsite-generic"
+            ? `/${String(page.slug).replace(/^simf-microsite\//, "")}`
           : page.pageType === "simf-microsite-home"
               ? ""
               : `/${String(page.pageType).replace("simf-microsite-", "")}`;
