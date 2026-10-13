@@ -498,8 +498,21 @@ updates the privacy URL in existing footer blocks, preserves published and
 draft content separately, and verifies that other page fields, media records,
 website settings and marketing settings remain unchanged. It never runs the
 site seed or overwrites an existing policy's editorial copy. If an integrity
-check fails, stop and inspect the reported record before continuing. Restart
-the application after the operation to clear cached page data.
+check fails, stop and inspect the reported record before continuing. After a
+successful build, move the disposable public-data cache aside before restarting
+so the edited footer URLs are read immediately from the live database:
+
+```bash
+cd /var/www/simf/app
+policy_cache_backup="/var/backups/simf/public-data-cache-$(date -u +%Y%m%dT%H%M%SZ)"
+if [ -d /var/www/simf/app/.next/cache/fetch-cache ]; then
+  sudo mv /var/www/simf/app/.next/cache/fetch-cache "$policy_cache_backup"
+fi
+sudo systemctl restart simf
+```
+
+This moves only Next.js's rebuildable data cache. The CMS database, uploads and
+image optimization cache remain in their original locations.
 
 Editors can use **Content → Pages → SIM Privacy Policy — STARTIME**, choose
 English or Arabic, and edit the hero introduction, update date, section
