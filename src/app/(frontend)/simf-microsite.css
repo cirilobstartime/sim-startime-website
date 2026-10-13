@@ -16506,7 +16506,7 @@ body
 }
 
 .simf-footer__links-grid .simf-footer__privacy {
-  grid-column: 1 / -1;
+  grid-column: 2;
 }
 
 @media (max-width: 800px) {
@@ -16586,6 +16586,10 @@ body
 
   .simf-footer__links-grid {
     grid-template-columns: 1fr;
+  }
+
+  .simf-footer__links-grid .simf-footer__privacy {
+    grid-column: 1;
   }
 }
 
